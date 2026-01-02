@@ -88,7 +88,7 @@ export const projects: Project[] = [
     date: "2023-05-18",
     category: "Talk",
     image: "work/wwt.png",
-    link: "https://www.youtube.com/watch?v=hLdxyDXAzNM",
+    link: "https://www.youtube.com/watch?v=hLdxyDXAzN",
     tags: ["Talk"],
   },
   {
