@@ -41,7 +41,31 @@ export interface Project {
 
 export type SortOrder = 'latest' | 'oldest';
 export type SectionType = 'experience' | 'education' | 'certifications';
+export type DiarySectionType = 'music' | 'books' | 'cinema' | 'blogs';
+
+// Personal content types
+export interface PersonalPost {
+  id: string;
+  title?: string;
+  caption: string;
+  image?: string;
+  date?: string;
+  tags?: string[];
+  link?: string;
+  content?: string; // Added for blog write-ups
+  type: 'music' | 'books' | 'cinema' | 'blogs';
+  metadata?: {
+    artist?: string;
+    album?: string;
+    author?: string;
+    book?: string;
+    movie?: string;
+    show?: string;
+    location?: string;
+    rating?: number;
+    detailedReview?: string[];
+  };
+}
 
 // Sherrii types
 export type Corner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-

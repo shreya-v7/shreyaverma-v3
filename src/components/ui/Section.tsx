@@ -26,7 +26,7 @@ export const Section = ({
     colors,
     isClient,
     techStackLabel: modalTechStackLabel,
-  } = useCompanyModal({ customTechStackLabel: techStackLabel });
+  } = useCompanyModal(techStackLabel);
 
   return (
     <section id={sectionId}>

@@ -1,7 +1,5 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { SectionType } from '../../types';
-import { BUTTON_BASE_CLASSES, BUTTON_ACTIVE_CLASSES, BUTTON_INACTIVE_CLASSES } from '../../utils/constants';
+import { SectionRouter } from '../../components/ui/SectionRouter';
 import Experience from './experience';
 import Education from './education';
 import CertList from './certlist';
@@ -11,38 +9,34 @@ interface AboutBodyProps {
 }
 
 export default function AboutBody({ defaultSection = 'experience' }: AboutBodyProps) {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const activeSection: SectionType = location.pathname.includes('/education') ? 'education' 
-    : location.pathname.includes('/certifications') ? 'certifications' 
-    : 'experience';
-
-  const sections: Array<{ id: SectionType; label: string; path: string }> = [
+  const sections = [
     { id: 'experience', label: 'Experience', path: '/about/experience' },
     { id: 'education', label: 'Education', path: '/about/education' },
     { id: 'certifications', label: 'Certifications', path: '/about/certifications' },
   ];
 
-  useEffect(() => {
-    if (defaultSection && location.pathname === '/about') {
-      navigate(`/about/${defaultSection}`, { replace: true });
+  const getActiveSection = (pathname: string): SectionType => {
+    if (pathname.includes('/education')) return 'education';
+    if (pathname.includes('/certifications')) return 'certifications';
+    return 'experience';
+  };
+
+  const renderSection = (activeSection: SectionType) => {
+    switch (activeSection) {
+      case 'experience': return <Experience />;
+      case 'education': return <Education />;
+      case 'certifications': return <CertList />;
+      default: return <Experience />;
     }
-  }, [defaultSection, location.pathname, navigate]);
+  };
 
   return (
-    <div>
-      <div className="flex justify-center space-x-4 mb-8">
-        {sections.map((section) => (
-          <Link key={section.id} to={section.path} className={`${BUTTON_BASE_CLASSES} ${activeSection === section.id ? BUTTON_ACTIVE_CLASSES : BUTTON_INACTIVE_CLASSES}`}>
-            {section.label}
-          </Link>
-        ))}
-      </div>
-      <div>
-        {activeSection === 'experience' && <Experience />}
-        {activeSection === 'education' && <Education />}
-        {activeSection === 'certifications' && <CertList />}
-      </div>
-    </div>
+    <SectionRouter
+      sections={sections}
+      defaultSection={defaultSection}
+      basePath="/about"
+      renderSection={renderSection}
+      getActiveSection={getActiveSection}
+    />
   );
 }

@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
 import { Modal } from '../../components/ui/Modal';
 import { ModalContent } from '../../components/ui/ModalContent';
 import { PreviewSection } from '../../components/ui/PreviewSection';
 import { CertificateCard } from '../../components/ui/CertificateCard';
+import { NavigationButtons } from '../../components/ui/NavigationButtons';
+import { SectionHeader } from '../../components/ui/SectionHeader';
 import { useCompanyModal } from '../../hooks/useCompanyModal';
 import { experienceData } from '../../data/experience';
 import { educationData } from '../../data/education';
 import { certificates } from '../../data/certificates';
 import { SectionType } from '../../types';
-import { BUTTON_BASE_CLASSES, BUTTON_INACTIVE_CLASSES } from '../../utils/constants';
 
 export default function AboutPreview() {
   const {
@@ -32,18 +32,10 @@ export default function AboutPreview() {
 
   return (
     <div className="space-y-12">
-      {/* Navigation Buttons */}
-      <div className="flex justify-center space-x-4 mb-8">
-        {sections.map((section) => (
-          <Link
-            key={section.id}
-            to={section.path}
-            className={`${BUTTON_BASE_CLASSES} ${BUTTON_INACTIVE_CLASSES}`}
-          >
-            {section.label}
-          </Link>
-        ))}
-      </div>
+      <NavigationButtons
+        buttons={sections}
+        activeId=""
+      />
       <PreviewSection
         title="Experience"
         viewAllPath="/about/experience"
@@ -62,17 +54,7 @@ export default function AboutPreview() {
       />
 
       <section>
-        <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100">
-            Certifications
-          </h2>
-          <Link
-            to="/about/certifications"
-            className="text-sm text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
-          >
-            View All →
-          </Link>
-        </div>
+        <SectionHeader title="Certifications" viewAllPath="/about/certifications" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {top2Certificates.map((cert, index) => (
             <CertificateCard key={index} certificate={cert} />

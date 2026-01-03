@@ -2,15 +2,21 @@
 node_modules/
 .pnp
 .pnp.js
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
 
 # Testing
 coverage/
 *.lcov
 .nyc_output
+.jest/
 
-# Production
+# Production builds
 dist/
 build/
+out/
 *.local
 
 # Environment variables
@@ -19,8 +25,11 @@ build/
 .env.development.local
 .env.test.local
 .env.production.local
+.env*.local
 
 # Logs
+logs/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
@@ -30,15 +39,16 @@ lerna-debug.log*
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
-.DS_Store
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
+!.vscode/settings.json
+.idea/
 *.swp
+*.swo
 *~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
 
 # OS files
 .DS_Store
@@ -49,19 +59,22 @@ lerna-debug.log*
 ehthumbs.db
 Thumbs.db
 Desktop.ini
+$RECYCLE.BIN/
 
 # Vite
 .vite/
-*.log
+.vite-cache/
 
 # TypeScript
 *.tsbuildinfo
+.tsbuildinfo
 
 # Optional npm cache directory
 .npm
 
 # Optional eslint cache
 .eslintcache
+.eslintcache.*
 
 # Optional stylelint cache
 .stylelintcache
@@ -78,27 +91,37 @@ Desktop.ini
 # Output of 'npm pack'
 *.tgz
 
-# Yarn Integrity file
+# Yarn
 .yarn-integrity
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
 
-# parcel-bundler cache
-.cache
+# Package manager lock files (uncomment if you want to ignore them)
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock
+
+# Parcel
 .parcel-cache
-
-# Next.js (if any remnants)
-.next/
-out/
-
-# Nuxt.js (if any remnants)
-.nuxt
-
-# Vercel
-.vercel
+.cache
 
 # Turbo
 .turbo
 
-# Lock files (optional - uncomment if you want to ignore them)
-# package-lock.json
-# pnpm-lock.yaml
-# yarn.lock
+# Vercel
+.vercel
+
+# Netlify
+.netlify
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# RSS feed outputs (generated during build)
+atom.xml
+feed.json

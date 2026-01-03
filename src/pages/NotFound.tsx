@@ -9,7 +9,7 @@ export default function NotFound() {
     { path: '/about/experience', label: 'Experience', icon: FiUser },
     { path: '/about/education', label: 'Education', icon: FiUser },
     { path: '/about/certifications', label: 'Certifications', icon: FiUser },
-    { path: '/blog', label: 'Blog', icon: FiBook },
+    { path: '/diary', label: 'Diary', icon: FiBook },
     { path: '/projects', label: 'Projects', icon: FiFolder },
     { path: '/contact', label: 'Contact', icon: FiMail },
   ];

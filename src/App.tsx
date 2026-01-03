@@ -7,7 +7,8 @@ import { Sherrii } from './components/layout/sherrii';
 import { metaData } from './config/config';
 import Home from './pages/Home';
 import About from './pages/about';
-import Blog from './pages/blog';
+import Diary from './pages/diary';
+import BlogDetail from './pages/diary/BlogDetail';
 import Projects from './pages/projects';
 import Contact from './pages/contact';
 import NotFound from './pages/NotFound';
@@ -40,7 +41,12 @@ function App() {
             <Route path="/about/experience" element={<About section="experience" />} />
             <Route path="/about/education" element={<About section="education" />} />
             <Route path="/about/certifications" element={<About section="certifications" />} />
-            <Route path="/blog" element={<Blog />} />
+            <Route path="/diary" element={<Diary />} />
+            <Route path="/diary/music" element={<Diary section="music" />} />
+            <Route path="/diary/books" element={<Diary section="books" />} />
+            <Route path="/diary/cinema" element={<Diary section="cinema" />} />
+            <Route path="/diary/blogs" element={<Diary section="blogs" />} />
+            <Route path="/diary/blogs/:id" element={<BlogDetail />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
