@@ -2,6 +2,25 @@ import { Company } from '../types';
 
 export const educationData: Company[] = [
   {
+    company: "Carnegie Mellon University",
+    logo: "education/cmu.png",
+    roles: [
+      {
+        title: "Master of Information Systems Management in Business Intelligence & Data Analytics",
+        duration: "Aug 2025 - Dec 2026",
+        content: [
+          "3.93/4.00 GPA",
+          "MISM Scholarship Recipient",
+          "Graduate Teaching Assistant for Organizational Design and Implementation with Dr. Lindsay Larson",
+          "Social Media and Marketing Manager for Indian Graduate Student Association (IGSA)",
+          "Student Campus Ambassador for Carnegie Mellon University",
+        ],
+        awards: "Dean's List for Fall 2025",
+        techStack: ["Machine Learning in Production", "AI Model Development", "Introduction to Deep Learning", "Corporate Startup Lab", "Applied Econometrics", "Unstructured Data Analytics", "Advanced Business Analytics", "Decision Making Under Uncertainty", "OOP in Java"],
+      },
+    ],
+  },
+  {
     company: "Vellore Institute of Technology",
     logo: "education/vit.png",
     roles: [

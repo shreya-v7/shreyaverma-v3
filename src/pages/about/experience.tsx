@@ -1,14 +1,13 @@
 import React from 'react';
-import { Accordion } from '../../components/ui/Accordion';
-import { useTechStackColors } from '../../hooks/useTechStackColors';
+import { Section } from '../../components/ui/Section';
 import { experienceData } from '../../data/experience';
 
 export default function Experience() {
-  const { colors, isClient } = useTechStackColors(experienceData);
-
   return (
-    <section id="experience">
-      <Accordion data={experienceData} colors={colors} isClient={isClient} />
-    </section>
+    <Section
+      data={experienceData}
+      sectionId="experience"
+      gridCols="grid-cols-1 md:grid-cols-2"
+    />
   );
 }

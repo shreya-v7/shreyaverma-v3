@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Navbar } from './components/layout/nav';
 import Footer from './components/layout/footer';
@@ -36,6 +36,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
+            <Route path="/about/experience" element={<About section="experience" />} />
+            <Route path="/about/education" element={<About section="education" />} />
+            <Route path="/about/certifications" element={<About section="certifications" />} />
             <Route path="/blog" element={<Blog />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />

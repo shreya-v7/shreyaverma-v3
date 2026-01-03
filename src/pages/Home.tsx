@@ -22,10 +22,10 @@ export default function Page() {
         Hello, I’m Shreya, dedicated science fiction enthusiast and unapologetic geek, diving deep into the captivating worlds of machine learning and deep learning. 
         </p>
         <p>
-        With a strong academic background and experience at Morgan Stanley, I embrace challenges to push boundaries, deepen my expertise, and advance sustainable technology.
+        Grad student at Carnegie Mellon Univeristy, breaking AI until it confesses how it works. Backed by a strong academic foundation and industry experience at Morgan Stanley, I like problems that don’t have obvious answers.
         </p>
         <p>
-        Fueled by insatiable curiosity, I’m on a mission to explore how technology and finance intertwine, unraveling the mysteries of innovative financial models and risk analytics while questioning the “how” and “why” behind these advancements.
+        I chase the uncomfortable questions in ML, why models look intelligent on paper, misbehave in reality, and how to close that gap.
         </p>
       </div>
     </section>

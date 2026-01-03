@@ -2,32 +2,64 @@ import { Company } from '../types';
 
 export const experienceData: Company[] = [
   {
+    company: "Wolfram Alpha",
+    logo: "experience/wolframalpha.png",
+    roles: [
+      {
+        title: "Student Ambassador",
+        duration: "Dec 2025 - Present",
+        content: [
+          "Organize and lead hackathons and technical workshops to promote computational thinking and mathematical problem-solving within the student community.",
+          "Develop and execute promotional campaigns to increase awareness and adoption of Wolfram technologies among students and researchers.",
+          "Conduct research projects on quantitative modeling and mathematical computations, leveraging Wolfram's computational intelligence for complex problem-solving.",
+          "Create educational content and tutorials demonstrating advanced mathematical computations and quantitative analysis techniques.",
+          "Collaborate with the Wolfram team to gather feedback and improve product features based on student and academic use cases.",
+        ],
+        techStack: ["Wolfram Language", "Mathematica", "Quantitative Modeling", "Mathematical Computation", "Data Analysis", "Research", "Event Organization", "Content Creation"],
+      },
+    ],
+  },
+  {
     company: "Morgan Stanley",
     logo: "experience/Ms.jpg",
     roles: [
       {
         title: "Software Engineer II",
-        duration: "Sep 2024 - Present",
+        duration: "Sep 2024 - Aug 2025",
         content: [
-          "Developing Stress-Testing Frameworks: Built a framework using the Barra model for factor returns and market shock simulations via Monte Carlo methods, visualized results in Power BI for interactive analysis, and enhanced data quality checks.",
-          "Building user interface for business groups to view stress test reports in ReactJS with drilldown and interactive features.",
-          "Optimized Risk Calculations: Implemented a Greedy Algorithm reducing exposure risk computation from 4 hours to 30 minutes.",
-          "Improved Database and IaC Efficiency: Set up Delphix servers and Terraform scripts, eliminating database conflicts and reducing QA/test setup time by 40+ hours per cycle.",
-          "Innovated Data Quality Detection: Developed a Deep Learning autoencoder for anomaly detection in risk reports and created rule-based DQ frameworks for actionable insights."
+          "Designed and built a distributed stress-testing system for quant and hedge fund portfolios, simulating 100K+ scenarios over million-position datasets, with a focus on scalability, correctness, and failure handling under load.",
+          "Developed high-performance Java services (Spring Boot, DDD, multithreading) with CI/CD pipelines, enabling large-scale historical backtesting and reproducible risk simulations.",
+          "Led statistical validation and anomaly analysis of model outputs using Python (NumPy, SciPy, pandas), reconciling independent implementations to surface edge cases and silent failures.",
+          "Built a data-quality engine using deep learning autoencoders to detect anomalous risk outputs, automatically triggering recalculation pipelines and improving accuracy, compliance, and system trustworthiness.",
+          "Created real-time risk insight dashboards (React, Power BI) that replaced manual Excel workflows and enabled faster, more reliable decision-making for Prime Brokerage and Institutional clients.",
+          "Improved margin requirement accuracy (GAP), contributing to a ~20% impact on revenue strategy, by tightening model assumptions and validation logic.",
+          "Recognized with Best Innovative Project and Team Engagement Champion awards for technical impact and leadership.",
         ],
-        awards: "IST Circle of Excellence Award, Team Engagement Champion 2024 Quarterly Awards",
+        awards: "Best Innovative Project Award, Team Engagement Champion 2024 Quarterly Awards",
         techStack: ["PyTorch", "Keras", "Tensorflow", "Java", "Springboot", "Python", "Angular", "React", "PowerBI", "Kafka", "Redis", "Kubernetes", "Podman", "Terraform", "Delphix", "Loki", "Prometheus", "Grafana", "Tempo", "Openshift"],
       },
       {
-        title: "Technology Analyst",
-        duration: "Jul 2023 - Sep 2024",
+        title: "Technology Associate",
+        duration: "Nov 2023 - Sep 2024",
         content: [
-          "Created a Deep Learning model framework (autoencoder) for a rule-based data quality engine for anomaly detection in risk data.",
-          "Graduated from Morgan Stanley's prestigious Technology Analyst Program (TAP), gaining expertise in software engineering, financial technology, and internal tech architecture."
+          "Optimized a core exposure computation algorithm, reducing runtime from 4 hours to 30 minutes, enabling same-day analytics and improving system reliability under time constraints.",
+          "Automated infrastructure provisioning and deployment (Terraform, OpenShift), eliminating environment drift and reducing QA/test setup time by 40+ hours.",
+          "Built internal tooling for automated test generation (Python, LLM-assisted workflows), improving coverage and reducing regression risk.",
+          "Served as Scrum Master, driving execution clarity while building observability dashboards to monitor system health and delivery velocity.",
+          "Awarded IST Annual Circle of Excellence (top performer recognition).",
+        ],
+        awards: "IST Circle of Excellence Award",
+        techStack: ["Python", "Java", "Spring Boot", "Azure Spring Apps", "Linux", "Terraform", "OpenShift", "Docker", "Git", "JUnit", "PyTest", "pandas", "NumPy", "React", "Power BI", "Jira", "Rally"]
+      }, 
+      {
+        title: "Technology Analyst",
+        duration: "Jul 2023 - Oct 2023",
+        content: [
+          "Graduated from Morgan Stanley's prestigious Technology Analyst Program (TAP), gaining expertise in software engineering, financial technology, and internal tech architecture.",
         ],
         awards: "First in Jeopardy Quiz on Tech Principles",
         techStack: ["React", "Java", "Python", "Azure Spring Functions", "Jira", "Rally", "Springboot", "Linux"],
-      },
+      }, 
       {
         title: "Spring Technology Analyst",
         duration: "Jan 2023 - Jul 2023",
