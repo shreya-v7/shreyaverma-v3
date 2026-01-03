@@ -10,6 +10,7 @@ import About from './pages/about';
 import Blog from './pages/blog';
 import Projects from './pages/projects';
 import Contact from './pages/contact';
+import NotFound from './pages/NotFound';
 
 function App() {
   return (
@@ -42,6 +43,7 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
         </main>
