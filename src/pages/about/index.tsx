@@ -29,8 +29,7 @@ export default function About({ section }: AboutProps) {
           {/* Introductory line with internal links */}
           <p className="mb-6">
             Curious about my journey? I've put in a lot of hard work, but let's make it interesting! 
-            Keep refreshing the page to watch the colors change. Fun, right? 
-            Want to dive deeper? 
+            See those messages? They keep changing evrey 5 seconds! Also, you can chat with Sherrii, my AI assistant, by clicking the button in the bottom right corner. 
           </p>
 
           <AboutPreview />
@@ -48,13 +47,6 @@ export default function About({ section }: AboutProps) {
       </Helmet>
       <div>
         <h1 className="mb-8 text-2xl font-medium tracking-tight">About</h1>
-
-        {/* Introductory line with internal links */}
-        <p className="mb-6">
-          Curious about my journey? I've put in a lot of hard work, but let's make it interesting! 
-          Keep refreshing the page to watch the colors change. Fun, right? 
-          Want to dive deeper? 
-        </p>
 
         <AboutBody defaultSection={section} />
       </div>

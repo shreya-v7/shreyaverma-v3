@@ -3,7 +3,6 @@ import { projects } from '../../data/projects';
 import { Project } from '../../types';
 import { ProjectCard } from '../../components/ui/ProjectCard';
 import { ProjectModal } from '../../components/ui/ProjectModal';
-import { Button } from '../../components/ui/Button';
 
 export default function ProjectsInfo() {
   const [activeCategory, setActiveCategory] = useState<string>('All');

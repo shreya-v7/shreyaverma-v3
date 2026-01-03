@@ -1,9 +1,10 @@
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { Navbar } from './components/layout/nav';
 import Footer from './components/layout/footer';
 import { ThemeProvider } from './components/layout/theme-switch';
+import { Sherrii } from './components/layout/sherrii';
 import { metaData } from './config/config';
 import Home from './pages/Home';
 import About from './pages/about';
@@ -46,6 +47,7 @@ function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
+          <Sherrii />
         </main>
       </div>
     </ThemeProvider>

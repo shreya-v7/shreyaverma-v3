@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
 import { SectionType } from '../../types';
+import { BUTTON_BASE_CLASSES, BUTTON_ACTIVE_CLASSES, BUTTON_INACTIVE_CLASSES } from '../../utils/constants';
 import Experience from './experience';
 import Education from './education';
 import CertList from './certlist';
@@ -40,22 +41,15 @@ export default function AboutBody({ defaultSection = 'experience' }: AboutBodyPr
     <div>
       {/* Section Toggle Buttons */}
       <div className="flex justify-center space-x-4 mb-8">
-        {sections.map((section) => {
-          const baseClasses = 'px-4 py-2 text-lg font-medium rounded-md transition-colors duration-300 no-underline';
-          const variantClasses = activeSection === section.id
-            ? 'bg-neutral-800 text-neutral-100 dark:bg-neutral-100 dark:text-neutral-900'
-            : 'bg-neutral-200 text-neutral-900 dark:bg-neutral-700 dark:text-neutral-200';
-          
-          return (
-            <Link
-              key={section.id}
-              to={section.path}
-              className={`${baseClasses} ${variantClasses}`}
-            >
-              {section.label}
-            </Link>
-          );
-        })}
+        {sections.map((section) => (
+          <Link
+            key={section.id}
+            to={section.path}
+            className={`${BUTTON_BASE_CLASSES} ${activeSection === section.id ? BUTTON_ACTIVE_CLASSES : BUTTON_INACTIVE_CLASSES}`}
+          >
+            {section.label}
+          </Link>
+        ))}
       </div>
 
       {/* Dynamic Section Rendering */}

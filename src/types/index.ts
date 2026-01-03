@@ -42,3 +42,12 @@ export interface Project {
 export type SortOrder = 'latest' | 'oldest';
 export type SectionType = 'experience' | 'education' | 'certifications';
 
+// Sherrii types
+export type Corner = 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+
+export interface ChatMessage {
+  id: number;
+  text: string;
+  isUser: boolean;
+}
+
