@@ -92,6 +92,8 @@ export default function BlogList() {
           <a
             key={index}
             href={blog.url}
+            target="_blank"
+            rel="noopener noreferrer"
             className="block p-4 bg-white border rounded-lg shadow-md transition-transform transform hover:scale-105 dark:bg-neutral-900"
           >
             {/* Blog Content */}

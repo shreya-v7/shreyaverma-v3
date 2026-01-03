@@ -78,15 +78,23 @@ const useAnnoyingMessages = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [currentCorner, setCurrentCorner] = useState<Corner>('bottom-right');
   const [isDismissed, setIsDismissed] = useState(false);
+  const [isManuallyTriggered, setIsManuallyTriggered] = useState(false);
 
+  // Auto-appearance logic - ONLY runs when NOT dismissed AND manually triggered
   useEffect(() => {
+    // If dismissed, stop all automatic behavior
     if (isDismissed) {
       setIsOpen(false);
       return;
     }
 
+    // Only auto-show if manually triggered (quirky button was clicked)
+    if (!isManuallyTriggered) {
+      return;
+    }
+
     const showSherrii = () => {
-      if (!isOpen && !isDismissed) {
+      if (!isOpen && !isDismissed && isManuallyTriggered) {
         setCurrentCorner(getRandomCorner());
         setCurrentMessage(sherriiMessages[Math.floor(Math.random() * sherriiMessages.length)]);
         setIsOpen(true);
@@ -97,7 +105,7 @@ const useAnnoyingMessages = () => {
     const initialTimer = setTimeout(showSherrii, initialDelay);
 
     const interval = setInterval(() => {
-      if (!isOpen && !isDismissed) {
+      if (!isOpen && !isDismissed && isManuallyTriggered) {
         const randomDelay = Math.random() * 60000 + 30000;
         setTimeout(showSherrii, randomDelay);
       }
@@ -107,20 +115,21 @@ const useAnnoyingMessages = () => {
       clearTimeout(initialTimer);
       clearInterval(interval);
     };
-  }, [isOpen, isDismissed]);
+  }, [isOpen, isDismissed, isManuallyTriggered]);
 
+  // Message update interval - ONLY when open and not dismissed
   useEffect(() => {
-    if (!isOpen || isDismissed) return;
+    if (!isOpen || isDismissed || !isManuallyTriggered) return;
 
     const interval = setInterval(() => {
-      if (isDismissed) {
+      if (isDismissed || !isManuallyTriggered) {
         clearInterval(interval);
         return;
       }
       
       setIsTyping(true);
       setTimeout(() => {
-        if (isDismissed) return;
+        if (isDismissed || !isManuallyTriggered) return;
         setCurrentMessage(sherriiMessages[Math.floor(Math.random() * sherriiMessages.length)]);
         setIsTyping(false);
         if (Math.random() < 0.3) {
@@ -130,9 +139,38 @@ const useAnnoyingMessages = () => {
     }, 7000);
 
     return () => clearInterval(interval);
-  }, [isOpen, isDismissed]);
+  }, [isOpen, isDismissed, isManuallyTriggered]);
 
-  return { isOpen, currentMessage, isTyping, currentCorner, isDismissed, setIsOpen, setIsDismissed, setCurrentCorner };
+  const triggerManually = () => {
+    setIsManuallyTriggered(true);
+    setCurrentCorner(getRandomCorner());
+    setCurrentMessage(sherriiMessages[Math.floor(Math.random() * sherriiMessages.length)]);
+    setIsOpen(true);
+  };
+
+  const handleDismiss = () => {
+    setIsDismissed(true);
+    setIsManuallyTriggered(false);
+    setIsOpen(false);
+  };
+
+  const resetDismissal = () => {
+    setIsDismissed(false);
+    setIsManuallyTriggered(false);
+  };
+
+  return { 
+    isOpen, 
+    currentMessage, 
+    isTyping, 
+    currentCorner, 
+    isDismissed, 
+    setIsOpen, 
+    setIsDismissed: handleDismiss, 
+    setCurrentCorner,
+    triggerManually,
+    resetDismissal
+  };
 };
 
 // Chat hook logic
@@ -290,7 +328,7 @@ export const Sherrii: React.FC = () => {
   const [showAnnoyingToast, setShowAnnoyingToast] = useState(false);
   const [showRestartMessage, setShowRestartMessage] = useState(false);
   const [isJumping, setIsJumping] = useState(false);
-  const { isOpen: isAnnoyingOpen, currentMessage, isTyping, currentCorner, isDismissed, setIsOpen: setAnnoyingOpen, setIsDismissed } = useAnnoyingMessages();
+  const { isOpen: isAnnoyingOpen, currentMessage, isTyping, currentCorner, isDismissed, setIsOpen: setAnnoyingOpen, setIsDismissed, triggerManually, resetDismissal } = useAnnoyingMessages();
 
   // Chat state
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -327,7 +365,7 @@ export const Sherrii: React.FC = () => {
   // Handlers
   const handleCloseAnnoying = () => {
     setAnnoyingOpen(false);
-    setIsDismissed(true);
+    setIsDismissed(); // This now calls handleDismiss which sets isDismissed to true
     setShowAnnoyingToast(true);
   };
 
@@ -345,8 +383,8 @@ export const Sherrii: React.FC = () => {
   };
 
   const handleRestartAnnoying = () => {
-    setIsDismissed(false);
-    setAnnoyingOpen(true);
+    resetDismissal();
+    triggerManually();
   };
 
   return (
@@ -374,7 +412,7 @@ export const Sherrii: React.FC = () => {
       {/* Top Left: Button to manually trigger annoying messages */}
       {!isDismissed && !isAnnoyingOpen && (
         <button
-          onClick={() => setAnnoyingOpen(true)}
+          onClick={triggerManually}
           className="fixed top-6 left-6 z-50 bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 text-white rounded-full p-3 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 hover:rotate-12 animate-pulse"
           aria-label="Start annoying messages"
           title="Click for annoying messages!"
