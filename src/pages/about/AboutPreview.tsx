@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Modal } from '../../components/ui/Modal';
 import { ModalContent } from '../../components/ui/ModalContent';
@@ -25,10 +24,10 @@ export default function AboutPreview() {
   const top2Education = educationData.slice(0, 2);
   const top2Certificates = certificates.slice(0, 2);
 
-  const sections: Array<{ id: SectionType; label: string; path: string }> = [
-    { id: 'experience', label: 'Experience', path: '/about/experience' },
-    { id: 'education', label: 'Education', path: '/about/education' },
-    { id: 'certifications', label: 'Certifications', path: '/about/certifications' },
+  const sections = [
+    { id: 'experience' as SectionType, label: 'Experience', path: '/about/experience' },
+    { id: 'education' as SectionType, label: 'Education', path: '/about/education' },
+    { id: 'certifications' as SectionType, label: 'Certifications', path: '/about/certifications' },
   ];
 
   return (

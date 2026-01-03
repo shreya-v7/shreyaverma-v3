@@ -11,8 +11,6 @@ export default function BlogPosts() {
       <section>
         <h1 className="mb-8 text-2xl font-medium tracking-tight">Blogs</h1>
         <BlogList />
-        <div>
-        </div>
       </section>
     </>
   );

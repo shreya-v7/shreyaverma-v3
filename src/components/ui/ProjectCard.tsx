@@ -1,4 +1,3 @@
-import React from 'react';
 import { Project } from '../../types';
 import { formatDate } from '../../utils';
 import { FiExternalLink } from 'react-icons/fi';
@@ -8,9 +7,8 @@ interface ProjectCardProps {
   onClick?: () => void;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) => {
-  return (
-    <div
+export const ProjectCard = ({ project, onClick }: ProjectCardProps) => (
+  <div
       className="group relative aspect-square bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300 cursor-pointer"
       onClick={onClick}
     >
@@ -56,5 +54,4 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, onClick }) =>
         </div>
       </div>
     </div>
-  );
-};
+);

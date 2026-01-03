@@ -1,4 +1,3 @@
-import React from 'react';
 import { Company } from '../../types';
 import { getCompanyDuration } from '../../utils';
 
@@ -8,11 +7,7 @@ interface CompanyCardProps {
   showAwards?: boolean;
 }
 
-export const CompanyCard: React.FC<CompanyCardProps> = ({ 
-  company, 
-  onClick, 
-  showAwards = false 
-}) => {
+export const CompanyCard = ({ company, onClick, showAwards = false }: CompanyCardProps) => {
   const latestRole = company.roles[0];
   const overallDuration = getCompanyDuration(company.roles);
 

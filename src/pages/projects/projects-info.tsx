@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import { useState, useMemo } from 'react';
 import { projects } from '../../data/projects';
 import { Project } from '../../types';
 import { ProjectCard } from '../../components/ui/ProjectCard';
@@ -10,32 +10,15 @@ export default function ProjectsInfo() {
 
   const categories = ['All', 'Web', 'App', 'Talk', 'Research'];
 
-  const filteredProjects = useMemo(() => {
-    if (activeCategory === 'All') {
-      return projects;
-    }
-    return projects.filter((project) => project.tags.includes(activeCategory));
+  const sortedProjects = useMemo(() => {
+    const filtered = activeCategory === 'All' 
+      ? projects 
+      : projects.filter(p => p.tags.includes(activeCategory));
+    return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
   }, [activeCategory]);
-
-  const sortedProjects = useMemo(
-    () =>
-      [...filteredProjects].sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      ),
-    [filteredProjects]
-  );
-
-  const handleProjectClick = (project: Project) => {
-    setSelectedProject(project);
-  };
-
-  const handleCloseModal = () => {
-    setSelectedProject(null);
-  };
 
   return (
     <section className="text-neutral-900 dark:text-neutral-100">
-      {/* Filter Buttons */}
       <div className="mb-6 flex justify-center items-center gap-2 flex-wrap">
         {categories.map((category) => (
           <button
@@ -51,40 +34,22 @@ export default function ProjectsInfo() {
           </button>
         ))}
       </div>
-
-      {/* Project Count */}
       <div className="mb-6 text-center">
         <p className="text-sm text-neutral-600 dark:text-neutral-400">
           Showing <span className="font-semibold text-neutral-900 dark:text-neutral-100">{sortedProjects.length}</span> project{sortedProjects.length !== 1 ? 's' : ''}
         </p>
       </div>
-
-      {/* Project Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {sortedProjects.map((project, index) => (
-          <ProjectCard
-            key={`${project.title}-${index}`}
-            project={project}
-            onClick={() => handleProjectClick(project)}
-          />
+          <ProjectCard key={`${project.title}-${index}`} project={project} onClick={() => setSelectedProject(project)} />
         ))}
       </div>
-
-      {/* Empty State */}
       {sortedProjects.length === 0 && (
         <div className="text-center py-12">
-          <p className="text-lg text-neutral-600 dark:text-neutral-400">
-            No projects found in this category.
-          </p>
+          <p className="text-lg text-neutral-600 dark:text-neutral-400">No projects found in this category.</p>
         </div>
       )}
-
-      {/* Project Modal */}
-      <ProjectModal
-        project={selectedProject}
-        isOpen={selectedProject !== null}
-        onClose={handleCloseModal}
-      />
+      <ProjectModal project={selectedProject} isOpen={selectedProject !== null} onClose={() => setSelectedProject(null)} />
     </section>
   );
 }

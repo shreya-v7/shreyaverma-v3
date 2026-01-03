@@ -1,4 +1,3 @@
-import React from 'react';
 import { Company } from '../../types';
 import { CompanyCard } from './CompanyCard';
 import { Modal } from './Modal';
@@ -13,13 +12,13 @@ interface SectionProps {
   techStackLabel?: string;
 }
 
-export const Section: React.FC<SectionProps> = ({
+export const Section = ({
   data,
   sectionId,
   gridCols = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
   showAwards = false,
   techStackLabel = 'Tech Stack:',
-}) => {
+}: SectionProps) => {
   const {
     selectedCompany,
     handleCardClick,

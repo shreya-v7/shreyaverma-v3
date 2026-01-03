@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useState, useEffect } from "react";
 import { useTheme, ThemeProvider as NextThemesProvider } from "next-themes";
 import type { ThemeProviderProps } from "next-themes/dist/types";
 import { FaCircleHalfStroke } from "react-icons/fa6";
@@ -6,23 +6,13 @@ import { FaCircleHalfStroke } from "react-icons/fa6";
 const storageKey = 'theme-preference';
 
 export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
-  return (
-    <NextThemesProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
-      {...props}
-    >
-      {children}
-    </NextThemesProvider>
-  );
+  return <NextThemesProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange {...props}>{children}</NextThemesProvider>;
 }
 
-export const ThemeSwitch: React.FC = () => {
+export const ThemeSwitch = () => {
   const { setTheme } = useTheme();
-  const [mounted, setMounted] = React.useState(false);
-  const [currentTheme, setCurrentTheme] = React.useState<'light' | 'dark'>('light');
+  const [mounted, setMounted] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<'light' | 'dark'>('light');
 
   const toggleTheme = () => {
     const newTheme = currentTheme === 'light' ? 'dark' : 'light';
@@ -48,45 +38,25 @@ export const ThemeSwitch: React.FC = () => {
     setTheme(theme);
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setMounted(true);
     const initTheme = getColorPreference();
     reflectPreference(initTheme);
-
     const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
     const handleChange = () => {
       const newTheme = mediaQuery.matches ? 'dark' : 'light';
       localStorage.setItem(storageKey, newTheme);
       reflectPreference(newTheme);
     };
-
     mediaQuery.addEventListener('change', handleChange);
-
     return () => mediaQuery.removeEventListener('change', handleChange);
   }, [setTheme]);
 
-  // Don't render the button until the theme is fully loaded
-  if (!mounted) {
-    return (
-      <FaCircleHalfStroke
-        className="h-[14px] w-[14px] text-[#1c1c1c]"
-        aria-hidden="true"
-      />
-    );
-  }
+  if (!mounted) return <FaCircleHalfStroke className="h-[14px] w-[14px] text-[#1c1c1c]" aria-hidden="true" />;
 
   return (
-    <button
-      id="theme-toggle"
-      aria-label={`${currentTheme} mode`}
-      onClick={toggleTheme}
-      className="flex items-center justify-center transition-opacity duration-300 hover:opacity-90"
-    >
-      <FaCircleHalfStroke
-        className={`h-[14px] w-[14px] ${
-          currentTheme === "dark" ? "text-[#D4D4D4]" : "text-[#1c1c1c]"
-        }`}
-      />
+    <button id="theme-toggle" aria-label={`${currentTheme} mode`} onClick={toggleTheme} className="flex items-center justify-center transition-opacity duration-300 hover:opacity-90">
+      <FaCircleHalfStroke className={`h-[14px] w-[14px] ${currentTheme === "dark" ? "text-[#D4D4D4]" : "text-[#1c1c1c]"}`} />
     </button>
   );
 };

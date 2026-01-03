@@ -1,4 +1,3 @@
-import React from "react";
 import { Helmet } from "react-helmet-async";
 import ProjectsInfo from "./projects-info";
 
@@ -11,9 +10,7 @@ export default function Projects() {
       </Helmet>
       <section>
         <h1 className="mb-8 text-2xl font-medium tracking-tight">Projects</h1>
-        <div className="space-y-6">
-          <ProjectsInfo />
-        </div>
+        <ProjectsInfo />
       </section>
     </>
   );
