@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { FiX, FiZap } from 'react-icons/fi';
 import { Corner } from '../../../types';
 import { sherriiMessages } from '../../../data/sherrii-messages';
@@ -111,6 +111,27 @@ const SherriiBubble = ({ message, isTyping, onClose }: { message: string; isTypi
 export const Sherrii = () => {
   const [showAnnoyingToast, setShowAnnoyingToast] = useState(false);
   const { isOpen: isAnnoyingOpen, currentMessage, isTyping, currentCorner, isDismissed, setIsOpen: setAnnoyingOpen, setIsDismissed, restartMessages } = useAnnoyingMessages();
+  const [iconPosition, setIconPosition] = useState(80); // Default top position in pixels
+  const [isDragging, setIsDragging] = useState(false);
+  const [hasDragged, setHasDragged] = useState(false);
+  const [currentDragY, setCurrentDragY] = useState(0);
+  const dragStartRef = useRef({ y: 0, top: 0 });
+  const currentDragYRef = useRef(0);
+
+  // Load saved position from localStorage on mount
+  useEffect(() => {
+    const savedPosition = localStorage.getItem('sherrii-icon-position');
+    if (savedPosition) {
+      setIconPosition(parseInt(savedPosition, 10));
+    }
+  }, []);
+
+  // Save position to localStorage whenever it changes (but not while dragging)
+  useEffect(() => {
+    if (!isDragging && iconPosition !== 80) {
+      localStorage.setItem('sherrii-icon-position', iconPosition.toString());
+    }
+  }, [iconPosition, isDragging]);
 
   const handleCloseAnnoying = () => {
     setAnnoyingOpen(false);
@@ -118,10 +139,117 @@ export const Sherrii = () => {
     setShowAnnoyingToast(true);
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+    setHasDragged(false);
+    dragStartRef.current = {
+      y: e.clientY,
+      top: iconPosition,
+    };
+  };
+
+  useEffect(() => {
+    if (!isDragging) return;
+
+    let animationFrameId: number;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      e.preventDefault();
+      
+      const deltaY = e.clientY - dragStartRef.current.y;
+      
+      // Track if user has actually dragged (more than 5px threshold)
+      if (Math.abs(deltaY) > 5) {
+        setHasDragged(true);
+      }
+
+      // Use requestAnimationFrame for smooth updates
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+
+      animationFrameId = requestAnimationFrame(() => {
+        const newTop = dragStartRef.current.top + deltaY;
+        
+        // Constrain to viewport bounds (with padding)
+        const minTop = 20;
+        const maxTop = window.innerHeight - 60; // Button height + padding
+        
+        const constrainedTop = Math.max(minTop, Math.min(maxTop, newTop));
+        const constrainedDelta = constrainedTop - dragStartRef.current.top;
+        
+        currentDragYRef.current = constrainedDelta;
+        setCurrentDragY(constrainedDelta);
+      });
+    };
+
+    const handleMouseUp = () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      
+      // Update final position
+      const finalTop = dragStartRef.current.top + currentDragYRef.current;
+      const minTop = 20;
+      const maxTop = window.innerHeight - 60;
+      const constrainedTop = Math.max(minTop, Math.min(maxTop, finalTop));
+      setIconPosition(constrainedTop);
+      
+      setIsDragging(false);
+      setCurrentDragY(0);
+      
+      // Reset hasDragged after a short delay to allow click if no drag occurred
+      setTimeout(() => {
+        setHasDragged(false);
+      }, 100);
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: false });
+    window.addEventListener('mouseup', handleMouseUp);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [isDragging]);
+
+  const handleClick = (e: React.MouseEvent) => {
+    // Prevent click if user was dragging
+    if (hasDragged) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    restartMessages();
+  };
+
   return (
     <>
       {isDismissed && !isAnnoyingOpen && (
-        <button onClick={restartMessages} className="fixed top-20 left-6 z-50 bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 text-white rounded-full p-3 shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 hover:rotate-12 animate-pulse" aria-label="Restart annoying messages" title="Wanna yap again? Click me!">
+        <button
+          onClick={handleClick}
+          onMouseDown={handleMouseDown}
+          className={`fixed left-6 z-50 bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 text-white rounded-full p-3 shadow-2xl hover:shadow-3xl hover:scale-110 hover:rotate-12 ${
+            isDragging 
+              ? 'cursor-grabbing scale-105 select-none' 
+              : 'cursor-grab animate-pulse'
+          }`}
+          style={{ 
+            top: `${iconPosition}px`,
+            transform: isDragging ? `translateY(${currentDragY}px)` : undefined,
+            transition: isDragging ? 'none' : 'top 0.2s ease-out',
+            userSelect: 'none',
+            WebkitUserSelect: 'none',
+            pointerEvents: 'auto',
+          }}
+          aria-label="Restart annoying messages"
+          title="Drag me around! Click to restart messages"
+        >
           <FiZap className="w-5 h-5" />
         </button>
       )}
