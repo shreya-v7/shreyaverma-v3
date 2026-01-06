@@ -117,6 +117,7 @@ export const Sherrii = () => {
   const [currentDragY, setCurrentDragY] = useState(0);
   const dragStartRef = useRef({ y: 0, top: 0 });
   const currentDragYRef = useRef(0);
+  const shouldPreventScrollRef = useRef(false);
 
   // Load saved position from localStorage on mount
   useEffect(() => {
@@ -139,30 +140,53 @@ export const Sherrii = () => {
     setShowAnnoyingToast(true);
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
+  const getClientY = (e: MouseEvent | TouchEvent): number => {
+    if ('touches' in e && e.touches.length > 0) {
+      return e.touches[0].clientY;
+    }
+    if ('clientY' in e) {
+      return e.clientY;
+    }
+    return 0;
+  };
+
+  const handleStart = (clientY: number) => {
     setIsDragging(true);
     setHasDragged(false);
     dragStartRef.current = {
-      y: e.clientY,
+      y: clientY,
       top: iconPosition,
     };
   };
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    handleStart(e.clientY);
+  };
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    // Don't prevent default here - allow normal scrolling unless user drags
+    if (e.touches.length === 1) {
+      handleStart(e.touches[0].clientY);
+    }
+  };
+
   useEffect(() => {
-    if (!isDragging) return;
+    if (!isDragging) {
+      shouldPreventScrollRef.current = false;
+      return;
+    }
 
     let animationFrameId: number;
 
-    const handleMouseMove = (e: MouseEvent) => {
-      e.preventDefault();
-      
-      const deltaY = e.clientY - dragStartRef.current.y;
+    const handleMove = (clientY: number) => {
+      const deltaY = clientY - dragStartRef.current.y;
       
       // Track if user has actually dragged (more than 5px threshold)
       if (Math.abs(deltaY) > 5) {
         setHasDragged(true);
+        shouldPreventScrollRef.current = true;
       }
 
       // Use requestAnimationFrame for smooth updates
@@ -185,20 +209,38 @@ export const Sherrii = () => {
       });
     };
 
-    const handleMouseUp = () => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (shouldPreventScrollRef.current) {
+        e.preventDefault();
+      }
+      handleMove(e.clientY);
+    };
+
+    const handleTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        if (shouldPreventScrollRef.current) {
+          e.preventDefault();
+        }
+        handleMove(e.touches[0].clientY);
+      }
+    };
+
+    const handleEnd = () => {
       if (animationFrameId) {
         cancelAnimationFrame(animationFrameId);
       }
       
-      // Update final position
+      // Calculate final position
       const finalTop = dragStartRef.current.top + currentDragYRef.current;
       const minTop = 20;
       const maxTop = window.innerHeight - 60;
       const constrainedTop = Math.max(minTop, Math.min(maxTop, finalTop));
-      setIconPosition(constrainedTop);
       
-      setIsDragging(false);
+      // Update position and reset drag state synchronously - no animation
+      setIconPosition(constrainedTop);
       setCurrentDragY(0);
+      setIsDragging(false);
+      shouldPreventScrollRef.current = false;
       
       // Reset hasDragged after a short delay to allow click if no drag occurred
       setTimeout(() => {
@@ -206,8 +248,14 @@ export const Sherrii = () => {
       }, 100);
     };
 
+    const handleMouseUp = () => handleEnd();
+    const handleTouchEnd = () => handleEnd();
+
     window.addEventListener('mousemove', handleMouseMove, { passive: false });
     window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('touchmove', handleTouchMove, { passive: false });
+    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('touchcancel', handleTouchEnd);
 
     return () => {
       if (animationFrameId) {
@@ -215,10 +263,24 @@ export const Sherrii = () => {
       }
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('touchmove', handleTouchMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', handleTouchEnd);
+      shouldPreventScrollRef.current = false;
     };
   }, [isDragging]);
 
   const handleClick = (e: React.MouseEvent) => {
+    // Prevent click if user was dragging
+    if (hasDragged) {
+      e.preventDefault();
+      e.stopPropagation();
+      return;
+    }
+    restartMessages();
+  };
+
+  const handleTouchEndClick = (e: React.TouchEvent) => {
     // Prevent click if user was dragging
     if (hasDragged) {
       e.preventDefault();
@@ -234,18 +296,23 @@ export const Sherrii = () => {
         <button
           onClick={handleClick}
           onMouseDown={handleMouseDown}
-          className={`fixed left-6 z-50 bg-gradient-to-br from-yellow-400 via-pink-500 to-purple-600 text-white rounded-full p-3 shadow-2xl hover:shadow-3xl hover:scale-110 hover:rotate-12 ${
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEndClick}
+          className={`fixed left-3 sm:left-6 z-50 bg-gradient-to-br from-yellow-400 via-pink-500 to-blue-600 text-white rounded-full p-2.5 sm:p-3 shadow-2xl hover:shadow-3xl hover:scale-110 hover:rotate-12 touch-none ${
             isDragging 
               ? 'cursor-grabbing scale-105 select-none' 
               : 'cursor-grab animate-pulse'
           }`}
           style={{ 
             top: `${iconPosition}px`,
-            transform: isDragging ? `translateY(${currentDragY}px)` : undefined,
-            transition: isDragging ? 'none' : 'top 0.2s ease-out',
+            transform: isDragging ? `translateY(${currentDragY}px)` : 'translateY(0)',
+            transition: 'none',
             userSelect: 'none',
             WebkitUserSelect: 'none',
+            WebkitTouchCallout: 'none',
+            touchAction: isDragging ? 'none' : 'manipulation',
             pointerEvents: 'auto',
+            willChange: isDragging ? 'transform' : 'auto',
           }}
           aria-label="Restart annoying messages"
           title="Drag me around! Click to restart messages"
