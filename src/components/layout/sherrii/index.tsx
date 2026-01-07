@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { FiX, FiZap } from 'react-icons/fi';
+import { FiX } from 'react-icons/fi';
 import { Corner } from '../../../types';
 import { sherriiMessages } from '../../../data/sherrii-messages';
 import { Toast } from '../../ui/Toast';
@@ -105,6 +105,105 @@ const SherriiBubble = ({ message, isTyping, onClose }: { message: string; isTypi
     >
       <FiX className="w-4 h-4" />
     </button>
+  </div>
+);
+
+// Cute Butterfly Component with Nudge Animation
+const CuteButterfly = ({ isDragging }: { isDragging: boolean }) => (
+  <div className={`relative w-16 h-16 sm:w-20 sm:h-20 ${isDragging ? '' : 'animate-nudge'}`}>
+    <svg
+      viewBox="0 0 100 100"
+      className="w-full h-full"
+      style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15))' }}
+    >
+      {/* Upper Left Wing */}
+      <ellipse cx="30" cy="35" rx="20" ry="25" fill="#ff6b9d" opacity="0.9" />
+      <ellipse cx="30" cy="35" rx="15" ry="20" fill="#ff8fab" />
+      <ellipse cx="25" cy="30" rx="8" ry="10" fill="#ffb3d9" />
+      
+      {/* Upper Right Wing */}
+      <ellipse cx="70" cy="35" rx="20" ry="25" fill="#ff6b9d" opacity="0.9" />
+      <ellipse cx="70" cy="35" rx="15" ry="20" fill="#ff8fab" />
+      <ellipse cx="75" cy="30" rx="8" ry="10" fill="#ffb3d9" />
+      
+      {/* Lower Left Wing */}
+      <ellipse cx="30" cy="65" rx="20" ry="25" fill="#c77dff" opacity="0.9" />
+      <ellipse cx="30" cy="65" rx="15" ry="20" fill="#d89eff" />
+      <ellipse cx="25" cy="70" rx="8" ry="10" fill="#e6b3ff" />
+      
+      {/* Lower Right Wing */}
+      <ellipse cx="70" cy="65" rx="20" ry="25" fill="#c77dff" opacity="0.9" />
+      <ellipse cx="70" cy="65" rx="15" ry="20" fill="#d89eff" />
+      <ellipse cx="75" cy="70" rx="8" ry="10" fill="#e6b3ff" />
+      
+      {/* Body */}
+      <ellipse cx="50" cy="50" rx="4" ry="35" fill="#4a5568" />
+      <ellipse cx="50" cy="45" rx="3" ry="8" fill="#2d3748" />
+      
+      {/* Antennae */}
+      <line x1="50" y1="15" x2="45" y2="10" stroke="#2d3748" strokeWidth="2" strokeLinecap="round" />
+      <line x1="50" y1="15" x2="55" y2="10" stroke="#2d3748" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="45" cy="10" r="2" fill="#ff6b9d" />
+      <circle cx="55" cy="10" r="2" fill="#ff6b9d" />
+      
+      {/* Wing Patterns - Left Upper */}
+      <circle cx="25" cy="30" r="3" fill="#ffffff" opacity="0.7" />
+      <circle cx="32" cy="38" r="2" fill="#ffffff" opacity="0.5" />
+      
+      {/* Wing Patterns - Right Upper */}
+      <circle cx="75" cy="30" r="3" fill="#ffffff" opacity="0.7" />
+      <circle cx="68" cy="38" r="2" fill="#ffffff" opacity="0.5" />
+      
+      {/* Wing Patterns - Left Lower */}
+      <circle cx="25" cy="70" r="3" fill="#ffffff" opacity="0.7" />
+      <circle cx="32" cy="62" r="2" fill="#ffffff" opacity="0.5" />
+      
+      {/* Wing Patterns - Right Lower */}
+      <circle cx="75" cy="70" r="3" fill="#ffffff" opacity="0.7" />
+      <circle cx="68" cy="62" r="2" fill="#ffffff" opacity="0.5" />
+    </svg>
+    
+    {/* Nudge Animation Styles */}
+    <style>{`
+      @keyframes nudge {
+        0%, 100% {
+          transform: translateX(0) rotate(0deg);
+        }
+        10% {
+          transform: translateX(8px) rotate(-5deg);
+        }
+        20% {
+          transform: translateX(0) rotate(0deg);
+        }
+        30% {
+          transform: translateX(6px) rotate(3deg);
+        }
+        40% {
+          transform: translateX(0) rotate(0deg);
+        }
+        50% {
+          transform: translateX(4px) rotate(-2deg);
+        }
+        60% {
+          transform: translateX(0) rotate(0deg);
+        }
+        70% {
+          transform: translateX(3px) rotate(2deg);
+        }
+        80% {
+          transform: translateX(0) rotate(0deg);
+        }
+        90% {
+          transform: translateX(2px) rotate(-1deg);
+        }
+        100% {
+          transform: translateX(0) rotate(0deg);
+        }
+      }
+      .animate-nudge {
+        animation: nudge 2s ease-in-out infinite;
+      }
+    `}</style>
   </div>
 );
 
@@ -298,10 +397,10 @@ export const Sherrii = () => {
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEndClick}
-          className={`fixed left-3 sm:left-6 z-50 bg-gradient-to-br from-yellow-400 via-pink-500 to-blue-600 text-white rounded-full p-2.5 sm:p-3 shadow-2xl hover:shadow-3xl hover:scale-110 hover:rotate-12 touch-none ${
+          className={`fixed left-0 z-50 touch-none ${
             isDragging 
-              ? 'cursor-grabbing scale-105 select-none' 
-              : 'cursor-grab animate-pulse'
+              ? 'cursor-grabbing select-none' 
+              : 'cursor-grab'
           }`}
           style={{ 
             top: `${iconPosition}px`,
@@ -313,11 +412,17 @@ export const Sherrii = () => {
             touchAction: isDragging ? 'none' : 'manipulation',
             pointerEvents: 'auto',
             willChange: isDragging ? 'transform' : 'auto',
+            padding: '8px',
+            background: 'transparent',
+            border: 'none',
+            outline: 'none',
           }}
           aria-label="Restart annoying messages"
           title="Drag me around! Click to restart messages"
         >
-          <FiZap className="w-5 h-5" />
+          <div className={`relative ${isDragging ? 'scale-105' : 'hover:scale-110'} transition-transform duration-200`}>
+            <CuteButterfly isDragging={isDragging} />
+          </div>
         </button>
       )}
       {showAnnoyingToast && <Toast message="fine! I won't annoy!" duration={2000} onClose={() => setShowAnnoyingToast(false)} />}
