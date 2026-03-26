@@ -51,6 +51,10 @@ export interface Achievement {
   title: string;
   category: AchievementCategory;
   /**
+   * Optional heading to cluster related rows in the full list (e.g. "Morgan Stanley").
+   */
+  group?: string;
+  /**
    * ISO-ish date (YYYY-MM or YYYY-MM-DD) when received/published.
    * Use when known so we can sort accurately.
    */
