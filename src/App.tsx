@@ -54,6 +54,7 @@ function App() {
             <Route path="/about/experience" element={<About section="experience" />} />
             <Route path="/about/education" element={<About section="education" />} />
             <Route path="/about/certifications" element={<About section="certifications" />} />
+            <Route path="/about/achievements" element={<About section="achievements" />} />
             <Route path="/diary" element={<Diary />} />
             <Route path="/diary/music" element={<Diary section="music" />} />
             <Route path="/diary/books" element={<Diary section="books" />} />

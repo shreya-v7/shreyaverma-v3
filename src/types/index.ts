@@ -39,8 +39,32 @@ export interface Project {
   tags: string[];
 }
 
+export type AchievementCategory =
+  | 'Award'
+  | 'Publication'
+  | 'Scholarship'
+  | 'Certification'
+  | 'Hackathon'
+  | 'Leadership';
+
+export interface Achievement {
+  title: string;
+  category: AchievementCategory;
+  /**
+   * ISO-ish date (YYYY-MM or YYYY-MM-DD) when received/published.
+   * Use when known so we can sort accurately.
+   */
+  date?: string;
+  /** Fallback when only year is known. */
+  year?: number;
+  context: string;
+  highlight: string;
+  details?: string[];
+  link?: string;
+}
+
 export type SortOrder = 'latest' | 'oldest';
-export type SectionType = 'experience' | 'education' | 'certifications';
+export type SectionType = 'experience' | 'education' | 'certifications' | 'achievements';
 export type DiarySectionType = 'music' | 'books' | 'cinema' | 'blogs';
 
 // Personal content types

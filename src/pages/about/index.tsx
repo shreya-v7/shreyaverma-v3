@@ -7,6 +7,7 @@ const sectionTitles: Record<SectionType, string> = {
   experience: 'Experience',
   education: 'Education',
   certifications: 'Certifications',
+  achievements: 'Achievements',
 };
 
 interface AboutProps {
@@ -19,7 +20,7 @@ export default function About({ section }: AboutProps) {
     <>
       <Helmet>
         <title>{title} | Shreya Verma</title>
-        <meta name="description" content={section ? `About - ${sectionTitles[section]}` : 'About - Experience, Education, and Certifications'} />
+        <meta name="description" content={section ? `About - ${sectionTitles[section]}` : 'About - Experience, Education, Certifications, and Achievements'} />
       </Helmet>
       <div>
         <h1 className="mb-8 text-2xl font-medium tracking-tight">About</h1>

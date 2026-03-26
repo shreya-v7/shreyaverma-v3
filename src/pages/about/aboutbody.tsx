@@ -3,6 +3,7 @@ import { SectionRouter } from '../../components/ui/SectionRouter';
 import Experience from './experience';
 import Education from './education';
 import CertList from './certlist';
+import Achievements from './achievements';
 
 interface AboutBodyProps {
   defaultSection?: SectionType;
@@ -13,11 +14,13 @@ export default function AboutBody({ defaultSection = 'experience' }: AboutBodyPr
     { id: 'experience', label: 'Experience', path: '/about/experience' },
     { id: 'education', label: 'Education', path: '/about/education' },
     { id: 'certifications', label: 'Certifications', path: '/about/certifications' },
+    { id: 'achievements', label: 'Achievements', path: '/about/achievements' },
   ];
 
   const getActiveSection = (pathname: string): SectionType => {
     if (pathname.includes('/education')) return 'education';
     if (pathname.includes('/certifications')) return 'certifications';
+    if (pathname.includes('/achievements')) return 'achievements';
     return 'experience';
   };
 
@@ -26,6 +29,7 @@ export default function AboutBody({ defaultSection = 'experience' }: AboutBodyPr
       case 'experience': return <Experience />;
       case 'education': return <Education />;
       case 'certifications': return <CertList />;
+      case 'achievements': return <Achievements />;
       default: return <Experience />;
     }
   };

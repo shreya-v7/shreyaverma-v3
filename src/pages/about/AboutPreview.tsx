@@ -8,6 +8,7 @@ import { useCompanyModal } from '../../hooks/useCompanyModal';
 import { experienceData } from '../../data/experience';
 import { educationData } from '../../data/education';
 import { certificates } from '../../data/certificates';
+import { achievementsData } from '../../data/achievements';
 import { SectionType } from '../../types';
 
 export default function AboutPreview() {
@@ -23,11 +24,13 @@ export default function AboutPreview() {
   const top2Experience = experienceData.slice(0, 2);
   const top2Education = educationData.slice(0, 2);
   const top2Certificates = certificates.slice(0, 2);
+  const top2Achievements = achievementsData.slice(0, 2);
 
   const sections = [
     { id: 'experience' as SectionType, label: 'Experience', path: '/about/experience' },
     { id: 'education' as SectionType, label: 'Education', path: '/about/education' },
     { id: 'certifications' as SectionType, label: 'Certifications', path: '/about/certifications' },
+    { id: 'achievements' as SectionType, label: 'Achievements', path: '/about/achievements' },
   ];
 
   return (
@@ -58,6 +61,27 @@ export default function AboutPreview() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {top2Certificates.map((cert, index) => (
             <CertificateCard key={index} certificate={cert} />
+          ))}
+        </div>
+      </section>
+
+      <section>
+        <SectionHeader title="Achievements" viewAllPath="/about/achievements" />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {top2Achievements.map((item) => (
+            <article
+              key={`${item.title}-${item.date ?? item.year ?? ''}`}
+              className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900"
+            >
+              <p className="text-xs font-mono uppercase tracking-[0.16em] text-neutral-500 dark:text-neutral-400">
+                {item.category}
+              </p>
+              <h3 className="mt-2 text-base font-semibold text-neutral-900 dark:text-neutral-100">{item.title}</h3>
+              <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">{item.context}</p>
+              <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300 line-clamp-3">
+                {item.highlight}
+              </p>
+            </article>
           ))}
         </div>
       </section>
