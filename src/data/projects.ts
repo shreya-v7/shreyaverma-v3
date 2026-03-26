@@ -100,5 +100,15 @@ export const projects: Project[] = [
     link: "https://link.springer.com/chapter/10.1007/978-981-99-3734-9_10",
     tags: ["Research"],
   },
+  {
+    title: "Quantastica - Fin.AI",
+    description:
+      "Agentic AI-powered personal finance and investing platform, spanning analytical web dashboards and a conversational app experience.",
+    date: "2026-02-15",
+    category: "App & Web",
+    image: "work/quantastica.png",
+    link: "https://github.com/shreya-v7/Quantastica-Agentic-AI",
+    tags: ["App", "Web", "AI", "Finance"],
+  },
 ];
 

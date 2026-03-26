@@ -5,6 +5,7 @@ import Footer from './components/layout/footer';
 import { ThemeProvider } from './components/layout/theme-switch';
 import { Sherrii } from './components/layout/sherrii';
 import { Preloader } from './components/ui/Preloader';
+import ScrollProgress from './components/ui/ScrollProgress';
 import { useImagePreloader } from './hooks/useImagePreloader';
 import { metaData } from './config/config';
 import Home from './pages/Home';
@@ -36,8 +37,15 @@ function App() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={metaData.name} />
       </Helmet>
+      <ScrollProgress />
+      <div className="site-ambient-bg" aria-hidden="true">
+        <div className="ambient-layer ambient-base" />
+        <div className="ambient-layer ambient-orb ambient-orb-a" />
+        <div className="ambient-layer ambient-orb ambient-orb-b" />
+        <div className="ambient-layer ambient-sheen" />
+      </div>
       <Preloader loading={loading} progress={progress} />
-      <div className={`antialiased flex flex-col items-center justify-center mx-auto mt-2 lg:mt-8 mb-20 lg:mb-40 transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`relative z-10 antialiased flex flex-col items-center justify-center mx-auto mt-2 lg:mt-8 mb-20 lg:mb-40 transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
         <main className="flex-auto min-w-0 mt-2 md:mt-6 flex flex-col px-6 sm:px-4 md:px-0 max-w-[640px] w-full">
           <Navbar />
           <Routes>

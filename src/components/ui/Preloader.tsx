@@ -1,237 +1,214 @@
-import { useEffect, useState } from 'react';
-import { useTheme } from '../../hooks/useTheme';
+import { useEffect, useMemo, useState } from 'react';
+import { metaData } from '../../config/config';
+
+const SARCASTIC_AI_PHRASES: string[] = [
+  'Optimizing... by thinking really hard (source: vibes).',
+  'Loading your assets. The algorithm is impressed.',
+  'Running inference on time itself. Results soon.',
+  'One more second. (The model said that confidently.)',
+  'Caching like it is going out of style.',
+  'Batched loading because patience is a vector.',
+  'Preparing the experience. Debugging internally (silently).',
+  'Latency negotiation in progress.',
+  "Your wait time is being smoothed. Emotionally.",
+  "Model warming up. Please ignore the existential dread.",
+  'The server is pretending to be effortless.',
+  'Compiling thoughts into pixels. Slowly.',
+  'Fetching content. No promises, just probability.',
+  'Loading assets with the confidence of a demo.',
+  'Your page is computing its feelings.',
+  'Background work: 100% effort, 0% glamour.',
+  "Teaching your browser to believe.",
+  'Training on performance (with zero training data).',
+  'Synthesizing UI. May contain educated guesses.',
+  'Making it fast. Eventually. Spiritually.',
+  'Progress is moving in a parallel universe.',
+  'Letting the GPU stretch first. Be kind.',
+  "Pretending the model is omniscient. (It is not.)",
+  'Bringing your site online one pixel at a time.',
+  "Running magic. Do not ask for the receipts."
+];
 
 interface PreloaderProps {
   loading: boolean;
   progress: number;
 }
 
+const RING_R = 17;
+const RING_C = 2 * Math.PI * RING_R;
+
 export const Preloader = ({ loading, progress }: PreloaderProps) => {
   const [isVisible, setIsVisible] = useState(true);
-  const isDark = useTheme();
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const phraseCount = SARCASTIC_AI_PHRASES.length;
+
+  const dashOffset = useMemo(() => {
+    const p = Math.min(100, Math.max(0, progress));
+    return RING_C - (p / 100) * RING_C;
+  }, [progress]);
 
   useEffect(() => {
     if (!loading) {
-      // Fade out animation
-      setTimeout(() => {
-        setIsVisible(false);
-      }, 500);
+      const t = window.setTimeout(() => setIsVisible(false), 450);
+      return () => window.clearTimeout(t);
     }
+  }, [loading]);
+
+  useEffect(() => {
+    if (!loading) return;
+
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setPhraseIndex(0);
+      return;
+    }
+
+    const pickRandomDifferent = (current: number) => {
+      if (phraseCount <= 1) return 0;
+      let next = Math.floor(Math.random() * phraseCount);
+      if (next === current) {
+        next = (next + 1) % phraseCount;
+      }
+      return next;
+    };
+
+    setPhraseIndex((current) => pickRandomDifferent(current));
+    const interval = window.setInterval(() => {
+      setPhraseIndex((current) => pickRandomDifferent(current));
+    }, 2200);
+
+    return () => window.clearInterval(interval);
   }, [loading]);
 
   if (!isVisible) return null;
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex items-center justify-center transition-opacity duration-500 ${
+      role="status"
+      aria-live="polite"
+      aria-busy={loading}
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={progress}
+      className={`fixed inset-0 z-[9999] flex items-center justify-center font-sans antialiased transition-opacity duration-500 ease-out ${
         loading ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      } ${
-        isDark 
-          ? 'bg-gradient-to-br from-neutral-900 via-purple-900/20 to-neutral-900' 
-          : 'bg-gradient-to-br from-neutral-50 via-purple-50/30 to-neutral-50'
       }`}
     >
-      <div className="flex flex-col items-center justify-center space-y-8">
-        {/* Swiss Roll Spiral Loader */}
-        <div className="relative w-40 h-40">
-          <svg className="w-full h-full" viewBox="0 0 160 160">
-            <defs>
-              <linearGradient id="gradient-outer" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor={isDark ? "#a855f7" : "#c084fc"} />
-                <stop offset="50%" stopColor={isDark ? "#ec4899" : "#f472b6"} />
-                <stop offset="100%" stopColor={isDark ? "#a855f7" : "#c084fc"} />
-              </linearGradient>
-              <linearGradient id="gradient-middle" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor={isDark ? "#ec4899" : "#f472b6"} />
-                <stop offset="50%" stopColor={isDark ? "#a855f7" : "#c084fc"} />
-                <stop offset="100%" stopColor={isDark ? "#ec4899" : "#f472b6"} />
-              </linearGradient>
-              <linearGradient id="gradient-inner" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor={isDark ? "#a855f7" : "#c084fc"} />
-                <stop offset="50%" stopColor={isDark ? "#ec4899" : "#f472b6"} />
-                <stop offset="100%" stopColor={isDark ? "#a855f7" : "#c084fc"} />
-              </linearGradient>
-            </defs>
-            
-            {/* Outer spiral - Swiss roll layer 1 */}
-            <g className="swiss-roll-outer">
-              <path
-                d="M 80 80 L 80 20 A 60 60 0 0 1 140 80 A 60 60 0 0 1 80 140 A 60 60 0 0 1 20 80 A 60 60 0 0 1 80 20"
-                fill="none"
-                stroke="url(#gradient-outer)"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="swiss-roll-path"
-              />
-            </g>
-            
-            {/* Middle spiral - Swiss roll layer 2 */}
-            <g className="swiss-roll-middle">
-              <path
-                d="M 80 80 L 80 35 A 45 45 0 0 1 125 80 A 45 45 0 0 1 80 125 A 45 45 0 0 1 35 80 A 45 45 0 0 1 80 35"
-                fill="none"
-                stroke="url(#gradient-middle)"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="swiss-roll-path"
-              />
-            </g>
-            
-            {/* Inner spiral - Swiss roll layer 3 */}
-            <g className="swiss-roll-inner">
-              <path
-                d="M 80 80 L 80 50 A 30 30 0 0 1 110 80 A 30 30 0 0 1 80 110 A 30 30 0 0 1 50 80 A 30 30 0 0 1 80 50"
-                fill="none"
-                stroke="url(#gradient-inner)"
-                strokeWidth="4"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="swiss-roll-path"
-              />
-            </g>
-          </svg>
-          
-          {/* Center pulsing circle */}
-          <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full ${
-            isDark 
-              ? 'bg-gradient-to-br from-pink-500 to-purple-600' 
-              : 'bg-gradient-to-br from-pink-400 to-purple-500'
-          } animate-pulse flex items-center justify-center shadow-2xl`}>
-            <span className="text-xl font-bold text-white">SV</span>
+      {/* Backdrop */}
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-neutral-100 dark:from-neutral-950 dark:via-[#121212] dark:to-neutral-950"
+        aria-hidden
+      />
+      <div
+        className="preloader-ambient pointer-events-none absolute inset-0 opacity-40 dark:opacity-30"
+        style={{
+          background:
+            'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(115,115,115,0.12), transparent 50%), radial-gradient(ellipse 60% 40% at 100% 100%, rgba(115,115,115,0.08), transparent 45%)',
+        }}
+        aria-hidden
+      />
+
+      <div className="relative z-[1] w-full max-w-[420px] px-6 sm:px-4">
+        <div
+          className="rounded-2xl border border-neutral-200/90 bg-white/75 p-8 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.12)] ring-1 ring-black/[0.04] backdrop-blur-xl dark:border-neutral-700/90 dark:bg-neutral-900/70 dark:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.45)] dark:ring-white/[0.06] sm:p-10"
+        >
+          <div className="text-center">
+            <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-neutral-500 dark:text-neutral-400">
+              Portfolio
+            </p>
+            <h1 className="mt-3 text-[26px] font-semibold leading-none tracking-tight text-neutral-900 dark:text-neutral-50 sm:text-[28px]">
+              {metaData.title}
+            </h1>
+            <p className="mt-4 text-xs font-medium text-neutral-500 dark:text-neutral-400">
+              Preparing your experience
+            </p>
           </div>
-        </div>
 
-        {/* Loading Text */}
-        <div className="text-center">
-          <h2 className={`text-2xl font-bold mb-2 bg-gradient-to-r ${
-            isDark 
-              ? 'from-pink-400 to-purple-400' 
-              : 'from-pink-500 to-purple-600'
-          } bg-clip-text text-transparent`}>
-            Loading...
-          </h2>
-          <p className={`text-sm ${
-            isDark ? 'text-neutral-400' : 'text-neutral-600'
-          }`}>
-            Preparing your experience
+          <p className="mt-6 min-h-[3.25rem] text-center text-[13px] leading-relaxed text-neutral-600 dark:text-neutral-400">
+            {SARCASTIC_AI_PHRASES[phraseIndex]}
           </p>
-        </div>
 
-        {/* Progress Bar */}
-        <div className="w-64 md:w-80 space-y-2">
-          <div className={`h-2 rounded-full overflow-hidden ${
-            isDark ? 'bg-neutral-700' : 'bg-neutral-200'
-          }`}>
-            <div
-              className={`h-full rounded-full transition-all duration-300 ease-out ${
-                isDark
-                  ? 'bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500'
-                  : 'bg-gradient-to-r from-pink-400 via-purple-400 to-pink-400'
-              } shadow-lg`}
-              style={{ width: `${progress}%` }}
+          <div className="relative mx-auto mt-8 flex h-[120px] w-[120px] items-center justify-center">
+            <svg
+              className="h-[120px] w-[120px] -rotate-90 text-neutral-900 dark:text-neutral-100"
+              viewBox="0 0 48 48"
+              aria-hidden
             >
-              <div className="h-full w-full bg-white/30 animate-pulse" />
+              <circle
+                cx="24"
+                cy="24"
+                r={RING_R}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                className="text-neutral-200 dark:text-neutral-700"
+              />
+              <circle
+                cx="24"
+                cy="24"
+                r={RING_R}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.75"
+                strokeLinecap="round"
+                strokeDasharray={RING_C}
+                strokeDashoffset={dashOffset}
+                className="text-neutral-900 transition-[stroke-dashoffset] duration-300 ease-out dark:text-neutral-100"
+              />
+            </svg>
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <span className="text-2xl font-semibold tabular-nums tracking-tight text-neutral-900 dark:text-neutral-50">
+                {progress}
+                <span className="text-base font-medium text-neutral-400 dark:text-neutral-500">%</span>
+              </span>
             </div>
           </div>
-          <p className={`text-xs text-center font-medium ${
-            isDark ? 'text-neutral-400' : 'text-neutral-600'
-          }`}>
-            {progress}%
-          </p>
-        </div>
 
-        {/* Floating particles */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {[...Array(20)].map((_, i) => (
+          <div className="mt-8">
+            <div className="mb-2 flex items-center justify-between text-[11px] font-medium uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-500">
+              <span>Load</span>
+              <span className="tabular-nums normal-case tracking-normal text-neutral-700 dark:text-neutral-300">
+                {progress}%
+              </span>
+            </div>
             <div
-              key={i}
-              className={`absolute rounded-full ${
-                isDark
-                  ? 'bg-purple-500/20'
-                  : 'bg-purple-400/30'
-              } animate-float`}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                width: `${Math.random() * 8 + 4}px`,
-                height: `${Math.random() * 8 + 4}px`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${Math.random() * 3 + 2}s`,
-              }}
-            />
-          ))}
+              className="h-[3px] w-full overflow-hidden rounded-full bg-neutral-200/90 dark:bg-neutral-800/90"
+              aria-hidden
+            >
+              <div
+                className="preloader-bar-shine h-full rounded-full bg-gradient-to-r from-neutral-700 via-neutral-900 to-neutral-800 transition-[width] duration-300 ease-out dark:from-neutral-200 dark:via-neutral-50 dark:to-neutral-300"
+                style={{ width: `${progress}%` }}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
+      <span className="sr-only">
+        {loading ? `Loading, ${progress} percent complete.` : 'Loading complete.'}
+      </span>
+
       <style>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-            opacity: 0.3;
-          }
-          50% {
-            transform: translateY(-20px) translateX(10px);
-            opacity: 0.8;
-          }
+        @keyframes preloader-ambient-pulse {
+          0%, 100% { opacity: 0.38; transform: scale(1); }
+          50% { opacity: 0.52; transform: scale(1.015); }
         }
-        .animate-float {
-          animation: float 4s ease-in-out infinite;
+        .preloader-ambient {
+          animation: preloader-ambient-pulse 8s ease-in-out infinite;
         }
-        
-        @keyframes swiss-roll-rotate {
-          0% {
-            transform: rotate(0deg);
-          }
-          100% {
-            transform: rotate(360deg);
-          }
+        @keyframes preloader-bar-glow {
+          0%, 100% { filter: brightness(1); }
+          50% { filter: brightness(1.06); }
         }
-        
-        @keyframes swiss-roll-reverse {
-          0% {
-            transform: rotate(360deg);
-          }
-          100% {
-            transform: rotate(0deg);
-          }
+        .preloader-bar-shine {
+          animation: preloader-bar-glow 2.5s ease-in-out infinite;
         }
-        
-        .swiss-roll-outer {
-          animation: swiss-roll-rotate 2s linear infinite;
-        }
-        
-        .swiss-roll-middle {
-          animation: swiss-roll-reverse 1.5s linear infinite;
-        }
-        
-        .swiss-roll-inner {
-          animation: swiss-roll-rotate 1s linear infinite;
-        }
-        
-        .swiss-roll-path {
-          stroke-dasharray: 400;
-          stroke-dashoffset: 400;
-          animation: swiss-roll-dash 2s ease-in-out infinite;
-        }
-        
-        @keyframes swiss-roll-dash {
-          0% {
-            stroke-dashoffset: 400;
-            opacity: 0.3;
-          }
-          50% {
-            stroke-dashoffset: 0;
-            opacity: 1;
-          }
-          100% {
-            stroke-dashoffset: -400;
-            opacity: 0.3;
+        @media (prefers-reduced-motion: reduce) {
+          .preloader-ambient,
+          .preloader-bar-shine {
+            animation: none !important;
           }
         }
       `}</style>
     </div>
   );
 };
-

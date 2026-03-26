@@ -13,8 +13,8 @@ export default function DiaryBody({ defaultSection = 'music' }: DiaryBodyProps) 
   const sections = [
     { id: 'music', label: 'Music', path: '/diary/music' },
     { id: 'books', label: 'Books', path: '/diary/books' },
-    { id: 'cinema', label: 'Cinema', path: '/diary/cinema' },
-    { id: 'blogs', label: 'Blogs', path: '/diary/blogs' },
+    { id: 'cinema', label: 'TV', path: '/diary/cinema' },
+    { id: 'blogs', label: 'Movies', path: '/diary/blogs' },
   ];
 
   const getActiveSection = (pathname: string): DiarySectionType => {

@@ -92,8 +92,8 @@ export default function DiaryPreview() {
           buttons={[
             { id: 'music', label: 'Music', path: '/diary/music' },
             { id: 'books', label: 'Books', path: '/diary/books' },
-            { id: 'cinema', label: 'Cinema', path: '/diary/cinema' },
-            { id: 'blogs', label: 'Blogs', path: '/diary/blogs' },
+            { id: 'cinema', label: 'TV', path: '/diary/cinema' },
+            { id: 'blogs', label: 'Movies', path: '/diary/blogs' },
           ]}
           activeId=""
         />
@@ -120,7 +120,7 @@ export default function DiaryPreview() {
 
         {/* Cinema Section */}
         <section>
-          <SectionHeader title="Cinema" viewAllPath="/diary/cinema" />
+          <SectionHeader title="TV" viewAllPath="/diary/cinema" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {cinemaPosts.slice(0, 2).map((post) => (
               <CinemaCard key={post.id} post={post} />
@@ -130,7 +130,7 @@ export default function DiaryPreview() {
 
         {/* Blogs Section */}
         <section>
-          <SectionHeader title="Blogs" viewAllPath="/diary/blogs" />
+          <SectionHeader title="Movies" viewAllPath="/diary/blogs" />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {blogsPosts.slice(0, 2).map((post) => (
               <BlogCard key={post.id} post={post} />

@@ -11,9 +11,10 @@ export const educationData: Company[] = [
         content: [
           "3.93/4.00 GPA",
           "MISM Scholarship Recipient",
-          "Graduate Teaching Assistant for Organizational Design and Implementation with Dr. Lindsay Larson",
+          "Campus Ambassador for Carnegie Mellon University",
+          "Graduate Teaching Assistant for Advanced Business Analytics, Prof. Rahul Telang (Spring 2026)",
+          "Graduate Teaching Assistant for Organizational Design and Implementation, Dr. Lindsay Larson (Fall 2025)",
           "Social Media and Marketing Manager for Indian Graduate Student Association (IGSA)",
-          "Student Campus Ambassador for Carnegie Mellon University",
         ],
         awards: "Dean's List for Fall 2025",
         techStack: ["Machine Learning in Production", "AI Model Development", "Introduction to Deep Learning", "Corporate Startup Lab", "Applied Econometrics", "Unstructured Data Analytics", "Advanced Business Analytics", "Decision Making Under Uncertainty", "OOP in Java"],

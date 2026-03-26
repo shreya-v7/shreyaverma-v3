@@ -3,7 +3,7 @@ import { FiMail, FiPhone, FiUser, FiLinkedin } from 'react-icons/fi';
 
 const contactInfo = [
   { icon: FiMail, label: 'Email', value: 'shreya.verma2000@gmail.com', href: 'mailto:shreya.verma2000@gmail.com' },
-  { icon: FiPhone, label: 'Phone', value: '+91-9818898592', href: 'tel:+919818898592' },
+  // { icon: FiPhone, label: 'Phone', value: '+91-9818898592', href: 'tel:+919818898592' },
   { icon: FiUser, label: 'Name', value: 'Shreya Verma' },
   { icon: FiLinkedin, label: 'LinkedIn', value: 'https://in.linkedin.com/in/shreya-verma-1sv', href: 'https://in.linkedin.com/in/shreya-verma-1sv', external: true },
 ];

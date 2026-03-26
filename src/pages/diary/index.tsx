@@ -6,8 +6,8 @@ import { DiarySectionType } from "../../types";
 const sectionTitles: Record<DiarySectionType, string> = {
   music: 'Music',
   books: 'Books',
-  cinema: 'Cinema',
-  blogs: 'Blogs',
+  cinema: 'TV',
+  blogs: 'Movies',
 };
 
 interface DiaryProps {
@@ -20,7 +20,14 @@ export default function Diary({ section }: DiaryProps) {
     <>
       <Helmet>
         <title>{title} | Shreya Verma</title>
-        <meta name="description" content={section ? `Diary - ${sectionTitles[section]}` : 'Diary - Music, Books, Cinema, and Blogs'} />
+        <meta
+          name="description"
+          content={
+            section
+              ? `Diary - ${sectionTitles[section]}`
+              : 'Diary - Music, Books, TV, and Movies'
+          }
+        />
       </Helmet>
       <div>
         <h1 className="mb-8 text-2xl font-medium tracking-tight">Diary</h1>
