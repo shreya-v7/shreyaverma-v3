@@ -47,69 +47,70 @@ export default function Page() {
 
   return (
     <section className="space-y-12">
-      <div className="relative min-h-[72vh] py-4 md:py-8">
-        <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
-          <img
-            src="/profile.png"
-            alt="Shreya Verma"
-            className="rounded-full block lg:mt-5 mt-0 lg:mb-5 mb-10 mx-auto sm:float-right sm:ml-5 sm:mb-5"
-            width={160}
-            height={160}
-          />
-        </a>
+      <div className="flex min-h-[min(85dvh,820px)] flex-col py-4 md:min-h-[72vh] md:py-8">
+        {/* flow-root contains the floated avatar so height is correct; flex-1 fills hero when copy is short */}
+        <div className="flow-root min-h-0 flex-1">
+          <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
+            <img
+              src="/profile.png"
+              alt="Shreya Verma"
+              className="mx-auto mb-8 mt-0 block rounded-full sm:float-right sm:mb-5 sm:ml-5 lg:mb-5 lg:mt-5"
+              width={160}
+              height={160}
+            />
+          </a>
 
-        <div className="mb-3 font-medium">
-          <span className="text-2xl">Deep Learning!</span>{' '}
-          <span className="text-sm text-neutral-600 dark:text-neutral-400">shallow humor :)</span>
-        </div>
-
-        <div className="prose prose-neutral dark:prose-invert text-justify">
-          <p>
-            Hello, I&apos;m Shreya, dedicated science fiction enthusiast and unapologetic geek, diving deep
-            into the captivating worlds of machine learning and deep learning.
-          </p>
-          <p>
-            Grad student at Carnegie Mellon Univeristy, breaking AI until it confesses how it works.
-            Backed by a strong academic foundation and industry experience at Morgan Stanley, I like
-            problems that don&apos;t have obvious answers.
-          </p>
-          <p>
-            I chase the uncomfortable questions in ML, why models look intelligent on paper, misbehave
-            in reality, and how to close that gap.
-          </p>
-        </div>
-
-        {/* Social icons above, scroll cue directly below */}
-        <div className="absolute bottom-2 left-0 right-0 md:bottom-6">
-          <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-3 px-2">
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-2">
-              {heroSocial.map(({ href, label, Icon }) => (
-                <a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={label}
-                  className="text-neutral-700 transition hover:text-neutral-950 dark:text-neutral-300 dark:hover:text-white"
-                >
-                  <Icon className="h-[1.15rem] w-[1.15rem]" />
-                </a>
-              ))}
-            </div>
-
-            <a
-              href="#experience"
-              className="group flex flex-col items-center gap-2 text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-              aria-label="Scroll to experience section"
-            >
-              <span className="home-scroll-wheel-track">
-                <span className="home-scroll-wheel-dot" />
-              </span>
-              <span className="text-[10px] font-medium uppercase tracking-[0.32em] text-neutral-500 dark:text-neutral-500">
-                Scroll
-              </span>
-            </a>
+          <div className="mb-3 font-medium">
+            <span className="text-2xl">Deep Learning!</span>{' '}
+            <span className="text-sm text-neutral-600 dark:text-neutral-400">shallow humor :)</span>
           </div>
+
+          <div className="prose prose-neutral dark:prose-invert text-justify">
+            <p>
+              Hello, I&apos;m Shreya, dedicated science fiction enthusiast and unapologetic geek, diving deep
+              into the captivating worlds of machine learning and deep learning.
+            </p>
+            <p>
+              Grad student at Carnegie Mellon University, breaking AI until it confesses how it works.
+              Backed by a strong academic foundation and industry experience at Morgan Stanley, I like
+              problems that don&apos;t have obvious answers.
+            </p>
+            <p>
+              I chase the uncomfortable questions in ML, why models look intelligent on paper, misbehave
+              in reality, and how to close that gap.
+            </p>
+          </div>
+        </div>
+
+        {/* In document flow below copy — avoids overlap with absolute + float height bugs */}
+        <div className="mt-10 flex w-full shrink-0 flex-col items-center gap-4 px-2 sm:mt-12 md:mt-14">
+          <div className="flex max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-3 sm:gap-x-5">
+            {heroSocial.map(({ href, label, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={label}
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full text-neutral-700 transition hover:text-neutral-950 active:scale-95 dark:text-neutral-300 dark:hover:text-white sm:min-h-0 sm:min-w-0 sm:p-1"
+              >
+                <Icon className="h-5 w-5" />
+              </a>
+            ))}
+          </div>
+
+          <a
+            href="#experience"
+            className="group flex flex-col items-center gap-2 pb-1 text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+            aria-label="Scroll to experience section"
+          >
+            <span className="home-scroll-wheel-track">
+              <span className="home-scroll-wheel-dot" />
+            </span>
+            <span className="text-[10px] font-medium uppercase tracking-[0.32em] text-neutral-500 dark:text-neutral-500">
+              Scroll
+            </span>
+          </a>
         </div>
       </div>
 

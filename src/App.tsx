@@ -14,6 +14,8 @@ import Diary from './pages/diary';
 import BlogDetail from './pages/diary/BlogDetail';
 import Projects from './pages/projects';
 import Contact from './pages/contact';
+import Book from './pages/book';
+import Workspace from './pages/workspace';
 import NotFound from './pages/NotFound';
 
 function App() {
@@ -63,6 +65,8 @@ function App() {
             <Route path="/diary/blogs/:id" element={<BlogDetail />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/book" element={<Book />} />
+            <Route path="/workspace" element={<Workspace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
