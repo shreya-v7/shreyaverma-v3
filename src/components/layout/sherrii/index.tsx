@@ -3,7 +3,11 @@ import { FiX } from 'react-icons/fi';
 import { Corner } from '../../../types';
 import { sherriiMessages } from '../../../data/sherrii-messages';
 import { Toast } from '../../ui/Toast';
-import { getCornerClasses, getRandomCorner } from '../../../utils/sherrii-positions';
+import {
+  getCornerClasses,
+  getRandomCorner,
+  getBubbleCornerFromDock,
+} from '../../../utils/sherrii-positions';
 
 const useAnnoyingMessages = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -61,9 +65,9 @@ const useAnnoyingMessages = () => {
     setIsOpen(false);
   };
 
-  const restartMessages = () => {
+  const restartMessages = (preferredCorner?: Corner) => {
     setIsDismissed(false);
-    setCurrentCorner(getRandomCorner());
+    setCurrentCorner(preferredCorner ?? getRandomCorner());
     setCurrentMessage(sherriiMessages[Math.floor(Math.random() * sherriiMessages.length)]);
     setIsOpen(true);
   };
@@ -81,11 +85,11 @@ const useAnnoyingMessages = () => {
 };
 
 const SherriiBubble = ({ message, isTyping, onClose }: { message: string; isTyping: boolean; onClose: () => void }) => (
-  <div className="flex items-center gap-3 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full shadow-2xl px-4 py-3 pr-2 max-w-[calc(100vw-3rem)]">
-    <div className="flex-shrink-0 w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
-      <span className="text-xl">👩</span>
+  <div className="flex items-center gap-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full shadow-2xl px-3 py-2 pr-1.5 max-w-[calc(100vw-3rem)]">
+    <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
+      <span className="text-base">👩</span>
     </div>
-    <div className="flex-1 min-w-0 max-w-[200px]">
+    <div className="flex-1 min-w-0 max-w-[170px]">
       {isTyping ? (
         <div className="flex gap-1">
           <span className="w-2 h-2 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
@@ -103,14 +107,14 @@ const SherriiBubble = ({ message, isTyping, onClose }: { message: string; isTypi
       className="flex-shrink-0 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 transition-colors p-1.5 hover:rotate-90 duration-300 rounded-full hover:bg-neutral-100 dark:hover:bg-neutral-700"
       aria-label="Close"
     >
-      <FiX className="w-4 h-4" />
+      <FiX className="w-3.5 h-3.5" />
     </button>
   </div>
 );
 
 // Cute Butterfly Component with Nudge Animation
 const CuteButterfly = ({ isDragging }: { isDragging: boolean }) => (
-  <div className={`relative w-16 h-16 sm:w-20 sm:h-20 ${isDragging ? '' : 'animate-nudge'}`}>
+  <div className={`relative w-12 h-12 sm:w-14 sm:h-14 ${isDragging ? '' : 'animate-nudge'}`}>
     <svg
       viewBox="0 0 100 100"
       className="w-full h-full"
@@ -207,31 +211,111 @@ const CuteButterfly = ({ isDragging }: { isDragging: boolean }) => (
   </div>
 );
 
+const EDGE_PAD = 12;
+
+interface DockPoint {
+  left: number;
+  top: number;
+}
+
+const DEFAULT_DOCK: DockPoint = { left: EDGE_PAD, top: 80 };
+
+function clampDockDuringDrag(
+  left: number,
+  top: number,
+  w: number,
+  h: number
+): DockPoint {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  return {
+    left: Math.max(0, Math.min(vw - w, left)),
+    top: Math.max(0, Math.min(vh - h, top)),
+  };
+}
+
+function snapDockToNearestEdge(left: number, top: number, w: number, h: number): DockPoint {
+  const vw = window.innerWidth;
+  const vh = window.innerHeight;
+  const cx = left + w / 2;
+  const cy = top + h / 2;
+  const dLeft = cx;
+  const dRight = vw - cx;
+  const dTop = cy;
+  const dBottom = vh - cy;
+  const m = Math.min(dLeft, dRight, dTop, dBottom);
+  if (m === dLeft) {
+    return {
+      left: EDGE_PAD,
+      top: Math.max(EDGE_PAD, Math.min(vh - h - EDGE_PAD, top)),
+    };
+  }
+  if (m === dRight) {
+    return {
+      left: Math.max(EDGE_PAD, vw - w - EDGE_PAD),
+      top: Math.max(EDGE_PAD, Math.min(vh - h - EDGE_PAD, top)),
+    };
+  }
+  if (m === dTop) {
+    return {
+      left: Math.max(EDGE_PAD, Math.min(vw - w - EDGE_PAD, left)),
+      top: EDGE_PAD,
+    };
+  }
+  return {
+    left: Math.max(EDGE_PAD, Math.min(vw - w - EDGE_PAD, left)),
+    top: Math.max(EDGE_PAD, vh - h - EDGE_PAD),
+  };
+}
+
+function loadDockFromStorage(): DockPoint {
+  if (typeof window === 'undefined') return { ...DEFAULT_DOCK };
+  const raw = localStorage.getItem('sherrii-icon-position');
+  if (!raw) return { ...DEFAULT_DOCK };
+  try {
+    const parsed = JSON.parse(raw) as { left?: number; top?: number };
+    if (typeof parsed.left === 'number' && typeof parsed.top === 'number') {
+      return { left: parsed.left, top: parsed.top };
+    }
+  } catch {
+    const legacy = parseInt(raw, 10);
+    if (!Number.isNaN(legacy)) {
+      return { left: EDGE_PAD, top: legacy };
+    }
+  }
+  return { ...DEFAULT_DOCK };
+}
+
 export const Sherrii = () => {
   const [showAnnoyingToast, setShowAnnoyingToast] = useState(false);
   const { isOpen: isAnnoyingOpen, currentMessage, isTyping, currentCorner, isDismissed, setIsOpen: setAnnoyingOpen, setIsDismissed, restartMessages } = useAnnoyingMessages();
-  const [iconPosition, setIconPosition] = useState(80); // Default top position in pixels
+  const [dockPosition, setDockPosition] = useState<DockPoint>(() => loadDockFromStorage());
   const [isDragging, setIsDragging] = useState(false);
   const [hasDragged, setHasDragged] = useState(false);
-  const [currentDragY, setCurrentDragY] = useState(0);
-  const dragStartRef = useRef({ y: 0, top: 0 });
-  const currentDragYRef = useRef(0);
+  const dragStartRef = useRef({ x: 0, y: 0, left: 0, top: 0 });
+  const livePosRef = useRef<DockPoint>({ ...DEFAULT_DOCK });
   const shouldPreventScrollRef = useRef(false);
+  const dockButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Load saved position from localStorage on mount
   useEffect(() => {
-    const savedPosition = localStorage.getItem('sherrii-icon-position');
-    if (savedPosition) {
-      setIconPosition(parseInt(savedPosition, 10));
+    if (isDragging) return;
+    try {
+      localStorage.setItem('sherrii-icon-position', JSON.stringify(dockPosition));
+    } catch {
+      /* ignore quota */
     }
+  }, [dockPosition, isDragging]);
+
+  useEffect(() => {
+    const onResize = () => {
+      const el = dockButtonRef.current;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      setDockPosition((p) => snapDockToNearestEdge(p.left, p.top, r.width, r.height));
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
   }, []);
-
-  // Save position to localStorage whenever it changes (but not while dragging)
-  useEffect(() => {
-    if (!isDragging && iconPosition !== 80) {
-      localStorage.setItem('sherrii-icon-position', iconPosition.toString());
-    }
-  }, [iconPosition, isDragging]);
 
   const handleCloseAnnoying = () => {
     setAnnoyingOpen(false);
@@ -239,35 +323,29 @@ export const Sherrii = () => {
     setShowAnnoyingToast(true);
   };
 
-  const getClientY = (e: MouseEvent | TouchEvent): number => {
-    if ('touches' in e && e.touches.length > 0) {
-      return e.touches[0].clientY;
-    }
-    if ('clientY' in e) {
-      return e.clientY;
-    }
-    return 0;
-  };
-
-  const handleStart = (clientY: number) => {
+  const handleStart = (clientX: number, clientY: number) => {
     setIsDragging(true);
     setHasDragged(false);
+    const el = dockButtonRef.current;
+    const r = el?.getBoundingClientRect();
+    livePosRef.current = { ...dockPosition };
     dragStartRef.current = {
+      x: clientX,
       y: clientY,
-      top: iconPosition,
+      left: r?.left ?? dockPosition.left,
+      top: r?.top ?? dockPosition.top,
     };
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    handleStart(e.clientY);
+    handleStart(e.clientX, e.clientY);
   };
 
   const handleTouchStart = (e: React.TouchEvent) => {
-    // Don't prevent default here - allow normal scrolling unless user drags
     if (e.touches.length === 1) {
-      handleStart(e.touches[0].clientY);
+      handleStart(e.touches[0].clientX, e.touches[0].clientY);
     }
   };
 
@@ -277,148 +355,131 @@ export const Sherrii = () => {
       return;
     }
 
-    let animationFrameId: number;
+    let animationFrameId = 0;
 
-    const handleMove = (clientY: number) => {
-      const deltaY = clientY - dragStartRef.current.y;
-      
-      // Track if user has actually dragged (more than 5px threshold)
-      if (Math.abs(deltaY) > 5) {
+    const applyMove = (clientX: number, clientY: number) => {
+      const dx = clientX - dragStartRef.current.x;
+      const dy = clientY - dragStartRef.current.y;
+      if (Math.hypot(dx, dy) > 5) {
         setHasDragged(true);
         shouldPreventScrollRef.current = true;
       }
 
-      // Use requestAnimationFrame for smooth updates
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
       animationFrameId = requestAnimationFrame(() => {
-        const newTop = dragStartRef.current.top + deltaY;
-        
-        // Constrain to viewport bounds (with padding)
-        const minTop = 20;
-        const maxTop = window.innerHeight - 60; // Button height + padding
-        
-        const constrainedTop = Math.max(minTop, Math.min(maxTop, newTop));
-        const constrainedDelta = constrainedTop - dragStartRef.current.top;
-        
-        currentDragYRef.current = constrainedDelta;
-        setCurrentDragY(constrainedDelta);
+        const el = dockButtonRef.current;
+        const w = el?.offsetWidth ?? 64;
+        const h = el?.offsetHeight ?? 64;
+        const next = clampDockDuringDrag(
+          dragStartRef.current.left + dx,
+          dragStartRef.current.top + dy,
+          w,
+          h
+        );
+        livePosRef.current = next;
+        setDockPosition(next);
       });
     };
 
     const handleMouseMove = (e: MouseEvent) => {
-      if (shouldPreventScrollRef.current) {
-        e.preventDefault();
-      }
-      handleMove(e.clientY);
+      if (shouldPreventScrollRef.current) e.preventDefault();
+      applyMove(e.clientX, e.clientY);
     };
 
     const handleTouchMove = (e: TouchEvent) => {
       if (e.touches.length === 1) {
-        if (shouldPreventScrollRef.current) {
-          e.preventDefault();
-        }
-        handleMove(e.touches[0].clientY);
+        if (shouldPreventScrollRef.current) e.preventDefault();
+        applyMove(e.touches[0].clientX, e.touches[0].clientY);
       }
     };
 
     const handleEnd = () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-      
-      // Calculate final position
-      const finalTop = dragStartRef.current.top + currentDragYRef.current;
-      const minTop = 20;
-      const maxTop = window.innerHeight - 60;
-      const constrainedTop = Math.max(minTop, Math.min(maxTop, finalTop));
-      
-      // Update position and reset drag state synchronously - no animation
-      setIconPosition(constrainedTop);
-      setCurrentDragY(0);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
+      const el = dockButtonRef.current;
+      const w = el?.offsetWidth ?? 64;
+      const h = el?.offsetHeight ?? 64;
+      const p = livePosRef.current;
+      setDockPosition(snapDockToNearestEdge(p.left, p.top, w, h));
       setIsDragging(false);
       shouldPreventScrollRef.current = false;
-      
-      // Reset hasDragged after a short delay to allow click if no drag occurred
-      setTimeout(() => {
-        setHasDragged(false);
-      }, 100);
+      setTimeout(() => setHasDragged(false), 100);
     };
 
-    const handleMouseUp = () => handleEnd();
-    const handleTouchEnd = () => handleEnd();
-
     window.addEventListener('mousemove', handleMouseMove, { passive: false });
-    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('mouseup', handleEnd);
     window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleTouchEnd);
-    window.addEventListener('touchcancel', handleTouchEnd);
+    window.addEventListener('touchend', handleEnd);
+    window.addEventListener('touchcancel', handleEnd);
 
     return () => {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
       window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseup', handleEnd);
       window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleTouchEnd);
-      window.removeEventListener('touchcancel', handleTouchEnd);
+      window.removeEventListener('touchend', handleEnd);
+      window.removeEventListener('touchcancel', handleEnd);
       shouldPreventScrollRef.current = false;
     };
   }, [isDragging]);
 
+  const openFromDock = () => {
+    const el = dockButtonRef.current;
+    const w = el?.offsetWidth ?? 64;
+    const h = el?.offsetHeight ?? 64;
+    const corner = getBubbleCornerFromDock(dockPosition.left, dockPosition.top, w, h);
+    restartMessages(corner);
+  };
+
   const handleClick = (e: React.MouseEvent) => {
-    // Prevent click if user was dragging
     if (hasDragged) {
       e.preventDefault();
       e.stopPropagation();
       return;
     }
-    restartMessages();
+    openFromDock();
   };
 
   const handleTouchEndClick = (e: React.TouchEvent) => {
-    // Prevent click if user was dragging
     if (hasDragged) {
       e.preventDefault();
       e.stopPropagation();
       return;
     }
-    restartMessages();
+    openFromDock();
   };
+
+  const positionTransition = 'left 0.38s cubic-bezier(0.22, 1, 0.36, 1), top 0.38s cubic-bezier(0.22, 1, 0.36, 1)';
 
   return (
     <>
       {isDismissed && !isAnnoyingOpen && (
         <button
+          ref={dockButtonRef}
           onClick={handleClick}
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEndClick}
-          className={`fixed left-0 z-50 touch-none ${
-            isDragging 
-              ? 'cursor-grabbing select-none' 
-              : 'cursor-grab'
+          className={`fixed z-50 touch-none ${
+            isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
           }`}
-          style={{ 
-            top: `${iconPosition}px`,
-            transform: isDragging ? `translateY(${currentDragY}px)` : 'translateY(0)',
-            transition: 'none',
+          style={{
+            left: dockPosition.left,
+            top: dockPosition.top,
+            transform: 'translateZ(0)',
+            transition: isDragging ? 'none' : positionTransition,
             userSelect: 'none',
             WebkitUserSelect: 'none',
             WebkitTouchCallout: 'none',
             touchAction: isDragging ? 'none' : 'manipulation',
             pointerEvents: 'auto',
-            willChange: isDragging ? 'transform' : 'auto',
-            padding: '8px',
+            willChange: isDragging ? 'left, top' : 'auto',
+            padding: '6px',
             background: 'transparent',
             border: 'none',
             outline: 'none',
           }}
           aria-label="Restart annoying messages"
-          title="Drag me around! Click to restart messages"
+          title="Drag to any edge. Click to restart messages."
         >
           <div className={`relative ${isDragging ? 'scale-105' : 'hover:scale-110'} transition-transform duration-200`}>
             <CuteButterfly isDragging={isDragging} />
@@ -427,7 +488,9 @@ export const Sherrii = () => {
       )}
       {showAnnoyingToast && <Toast message="fine! I won't annoy!" duration={2000} onClose={() => setShowAnnoyingToast(false)} />}
       {isAnnoyingOpen && !isDismissed && (
-        <div className={`fixed ${getCornerClasses(currentCorner)} z-50 animate-in slide-in-from-bottom-4 fade-in duration-500`}>
+        <div
+          className={`fixed ${getCornerClasses(currentCorner)} z-50 animate-in slide-in-from-bottom-4 fade-in duration-500 transition-[top,left,right,bottom] duration-500 ease-out`}
+        >
           <SherriiBubble message={currentMessage} isTyping={isTyping} onClose={handleCloseAnnoying} />
         </div>
       )}

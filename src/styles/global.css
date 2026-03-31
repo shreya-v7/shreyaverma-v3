@@ -184,106 +184,182 @@ table {
 .ambient-layer {
   position: absolute;
   inset: 0;
-  will-change: transform, opacity, filter;
 }
 
 .ambient-base {
-  background: radial-gradient(circle at 50% 45%, rgba(148, 163, 184, 0.06), transparent 62%);
+  background:
+    radial-gradient(120% 70% at 50% -18%, rgba(14, 165, 233, 0.12), transparent 58%),
+    linear-gradient(180deg, #f9fbfe 0%, #f3f6fb 52%, #eef3f8 100%);
 }
 
-.ambient-orb {
+.ambient-base::before,
+.ambient-base::after {
+  content: "";
   position: absolute;
-  border-radius: 9999px;
-  filter: blur(36px) saturate(102%);
-  opacity: 0.55;
+  inset: 0;
+  pointer-events: none;
 }
 
-.ambient-orb-a {
-  width: min(68vw, 760px);
-  aspect-ratio: 1;
-  left: 20%;
-  top: 22%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(99, 102, 241, 0.16), rgba(99, 102, 241, 0.03) 52%, transparent 72%);
-  animation: ambientFloatA 18s ease-in-out infinite alternate;
+.ambient-base::before {
+  background:
+    radial-gradient(120% 80% at -10% -20%, rgba(15, 23, 42, 0.035), transparent 56%),
+    radial-gradient(120% 80% at 110% 120%, rgba(15, 23, 42, 0.032), transparent 58%);
 }
 
-.ambient-orb-b {
-  width: min(64vw, 700px);
-  aspect-ratio: 1;
-  left: 82%;
-  top: 76%;
-  transform: translate(-50%, -50%);
-  background: radial-gradient(circle, rgba(14, 165, 233, 0.14), rgba(14, 165, 233, 0.03) 52%, transparent 72%);
-  animation: ambientFloatB 22s ease-in-out infinite alternate;
-}
-
-.ambient-sheen {
+.ambient-base::after {
   background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(148, 163, 184, 0.04) 44%,
-    rgba(148, 163, 184, 0.018) 52%,
-    transparent 62%
+    180deg,
+    rgba(255, 255, 255, 0.34) 0%,
+    rgba(255, 255, 255, 0.12) 42%,
+    transparent 64%
   );
-  filter: blur(12px);
-  animation: ambientSheen 26s ease-in-out infinite alternate;
+}
+
+/* Adds subtle 3D depth and panel glow */
+.ambient-depth {
+  opacity: 0.62;
+  background:
+    radial-gradient(56% 34% at 50% 24%, rgba(56, 189, 248, 0.12), transparent 64%),
+    radial-gradient(42% 28% at 50% 14%, rgba(99, 102, 241, 0.08), transparent 68%),
+    linear-gradient(180deg, transparent 38%, rgba(56, 189, 248, 0.05) 52%, transparent 76%);
+  filter: saturate(108%);
+}
+
+.ambient-grid {
+  opacity: 0.5;
+  inset: 46% -10% -6% -10%;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.28) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.24) 1px, transparent 1px);
+  background-size: 42px 42px;
+  transform-origin: center bottom;
+  transform: perspective(1080px) rotateX(72deg) scale(1.14) translateY(8%);
+  mask-image: linear-gradient(180deg, transparent 0%, black 14%, black 86%, transparent 100%);
+}
+
+.ambient-grid::before {
+  content: "";
+  position: absolute;
+  left: -4%;
+  right: -4%;
+  top: -8px;
+  height: 26px;
+  background: linear-gradient(
+    180deg,
+    rgba(56, 189, 248, 0.42) 0%,
+    rgba(56, 189, 248, 0.12) 45%,
+    rgba(56, 189, 248, 0) 100%
+  );
+  filter: blur(8px);
+}
+
+/* Faint "market tape" bars + trend line pattern */
+.ambient-market {
+  opacity: 0.22;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 22px,
+      rgba(14, 165, 233, 0.16) 22px 24px,
+      transparent 24px 32px,
+      rgba(15, 23, 42, 0.08) 32px 33px,
+      transparent 33px 54px
+    ),
+    linear-gradient(
+      158deg,
+      transparent 0%,
+      transparent 58%,
+      rgba(14, 165, 233, 0.2) 58.8%,
+      transparent 60.2%
+    );
+  mask-image: radial-gradient(130% 90% at 50% 100%, black 46%, transparent 88%);
+}
+
+/* Curved diagonal edge accents (tech panel feel) */
+.ambient-circuit {
+  opacity: 0.3;
+  background:
+    radial-gradient(150% 95% at -16% -30%, transparent 58%, rgba(15, 23, 42, 0.1) 58.8%, transparent 59.8%),
+    radial-gradient(150% 95% at 116% 130%, transparent 58%, rgba(15, 23, 42, 0.09) 58.8%, transparent 59.8%),
+    linear-gradient(140deg, transparent 74%, rgba(14, 165, 233, 0.2) 75%, transparent 76%);
+}
+
+.ambient-frame {
+  box-shadow:
+    inset 0 0 0 1px rgba(148, 163, 184, 0.09),
+    inset 0 110px 160px -140px rgba(15, 23, 42, 0.08),
+    inset 0 -110px 160px -140px rgba(15, 23, 42, 0.07);
 }
 
 .dark .ambient-base {
-  background: radial-gradient(circle at 50% 45%, rgba(148, 163, 184, 0.045), transparent 64%);
+  background:
+    radial-gradient(120% 70% at 50% -18%, rgba(56, 189, 248, 0.22), transparent 58%),
+    linear-gradient(180deg, #0d1117 0%, #0d1219 54%, #0c1118 100%);
 }
 
-.dark .ambient-orb {
-  filter: blur(44px) saturate(106%);
-  opacity: 0.62;
+.dark .ambient-base::before {
+  background:
+    radial-gradient(120% 80% at -10% -20%, rgba(148, 163, 184, 0.07), transparent 56%),
+    radial-gradient(120% 80% at 110% 120%, rgba(148, 163, 184, 0.06), transparent 58%);
 }
 
-.dark .ambient-orb-a {
-  background: radial-gradient(circle, rgba(129, 140, 248, 0.2), rgba(129, 140, 248, 0.04) 55%, transparent 74%);
-}
-
-.dark .ambient-orb-b {
-  background: radial-gradient(circle, rgba(56, 189, 248, 0.18), rgba(56, 189, 248, 0.04) 55%, transparent 74%);
-}
-
-.dark .ambient-sheen {
+.dark .ambient-base::after {
   background: linear-gradient(
-    120deg,
-    transparent 0%,
-    rgba(148, 163, 184, 0.05) 44%,
-    rgba(148, 163, 184, 0.02) 52%,
-    transparent 62%
+    180deg,
+    rgba(148, 163, 184, 0.06) 0%,
+    rgba(148, 163, 184, 0.02) 42%,
+    transparent 64%
   );
 }
 
-@keyframes ambientFloatA {
-  0% {
-    transform: translate(-50%, -50%) translate3d(-2%, -1%, 0) scale(1);
-  }
-  100% {
-    transform: translate(-50%, -50%) translate3d(2%, 1.5%, 0) scale(1.06);
-  }
+.dark .ambient-depth {
+  opacity: 0.7;
+  background:
+    radial-gradient(56% 34% at 50% 24%, rgba(56, 189, 248, 0.28), transparent 64%),
+    radial-gradient(42% 28% at 50% 14%, rgba(129, 140, 248, 0.2), transparent 68%),
+    linear-gradient(180deg, transparent 38%, rgba(56, 189, 248, 0.08) 52%, transparent 76%);
 }
 
-@keyframes ambientFloatB {
-  0% {
-    transform: translate(-50%, -50%) translate3d(2%, 1%, 0) scale(1);
-  }
-  100% {
-    transform: translate(-50%, -50%) translate3d(-2%, -1.5%, 0) scale(1.05);
-  }
+.dark .ambient-grid {
+  opacity: 0.62;
+  background-image:
+    linear-gradient(rgba(56, 189, 248, 0.42) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(56, 189, 248, 0.38) 1px, transparent 1px);
 }
 
-@keyframes ambientSheen {
-  0% {
-    transform: translate3d(-2%, -1%, 0);
-    opacity: 0.65;
-  }
-  100% {
-    transform: translate3d(2%, 1%, 0);
-    opacity: 1;
-  }
+.dark .ambient-market {
+  opacity: 0.26;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      transparent 0 22px,
+      rgba(56, 189, 248, 0.22) 22px 24px,
+      transparent 24px 32px,
+      rgba(148, 163, 184, 0.12) 32px 33px,
+      transparent 33px 54px
+    ),
+    linear-gradient(
+      158deg,
+      transparent 0%,
+      transparent 58%,
+      rgba(56, 189, 248, 0.26) 58.8%,
+      transparent 60.2%
+    );
+}
+
+.dark .ambient-circuit {
+  opacity: 0.36;
+  background:
+    radial-gradient(150% 95% at -16% -30%, transparent 58%, rgba(148, 163, 184, 0.22) 58.8%, transparent 59.8%),
+    radial-gradient(150% 95% at 116% 130%, transparent 58%, rgba(148, 163, 184, 0.2) 58.8%, transparent 59.8%),
+    linear-gradient(140deg, transparent 74%, rgba(56, 189, 248, 0.28) 75%, transparent 76%);
+}
+
+.dark .ambient-frame {
+  box-shadow:
+    inset 0 0 0 1px rgba(148, 163, 184, 0.12),
+    inset 0 110px 160px -140px rgba(255, 255, 255, 0.04),
+    inset 0 -110px 160px -140px rgba(255, 255, 255, 0.03);
 }
 
 /* Homepage hero scroll cue */
@@ -337,11 +413,6 @@ table {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-  .ambient-orb-a,
-  .ambient-orb-b,
-  .ambient-sheen {
-    animation: none;
   }
   .home-scroll-wheel-dot {
     animation: none;

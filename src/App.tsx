@@ -42,9 +42,11 @@ function App() {
       <ScrollProgress />
       <div className="site-ambient-bg" aria-hidden="true">
         <div className="ambient-layer ambient-base" />
-        <div className="ambient-layer ambient-orb ambient-orb-a" />
-        <div className="ambient-layer ambient-orb ambient-orb-b" />
-        <div className="ambient-layer ambient-sheen" />
+        <div className="ambient-layer ambient-depth" />
+        <div className="ambient-layer ambient-grid" />
+        <div className="ambient-layer ambient-market" />
+        <div className="ambient-layer ambient-circuit" />
+        <div className="ambient-layer ambient-frame" />
       </div>
       <Preloader loading={loading} progress={progress} />
       <div className={`relative z-10 antialiased flex flex-col items-center justify-center mx-auto mt-2 lg:mt-8 mb-20 lg:mb-40 transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>

@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   FaXTwitter,
@@ -34,16 +33,12 @@ export default function Page() {
     .sort((a, b) => new Date(b.date ?? '').getTime() - new Date(a.date ?? '').getTime())
     .slice(0, 2);
 
-  const [activeBlogIdx, setActiveBlogIdx] = useState(0);
-
   const formatShortDate = (value?: string) => {
     if (!value) return '';
     const d = new Date(value);
     if (Number.isNaN(d.getTime())) return value;
     return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' });
   };
-
-  const activeBlog = latestBlogs[activeBlogIdx] ?? latestBlogs[0];
 
   return (
     <section className="space-y-12">
