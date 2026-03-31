@@ -95,7 +95,7 @@ export const Preloader = ({ loading, progress }: PreloaderProps) => {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-neutral-100 dark:from-neutral-950 dark:via-[#121212] dark:to-neutral-950"
+        className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-neutral-100 dark:from-[#050506] dark:via-[#08080c] dark:to-[#050506]"
         aria-hidden
       />
       <div

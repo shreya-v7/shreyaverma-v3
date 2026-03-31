@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { FiX } from 'react-icons/fi';
 import { Corner } from '../../../types';
 import { sherriiMessages } from '../../../data/sherrii-messages';
+import { pickSherriiAvatar, type SherriiAvatar } from '../../../data/sherrii-avatars';
 import { Toast } from '../../ui/Toast';
 import {
   getCornerClasses,
@@ -9,9 +10,18 @@ import {
   getBubbleCornerFromDock,
 } from '../../../utils/sherrii-positions';
 
+function nextAvatarAvoidRepeat(prev: SherriiAvatar): SherriiAvatar {
+  let next = pickSherriiAvatar();
+  for (let i = 0; i < 14 && next === prev; i += 1) {
+    next = pickSherriiAvatar();
+  }
+  return next;
+}
+
 const useAnnoyingMessages = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [currentMessage, setCurrentMessage] = useState(sherriiMessages[0]);
+  const [currentAvatar, setCurrentAvatar] = useState<SherriiAvatar>(() => pickSherriiAvatar());
   const [isTyping, setIsTyping] = useState(false);
   const [currentCorner, setCurrentCorner] = useState<Corner>('bottom-right');
   const [isDismissed, setIsDismissed] = useState(false);
@@ -25,6 +35,7 @@ const useAnnoyingMessages = () => {
       if (!isOpen && !isDismissed) {
         setCurrentCorner(getRandomCorner());
         setCurrentMessage(sherriiMessages[Math.floor(Math.random() * sherriiMessages.length)]);
+        setCurrentAvatar(pickSherriiAvatar());
         setIsOpen(true);
       }
     };
@@ -53,11 +64,20 @@ const useAnnoyingMessages = () => {
       setTimeout(() => {
         if (isDismissed) return;
         setCurrentMessage(sherriiMessages[Math.floor(Math.random() * sherriiMessages.length)]);
+        setCurrentAvatar((a) => nextAvatarAvoidRepeat(a));
         setIsTyping(false);
         if (Math.random() < 0.3) setCurrentCorner(getRandomCorner());
       }, 500);
     }, 7000);
     return () => clearInterval(interval);
+  }, [isOpen, isDismissed]);
+
+  useEffect(() => {
+    if (!isOpen || isDismissed) return;
+    const id = window.setInterval(() => {
+      setCurrentAvatar((a) => nextAvatarAvoidRepeat(a));
+    }, 3600);
+    return () => clearInterval(id);
   }, [isOpen, isDismissed]);
 
   const handleDismiss = () => {
@@ -69,12 +89,14 @@ const useAnnoyingMessages = () => {
     setIsDismissed(false);
     setCurrentCorner(preferredCorner ?? getRandomCorner());
     setCurrentMessage(sherriiMessages[Math.floor(Math.random() * sherriiMessages.length)]);
+    setCurrentAvatar(pickSherriiAvatar());
     setIsOpen(true);
   };
 
   return { 
     isOpen, 
     currentMessage, 
+    currentAvatar,
     isTyping, 
     currentCorner, 
     isDismissed, 
@@ -84,10 +106,31 @@ const useAnnoyingMessages = () => {
   };
 };
 
-const SherriiBubble = ({ message, isTyping, onClose }: { message: string; isTyping: boolean; onClose: () => void }) => (
+function avatarHueShift(emoji: string): number {
+  let n = 0;
+  for (let i = 0; i < emoji.length; i += 1) n += emoji.charCodeAt(i);
+  return (n % 118) - 48;
+}
+
+const SherriiBubble = ({
+  message,
+  isTyping,
+  avatar,
+  onClose,
+}: {
+  message: string;
+  isTyping: boolean;
+  avatar: SherriiAvatar;
+  onClose: () => void;
+}) => (
   <div className="flex items-center gap-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full shadow-2xl px-3 py-2 pr-1.5 max-w-[calc(100vw-3rem)]">
-    <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-br from-pink-500 to-purple-600 rounded-full flex items-center justify-center">
-      <span className="text-base">👩</span>
+    <div
+      className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 transition-[filter] duration-700 ease-out shadow-inner"
+      style={{ filter: `hue-rotate(${avatarHueShift(avatar)}deg) saturate(1.12)` }}
+    >
+      <span key={avatar} className="sherrii-avatar-emoji text-base leading-none block select-none" aria-hidden="true">
+        {avatar}
+      </span>
     </div>
     <div className="flex-1 min-w-0 max-w-[170px]">
       {isTyping ? (
@@ -288,14 +331,25 @@ function loadDockFromStorage(): DockPoint {
 
 export const Sherrii = () => {
   const [showAnnoyingToast, setShowAnnoyingToast] = useState(false);
-  const { isOpen: isAnnoyingOpen, currentMessage, isTyping, currentCorner, isDismissed, setIsOpen: setAnnoyingOpen, setIsDismissed, restartMessages } = useAnnoyingMessages();
+  const {
+    isOpen: isAnnoyingOpen,
+    currentMessage,
+    currentAvatar,
+    isTyping,
+    currentCorner,
+    isDismissed,
+    setIsOpen: setAnnoyingOpen,
+    setIsDismissed,
+    restartMessages,
+  } = useAnnoyingMessages();
   const [dockPosition, setDockPosition] = useState<DockPoint>(() => loadDockFromStorage());
   const [isDragging, setIsDragging] = useState(false);
   const [hasDragged, setHasDragged] = useState(false);
   const dragStartRef = useRef({ x: 0, y: 0, left: 0, top: 0 });
   const livePosRef = useRef<DockPoint>({ ...DEFAULT_DOCK });
-  const shouldPreventScrollRef = useRef(false);
+  const activePointerIdRef = useRef<number | null>(null);
   const dockButtonRef = useRef<HTMLButtonElement>(null);
+  const pendingDragRafRef = useRef(0);
 
   useEffect(() => {
     if (isDragging) return;
@@ -323,53 +377,85 @@ export const Sherrii = () => {
     setShowAnnoyingToast(true);
   };
 
-  const handleStart = (clientX: number, clientY: number) => {
+  const dragListenersRef = useRef<{
+    move: (ev: PointerEvent) => void;
+    up: (ev: PointerEvent) => void;
+  } | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (pendingDragRafRef.current) {
+        cancelAnimationFrame(pendingDragRafRef.current);
+        pendingDragRafRef.current = 0;
+      }
+      const bundle = dragListenersRef.current;
+      if (bundle) {
+        window.removeEventListener('pointermove', bundle.move);
+        window.removeEventListener('pointerup', bundle.up);
+        window.removeEventListener('pointercancel', bundle.up);
+        dragListenersRef.current = null;
+      }
+    };
+  }, []);
+
+  const handlePointerDown = (e: React.PointerEvent<HTMLButtonElement>) => {
+    if (e.pointerType === 'mouse' && e.button !== 0) return;
+    if (dragListenersRef.current) return;
+    e.stopPropagation();
+    try {
+      e.currentTarget.setPointerCapture(e.pointerId);
+    } catch {
+      /* ignore */
+    }
+    const pointerId = e.pointerId;
+    activePointerIdRef.current = pointerId;
     setIsDragging(true);
     setHasDragged(false);
     const el = dockButtonRef.current;
     const r = el?.getBoundingClientRect();
     livePosRef.current = { ...dockPosition };
     dragStartRef.current = {
-      x: clientX,
-      y: clientY,
+      x: e.clientX,
+      y: e.clientY,
       left: r?.left ?? dockPosition.left,
       top: r?.top ?? dockPosition.top,
     };
-  };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    handleStart(e.clientX, e.clientY);
-  };
-
-  const handleTouchStart = (e: React.TouchEvent) => {
-    if (e.touches.length === 1) {
-      handleStart(e.touches[0].clientX, e.touches[0].clientY);
-    }
-  };
-
-  useEffect(() => {
-    if (!isDragging) {
-      shouldPreventScrollRef.current = false;
-      return;
-    }
-
-    let animationFrameId = 0;
+    const teardown = () => {
+      if (pendingDragRafRef.current) {
+        cancelAnimationFrame(pendingDragRafRef.current);
+        pendingDragRafRef.current = 0;
+      }
+      const bundle = dragListenersRef.current;
+      dragListenersRef.current = null;
+      if (bundle) {
+        window.removeEventListener('pointermove', bundle.move);
+        window.removeEventListener('pointerup', bundle.up);
+        window.removeEventListener('pointercancel', bundle.up);
+      }
+      const btn = dockButtonRef.current;
+      if (btn) {
+        try {
+          if (btn.hasPointerCapture(pointerId)) btn.releasePointerCapture(pointerId);
+        } catch {
+          /* ignore */
+        }
+      }
+      activePointerIdRef.current = null;
+    };
 
     const applyMove = (clientX: number, clientY: number) => {
       const dx = clientX - dragStartRef.current.x;
       const dy = clientY - dragStartRef.current.y;
       if (Math.hypot(dx, dy) > 5) {
         setHasDragged(true);
-        shouldPreventScrollRef.current = true;
       }
-
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      animationFrameId = requestAnimationFrame(() => {
-        const el = dockButtonRef.current;
-        const w = el?.offsetWidth ?? 64;
-        const h = el?.offsetHeight ?? 64;
+      if (pendingDragRafRef.current) cancelAnimationFrame(pendingDragRafRef.current);
+      pendingDragRafRef.current = requestAnimationFrame(() => {
+        pendingDragRafRef.current = 0;
+        const btnEl = dockButtonRef.current;
+        const w = btnEl?.offsetWidth ?? 64;
+        const h = btnEl?.offsetHeight ?? 64;
         const next = clampDockDuringDrag(
           dragStartRef.current.left + dx,
           dragStartRef.current.top + dy,
@@ -381,46 +467,29 @@ export const Sherrii = () => {
       });
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
-      if (shouldPreventScrollRef.current) e.preventDefault();
-      applyMove(e.clientX, e.clientY);
+    const handlePointerMove = (ev: PointerEvent) => {
+      if (ev.pointerId !== pointerId) return;
+      if (ev.cancelable) ev.preventDefault();
+      applyMove(ev.clientX, ev.clientY);
     };
 
-    const handleTouchMove = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        if (shouldPreventScrollRef.current) e.preventDefault();
-        applyMove(e.touches[0].clientX, e.touches[0].clientY);
-      }
-    };
-
-    const handleEnd = () => {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      const el = dockButtonRef.current;
-      const w = el?.offsetWidth ?? 64;
-      const h = el?.offsetHeight ?? 64;
+    const handlePointerUp = (ev: PointerEvent) => {
+      if (ev.pointerId !== pointerId) return;
+      teardown();
+      const btnEl = dockButtonRef.current;
+      const w = btnEl?.offsetWidth ?? 64;
+      const h = btnEl?.offsetHeight ?? 64;
       const p = livePosRef.current;
       setDockPosition(snapDockToNearestEdge(p.left, p.top, w, h));
       setIsDragging(false);
-      shouldPreventScrollRef.current = false;
       setTimeout(() => setHasDragged(false), 100);
     };
 
-    window.addEventListener('mousemove', handleMouseMove, { passive: false });
-    window.addEventListener('mouseup', handleEnd);
-    window.addEventListener('touchmove', handleTouchMove, { passive: false });
-    window.addEventListener('touchend', handleEnd);
-    window.addEventListener('touchcancel', handleEnd);
-
-    return () => {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleEnd);
-      window.removeEventListener('touchmove', handleTouchMove);
-      window.removeEventListener('touchend', handleEnd);
-      window.removeEventListener('touchcancel', handleEnd);
-      shouldPreventScrollRef.current = false;
-    };
-  }, [isDragging]);
+    dragListenersRef.current = { move: handlePointerMove, up: handlePointerUp };
+    window.addEventListener('pointermove', handlePointerMove, { passive: false });
+    window.addEventListener('pointerup', handlePointerUp);
+    window.addEventListener('pointercancel', handlePointerUp);
+  };
 
   const openFromDock = () => {
     const el = dockButtonRef.current;
@@ -439,15 +508,6 @@ export const Sherrii = () => {
     openFromDock();
   };
 
-  const handleTouchEndClick = (e: React.TouchEvent) => {
-    if (hasDragged) {
-      e.preventDefault();
-      e.stopPropagation();
-      return;
-    }
-    openFromDock();
-  };
-
   const positionTransition = 'left 0.38s cubic-bezier(0.22, 1, 0.36, 1), top 0.38s cubic-bezier(0.22, 1, 0.36, 1)';
 
   return (
@@ -455,10 +515,9 @@ export const Sherrii = () => {
       {isDismissed && !isAnnoyingOpen && (
         <button
           ref={dockButtonRef}
+          type="button"
           onClick={handleClick}
-          onMouseDown={handleMouseDown}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEndClick}
+          onPointerDown={handlePointerDown}
           className={`fixed z-50 touch-none ${
             isDragging ? 'cursor-grabbing select-none' : 'cursor-grab'
           }`}
@@ -470,7 +529,7 @@ export const Sherrii = () => {
             userSelect: 'none',
             WebkitUserSelect: 'none',
             WebkitTouchCallout: 'none',
-            touchAction: isDragging ? 'none' : 'manipulation',
+            touchAction: 'none',
             pointerEvents: 'auto',
             willChange: isDragging ? 'left, top' : 'auto',
             padding: '6px',
@@ -491,7 +550,7 @@ export const Sherrii = () => {
         <div
           className={`fixed ${getCornerClasses(currentCorner)} z-50 animate-in slide-in-from-bottom-4 fade-in duration-500 transition-[top,left,right,bottom] duration-500 ease-out`}
         >
-          <SherriiBubble message={currentMessage} isTyping={isTyping} onClose={handleCloseAnnoying} />
+          <SherriiBubble message={currentMessage} isTyping={isTyping} avatar={currentAvatar} onClose={handleCloseAnnoying} />
         </div>
       )}
     </>

@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
+import { AmbientBg } from './components/layout/AmbientBg';
 import { Navbar } from './components/layout/nav';
 import Footer from './components/layout/footer';
 import { ThemeProvider } from './components/layout/theme-switch';
@@ -40,14 +41,7 @@ function App() {
         <meta name="twitter:title" content={metaData.name} />
       </Helmet>
       <ScrollProgress />
-      <div className="site-ambient-bg" aria-hidden="true">
-        <div className="ambient-layer ambient-base" />
-        <div className="ambient-layer ambient-depth" />
-        <div className="ambient-layer ambient-grid" />
-        <div className="ambient-layer ambient-market" />
-        <div className="ambient-layer ambient-circuit" />
-        <div className="ambient-layer ambient-frame" />
-      </div>
+      <AmbientBg />
       <Preloader loading={loading} progress={progress} />
       <div className={`relative z-10 antialiased flex flex-col items-center justify-center mx-auto mt-2 lg:mt-8 mb-20 lg:mb-40 transition-opacity duration-500 ${loading ? 'opacity-0' : 'opacity-100'}`}>
         <main className="flex-auto min-w-0 mt-2 md:mt-6 flex flex-col px-6 sm:px-4 md:px-0 max-w-[640px] w-full">
