@@ -1,47 +1,41 @@
-import { DiarySectionType } from '../../types';
+import type { DiarySectionType } from '../../types';
 import { SectionRouter } from '../../components/ui/SectionRouter';
 import Music from './music';
 import Books from './books';
 import Cinema from './cinema';
 import Blogs from './blogs';
+import { DIARY_NAV } from '../../config/sectionNav';
+import { activeSectionFromPath } from '../../utils';
 
 interface DiaryBodyProps {
   defaultSection?: DiarySectionType;
 }
 
-export default function DiaryBody({ defaultSection = 'music' }: DiaryBodyProps) {
-  const sections = [
-    { id: 'music', label: 'Music', path: '/diary/music' },
-    { id: 'books', label: 'Books', path: '/diary/books' },
-    { id: 'cinema', label: 'TV', path: '/diary/cinema' },
-    { id: 'blogs', label: 'Movies', path: '/diary/blogs' },
-  ];
+function renderSection(id: DiarySectionType) {
+  switch (id) {
+    case 'music':
+      return <Music />;
+    case 'books':
+      return <Books />;
+    case 'cinema':
+      return <Cinema mode="tv" />;
+    case 'movies':
+      return <Cinema mode="movies" />;
+    case 'blogs':
+      return <Blogs />;
+    default:
+      return <Blogs />;
+  }
+}
 
-  const getActiveSection = (pathname: string): DiarySectionType => {
-    if (pathname.includes('/books')) return 'books';
-    if (pathname.includes('/cinema')) return 'cinema';
-    if (pathname.includes('/blogs')) return 'blogs';
-    return 'music';
-  };
-
-  const renderSection = (activeSection: DiarySectionType) => {
-    switch (activeSection) {
-      case 'music': return <Music />;
-      case 'books': return <Books />;
-      case 'cinema': return <Cinema />;
-      case 'blogs': return <Blogs />;
-      default: return <Music />;
-    }
-  };
-
+export default function DiaryBody({ defaultSection = 'blogs' }: DiaryBodyProps) {
   return (
     <SectionRouter
-      sections={sections}
+      sections={DIARY_NAV}
       defaultSection={defaultSection}
       basePath="/diary"
       renderSection={renderSection}
-      getActiveSection={getActiveSection}
+      getActiveSection={(pathname) => activeSectionFromPath(pathname, DIARY_NAV, 'blogs')}
     />
   );
 }
-

@@ -36,7 +36,7 @@ export const ModalContent = ({ company, colors, isClient, techStackLabel = 'Tech
               <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2">{techStackLabel}</p>
               <div className="flex flex-wrap gap-2">
                 {role.techStack.map((item, itemIndex) => (
-                  <span key={itemIndex} className="px-3 py-1 rounded-full text-white text-xs font-semibold" style={{ backgroundColor: isClient ? colors[item] : '#6b7280' }}>
+                  <span key={itemIndex} className="px-3 py-1 rounded-full text-white text-xs font-semibold" style={{ backgroundColor: isClient ? colors[item] : '#171717' }}>
                     {item}
                   </span>
                 ))}

@@ -19,6 +19,9 @@ build/
 out/
 *.local
 
+# Local vault (private notes, keys; never commit)
+.vault/
+
 # Environment variables
 .env
 .env.local
@@ -125,3 +128,18 @@ $RECYCLE.BIN/
 # RSS feed outputs (generated during build)
 atom.xml
 feed.json
+
+# Private docs (infra, setup, runbooks; keep local only)
+docs/WORKSPACE-AWS-ARCHITECTURE.md
+docs/SETUP-BACKEND-PIPELINE.md
+docs/INFRASTRUCTURE.md
+docs/WORKSPACE-AWS-SETUP-GUIDE.md
+docs/**/*PRIVATE*
+docs/**/*.local.md
+
+# Optional SAM / IaC under server/ (keep your copy only on disk, not in git)
+/server/
+
+# Local tooling noise
+deno.lock
+

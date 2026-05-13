@@ -6,18 +6,20 @@ import {
   FaLinkedinIn,
   FaCode,
 } from 'react-icons/fa6';
-import { TbMailFilled } from 'react-icons/tb';
+import { FiMail } from 'react-icons/fi';
 import { socialLinks } from '../config/config';
 import { experienceData } from '../data/experience';
 import { projects } from '../data/projects';
 import { blogsPosts } from '../data/diary/blogs';
+import { formatShortDate } from '../utils';
+import { DIARY_BLOGS_PATH } from '../config/sectionNav';
 
 const heroSocial = [
   { href: socialLinks.twitter, label: 'X', Icon: FaXTwitter },
   { href: socialLinks.github, label: 'GitHub', Icon: FaGithub },
   { href: socialLinks.instagram, label: 'Instagram', Icon: FaInstagram },
   { href: socialLinks.linkedin, label: 'LinkedIn', Icon: FaLinkedinIn },
-  { href: socialLinks.email, label: 'Email', Icon: TbMailFilled },
+  { href: socialLinks.email, label: 'Email', Icon: FiMail },
   { href: socialLinks.code, label: 'Code', Icon: FaCode },
 ] as const;
 
@@ -32,13 +34,6 @@ export default function Page() {
   const latestBlogs = [...blogsPosts]
     .sort((a, b) => new Date(b.date ?? '').getTime() - new Date(a.date ?? '').getTime())
     .slice(0, 2);
-
-  const formatShortDate = (value?: string) => {
-    if (!value) return '';
-    const d = new Date(value);
-    if (Number.isNaN(d.getTime())) return value;
-    return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: '2-digit' });
-  };
 
   return (
     <section className="space-y-12">
@@ -77,7 +72,7 @@ export default function Page() {
           </div>
         </div>
 
-        {/* In document flow below copy — avoids overlap with absolute + float height bugs */}
+        {/* In document flow below copy; avoids overlap with absolute + float height bugs */}
         <div className="mt-10 flex w-full shrink-0 flex-col items-center gap-4 px-2 sm:mt-12 md:mt-14">
           <div className="flex max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-3 sm:gap-x-5">
             {heroSocial.map(({ href, label, Icon }) => (
@@ -276,7 +271,7 @@ export default function Page() {
               Recent posts as simple tiles.
             </p>
           </div>
-          <Link to="/diary/blogs" className="text-sm underline underline-offset-4">
+          <Link to={DIARY_BLOGS_PATH} className="text-sm underline underline-offset-4">
             Open blog posts
           </Link>
         </div>
@@ -301,7 +296,7 @@ export default function Page() {
                   {(post.tags ?? []).slice(0, 3).map((t) => `#${t}`).join(' · ')}
                 </p>
                 <Link
-                  to={`/diary/blogs/${post.id}`}
+                  to={`${DIARY_BLOGS_PATH}/${post.id}`}
                   className="inline-flex shrink-0 items-center gap-1 rounded-full border border-neutral-400/90 bg-white/50 px-2.5 py-1 text-[11px] font-semibold text-neutral-900 shadow-sm backdrop-blur-sm transition hover:border-neutral-500 hover:bg-white/80 dark:border-neutral-500/90 dark:bg-neutral-800/50 dark:text-neutral-50 dark:shadow-none dark:hover:border-neutral-400 dark:hover:bg-neutral-800/80"
                 >
                   <span>Read</span>

@@ -1,4 +1,5 @@
 @import './ambient.css';
+@import './spotify.css';
 
 @tailwind base;
 @tailwind components;
@@ -25,42 +26,33 @@
 :root {
   --font-geist-sans: 'Geist Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   --font-geist-mono: 'Geist Mono', 'Fira Code', 'Fira Mono', 'Roboto Mono', 'Courier New', monospace;
-  --scroll-progress-bg: linear-gradient(90deg, rgba(71, 85, 105, 0.8), rgba(100, 116, 139, 0.8));
-  --scroll-progress-glow: 0 0 6px rgba(71, 85, 105, 0.2);
+  --site-ink: #111111;
+  --site-muted: #525252;
+  --site-faint: #8a8a8a;
+  --site-paper: #ffffff;
+  --site-panel: #f7f7f7;
+  --site-line: rgba(17, 17, 17, 0.12);
+  --scroll-progress-bg: linear-gradient(90deg, rgba(17, 17, 17, 0.92), rgba(82, 82, 82, 0.84));
+  --scroll-progress-glow: 0 0 10px rgba(17, 17, 17, 0.18);
+  background-color: #ffffff;
+  color: var(--site-ink);
 }
 
 ::selection {
-  background-color: #47a3f3;
-  color: #fefefe;
+  background-color: #111111;
+  color: #ffffff;
 }
 
-/* Light theme colors */
-:root {
-  --sh-class: #2d5e9d;
-  --sh-identifier: #354150;
-  --sh-sign: #8996a3;
-  --sh-string: #007f7a;
-  --sh-keyword: #e02518;
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: #e25a1c;
-}
-
-/* Dark theme colors */
 .dark {
-  background-color: #050506;
-  --sh-class: #4c97f8;
-  --sh-identifier: white;
-  --sh-sign: #8996a3;
-  --sh-string: #0fa295;
-  --sh-keyword: #f47067;
-  --sh-comment: #a19595;
-  --sh-jsxliterals: #6266d1;
-  --sh-property: #e25a1c;
-  --sh-entity: #e25a1c;
-  --scroll-progress-bg: linear-gradient(90deg, rgba(148, 163, 184, 0.85), rgba(203, 213, 225, 0.85));
-  --scroll-progress-glow: 0 0 8px rgba(148, 163, 184, 0.3);
+  --site-ink: #f5f5f5;
+  --site-muted: #c7c7c7;
+  --site-faint: #9a9a9a;
+  --site-paper: #090909;
+  --site-panel: #141414;
+  --site-line: rgba(255, 255, 255, 0.12);
+  background-color: #090909;
+  --scroll-progress-bg: linear-gradient(90deg, rgba(245, 245, 245, 0.9), rgba(163, 163, 163, 0.82));
+  --scroll-progress-glow: 0 0 10px rgba(245, 245, 245, 0.14);
 }
 
 html {
@@ -68,8 +60,13 @@ html {
   scroll-behavior: smooth;
 }
 
+body {
+  background: var(--site-paper);
+  color: var(--site-ink);
+}
+
 .prose {
-  @apply text-[#333333] dark:text-[#D4D4D4];
+  color: var(--site-ink);
 }
 
 .prose .anchor {
@@ -86,15 +83,25 @@ html {
 }
 
 .prose a {
-  @apply transition-all decoration-neutral-400 dark:decoration-neutral-600 underline-offset-2 decoration-[0.1em] font-normal text-[#333333] dark:text-[#D4D4D4];
+  color: var(--site-ink);
+  text-decoration-color: rgba(17, 17, 17, 0.35);
+  @apply transition-all underline-offset-2 decoration-[0.1em] font-normal;
 }
 
 .prose a:hover {
-  @apply dark:decoration-neutral-400 decoration-neutral-600;
+  text-decoration-color: rgba(17, 17, 17, 0.75);
+}
+
+.dark .prose a {
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+}
+
+.dark .prose a:hover {
+  text-decoration-color: rgba(255, 255, 255, 0.75);
 }
 
 .prose .anchor:after {
-  @apply text-neutral-300 dark:text-neutral-700;
+  color: var(--site-faint);
   content: "#";
 }
 
@@ -103,7 +110,7 @@ html {
 }
 
 .prose pre {
-  @apply bg-[#F7F7F7] dark:bg-[#181818] rounded-lg overflow-x-auto;
+  @apply bg-cyan-50 dark:bg-cyan-950 rounded-lg overflow-x-auto;
 }
 
 .prose code {
@@ -201,15 +208,15 @@ table {
   align-items: flex-start;
   justify-content: center;
   border-radius: 9999px;
-  border: 1px solid rgba(115, 115, 115, 0.35);
-  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(17, 17, 17, 0.16);
+  background: rgba(255, 255, 255, 0.52);
   padding-top: 0.5rem;
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset;
 }
 
 .dark .home-scroll-wheel-track {
-  border-color: rgba(115, 115, 115, 0.45);
-  background: rgba(23, 23, 23, 0.35);
+  border-color: rgba(255, 255, 255, 0.16);
+  background: rgba(9, 9, 9, 0.45);
   box-shadow: 0 1px 0 rgba(255, 255, 255, 0.06) inset;
 }
 
@@ -217,12 +224,12 @@ table {
   height: 0.45rem;
   width: 0.45rem;
   border-radius: 9999px;
-  background: rgb(82, 82, 82);
+  background: rgb(17, 17, 17);
   animation: homeScrollWheel 1.85s ease-in-out infinite;
 }
 
 .dark .home-scroll-wheel-dot {
-  background: rgb(212, 212, 212);
+  background: rgb(245, 245, 245);
 }
 
 @keyframes homeScrollWheel {

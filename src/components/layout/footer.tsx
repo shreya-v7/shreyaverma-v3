@@ -1,16 +1,17 @@
+import type { IconType } from 'react-icons';
 import {
   FaXTwitter,
   FaGithub,
   FaInstagram,
   FaLinkedinIn,
-  FaCode
-} from "react-icons/fa6";
-import { TbMailFilled } from "react-icons/tb";
-import { metaData, socialLinks } from "../../config/config";
+  FaCode,
+} from 'react-icons/fa6';
+import { FiMail } from 'react-icons/fi';
+import { metaData, socialLinks } from '../../config/config';
 
 const YEAR = new Date().getFullYear();
 
-function SocialLink({ href, icon: Icon }) {
+function SocialLink({ href, icon: Icon }: { href: string; icon: IconType }) {
   return (
     <a href={href} target="_blank" rel="noopener noreferrer">
       <Icon />
@@ -25,7 +26,7 @@ function SocialLinks() {
       <SocialLink href={socialLinks.github} icon={FaGithub} />
       <SocialLink href={socialLinks.instagram} icon={FaInstagram} />
       <SocialLink href={socialLinks.linkedin} icon={FaLinkedinIn} />
-      <SocialLink href={socialLinks.email} icon={TbMailFilled} />
+      <SocialLink href={socialLinks.email} icon={FiMail} />
       <SocialLink href={socialLinks.code} icon={FaCode} />
     </div>
   );
@@ -33,7 +34,7 @@ function SocialLinks() {
 
 export default function Footer() {
   return (
-    <small className="block lg:mt-24 mt-16 text-[#1C1C1C] dark:text-[#D4D4D4]">
+    <small className="block lg:mt-24 mt-16 text-neutral-900 dark:text-neutral-100">
       <time>© {YEAR}</time>{" "}
       <a className="no-underline" href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
         {metaData.title}

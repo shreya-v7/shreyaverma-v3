@@ -69,7 +69,7 @@ export interface Achievement {
 
 export type SortOrder = 'latest' | 'oldest';
 export type SectionType = 'experience' | 'education' | 'certifications' | 'achievements';
-export type DiarySectionType = 'music' | 'books' | 'cinema' | 'blogs';
+export type DiarySectionType = 'music' | 'books' | 'cinema' | 'movies' | 'blogs';
 
 // Personal content types
 export interface PersonalPost {
@@ -81,7 +81,7 @@ export interface PersonalPost {
   tags?: string[];
   link?: string;
   content?: string; // Added for blog write-ups
-  type: 'music' | 'books' | 'cinema' | 'blogs';
+  type: 'books' | 'cinema' | 'blogs';
   metadata?: {
     artist?: string;
     album?: string;

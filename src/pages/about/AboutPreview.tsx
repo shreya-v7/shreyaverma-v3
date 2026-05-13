@@ -5,11 +5,11 @@ import { CertificateCard } from '../../components/ui/CertificateCard';
 import { NavigationButtons } from '../../components/ui/NavigationButtons';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { useCompanyModal } from '../../hooks/useCompanyModal';
+import { ABOUT_NAV } from '../../config/sectionNav';
 import { experienceData } from '../../data/experience';
 import { educationData } from '../../data/education';
 import { certificates } from '../../data/certificates';
 import { achievementsData } from '../../data/achievements';
-import { SectionType } from '../../types';
 
 export default function AboutPreview() {
   const {
@@ -26,19 +26,9 @@ export default function AboutPreview() {
   const top2Certificates = certificates.slice(0, 2);
   const top2Achievements = achievementsData.slice(0, 2);
 
-  const sections = [
-    { id: 'experience' as SectionType, label: 'Experience', path: '/about/experience' },
-    { id: 'education' as SectionType, label: 'Education', path: '/about/education' },
-    { id: 'certifications' as SectionType, label: 'Certifications', path: '/about/certifications' },
-    { id: 'achievements' as SectionType, label: 'Achievements', path: '/about/achievements' },
-  ];
-
   return (
     <div className="space-y-12">
-      <NavigationButtons
-        buttons={sections}
-        activeId=""
-      />
+      <NavigationButtons buttons={ABOUT_NAV} activeId="" />
       <PreviewSection
         title="Experience"
         viewAllPath="/about/experience"

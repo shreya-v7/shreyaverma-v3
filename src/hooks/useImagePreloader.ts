@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { projects } from '../data/projects';
-import { artists } from '../data/diary/music';
 import { cinemaPosts } from '../data/diary/cinema';
 import { certificates } from '../data/certificates';
 import { experienceData } from '../data/experience';
@@ -17,11 +16,6 @@ export const useImagePreloader = () => {
       
       // Project images
       ...projects.map(project => `/${project.image}`),
-      
-      // Artist images
-      ...artists
-        .filter(artist => artist.image)
-        .map(artist => `/${artist.image}`),
       
       // Cinema images
       ...cinemaPosts

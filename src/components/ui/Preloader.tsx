@@ -95,14 +95,14 @@ export const Preloader = ({ loading, progress }: PreloaderProps) => {
     >
       {/* Backdrop */}
       <div
-        className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-neutral-100 dark:from-[#050506] dark:via-[#08080c] dark:to-[#050506]"
+        className="absolute inset-0 bg-gradient-to-b from-neutral-50 via-white to-neutral-100 dark:from-[#070707] dark:via-[#0c0c0c] dark:to-[#070707]"
         aria-hidden
       />
       <div
         className="preloader-ambient pointer-events-none absolute inset-0 opacity-40 dark:opacity-30"
         style={{
           background:
-            'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(115,115,115,0.12), transparent 50%), radial-gradient(ellipse 60% 40% at 100% 100%, rgba(115,115,115,0.08), transparent 45%)',
+            'radial-gradient(ellipse 80% 50% at 50% -20%, rgba(255,255,255,0.08), transparent 50%), radial-gradient(ellipse 60% 40% at 100% 100%, rgba(255,255,255,0.05), transparent 45%)',
         }}
         aria-hidden
       />

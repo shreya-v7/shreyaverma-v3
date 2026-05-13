@@ -1,5 +1,6 @@
 import { PersonalPost } from '../../types';
 import { formatDate } from '../../utils';
+import { DIARY_BLOGS_PATH } from '../../config/sectionNav';
 import { FiExternalLink, FiCalendar } from 'react-icons/fi';
 
 interface BlogCardProps {
@@ -58,7 +59,7 @@ export const BlogCard = ({ post }: BlogCardProps) => {
         )}
         {hasContent && (
           <a
-            href={`/diary/blogs/${post.id}`}
+            href={`${DIARY_BLOGS_PATH}/${post.id}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 font-medium text-xs group-hover:underline transition-all"

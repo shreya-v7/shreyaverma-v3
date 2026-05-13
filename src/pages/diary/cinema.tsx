@@ -1,10 +1,13 @@
+import { useEffect, useState } from 'react';
+
 import { CinemaCard } from '../../components/ui/CinemaCard';
 import { Pagination } from '../../components/ui/Pagination';
 import { useTheme } from '../../hooks/useTheme';
-import { cinemaPosts } from '../../data/diary/cinema';
-import { useState, useEffect, useRef } from 'react';
+import { cinemaMoviePosts, cinemaTvPosts } from '../../data/diary/cinema';
 
 const POSTS_PER_PAGE = 4;
+
+export type CinemaMode = 'tv' | 'movies';
 
 interface ShootingStar {
   id: number;
@@ -17,110 +20,94 @@ interface ShootingStar {
   size: number;
 }
 
-export default function Cinema() {
-  const [shootingStars, setShootingStars] = useState<ShootingStar[]>([]);
+function spawnStar(): ShootingStar {
+  const side = Math.floor(Math.random() * 4);
+  let x = 0;
+  let y = 0;
+  let vx = 0;
+  let vy = 0;
+  if (side === 0) {
+    x = Math.random() * 100; y = -10;
+    vx = (Math.random() - 0.5) * 0.5; vy = Math.random() * 0.3 + 0.2;
+  } else if (side === 1) {
+    x = 110; y = Math.random() * 100;
+    vx = -(Math.random() * 0.3 + 0.2); vy = (Math.random() - 0.5) * 0.5;
+  } else if (side === 2) {
+    x = Math.random() * 100; y = 110;
+    vx = (Math.random() - 0.5) * 0.5; vy = -(Math.random() * 0.3 + 0.2);
+  } else {
+    x = -10; y = Math.random() * 100;
+    vx = Math.random() * 0.3 + 0.2; vy = (Math.random() - 0.5) * 0.5;
+  }
+  return {
+    id: Date.now() + Math.random(),
+    x, y, vx, vy,
+    length: Math.random() * 50 + 40,
+    opacity: Math.random() * 0.4 + 0.6,
+    size: Math.random() * 2.5 + 2,
+  };
+}
+
+const DARK_COLORS = {
+  head: 'rgba(192, 192, 192, 1)',
+  glow: 'rgba(192, 192, 192, 0.8)',
+  outerGlow: 'rgba(192, 192, 192, 0.4)',
+  trailStart: 'rgba(192, 192, 192, 1)',
+  trailMid: 'rgba(192, 192, 192, 0.6)',
+};
+const LIGHT_COLORS = {
+  head: 'rgba(255, 215, 0, 1)',
+  glow: 'rgba(255, 215, 0, 1)',
+  outerGlow: 'rgba(255, 215, 0, 0.8)',
+  trailStart: 'rgba(255, 215, 0, 1)',
+  trailMid: 'rgba(255, 215, 0, 0.7)',
+};
+
+export default function Cinema({ mode = 'tv' }: { mode?: CinemaMode }) {
+  const [stars, setStars] = useState<ShootingStar[]>([]);
   const isDark = useTheme();
-  const sectionRef = useRef<HTMLElement>(null);
   const [currentPage, setCurrentPage] = useState(1);
 
+  const posts = mode === 'movies' ? cinemaMoviePosts() : cinemaTvPosts();
+
   useEffect(() => {
-    // Create shooting star
-    const createShootingStar = (): ShootingStar => {
-      const side = Math.floor(Math.random() * 4); // 0: top, 1: right, 2: bottom, 3: left
-      let x, y, vx, vy;
-      
-      if (side === 0) { // Top
-        x = Math.random() * 100;
-        y = -10;
-        vx = (Math.random() - 0.5) * 0.5;
-        vy = Math.random() * 0.3 + 0.2;
-      } else if (side === 1) { // Right
-        x = 110;
-        y = Math.random() * 100;
-        vx = -(Math.random() * 0.3 + 0.2);
-        vy = (Math.random() - 0.5) * 0.5;
-      } else if (side === 2) { // Bottom
-        x = Math.random() * 100;
-        y = 110;
-        vx = (Math.random() - 0.5) * 0.5;
-        vy = -(Math.random() * 0.3 + 0.2);
-      } else { // Left
-        x = -10;
-        y = Math.random() * 100;
-        vx = Math.random() * 0.3 + 0.2;
-        vy = (Math.random() - 0.5) * 0.5;
-      }
+    setCurrentPage(1);
+  }, [mode]);
 
-      return {
-        id: Date.now() + Math.random(),
-        x,
-        y,
-        vx,
-        vy,
-        length: Math.random() * 50 + 40, // Longer trails for more prominence
-        opacity: Math.random() * 0.4 + 0.6, // Higher opacity
-        size: Math.random() * 2.5 + 2, // Larger stars
-      };
-    };
+  useEffect(() => {
+    setStars(Array.from({ length: 12 }, spawnStar));
 
-    // Initialize with multiple shooting stars
-    const initialStars = Array.from({ length: 12 }, () => createShootingStar());
-    setShootingStars(initialStars);
+    const spawner = window.setInterval(() => {
+      setStars((prev) => [...prev.slice(-20), spawnStar()]);
+    }, 400);
 
-    // Add new shooting stars more frequently for multiple stars
-    const addStarInterval = setInterval(() => {
-      setShootingStars(prev => [...prev.slice(-20), createShootingStar()]);
-    }, 400); // More frequent spawning
-
-    // Animate shooting stars
-    const animationInterval = setInterval(() => {
-      setShootingStars(prev => 
-        prev.map(star => ({
-          ...star,
-          x: star.x + star.vx,
-          y: star.y + star.vy,
-          opacity: star.opacity * 0.98, // Fade out
-        })).filter(star => 
-          star.x > -50 && star.x < 150 && star.y > -50 && star.y < 150 && star.opacity > 0.1
-        )
+    const ticker = window.setInterval(() => {
+      setStars((prev) =>
+        prev
+          .map((s) => ({ ...s, x: s.x + s.vx, y: s.y + s.vy, opacity: s.opacity * 0.98 }))
+          .filter((s) => s.x > -50 && s.x < 150 && s.y > -50 && s.y < 150 && s.opacity > 0.1),
       );
-    }, 16); // ~60fps
+    }, 16);
 
     return () => {
-      clearInterval(addStarInterval);
-      clearInterval(animationInterval);
+      window.clearInterval(spawner);
+      window.clearInterval(ticker);
     };
   }, []);
 
-  const totalPages = Math.ceil(cinemaPosts.length / POSTS_PER_PAGE);
+  const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE) || 1;
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const endIndex = startIndex + POSTS_PER_PAGE;
-  const currentPosts = cinemaPosts.slice(startIndex, endIndex);
+  const currentPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
-  // Golden for light mode (more prominent), Silver for dark mode
-  const starColor = isDark 
-    ? { 
-        head: 'rgba(192, 192, 192, 1)', 
-        glow: 'rgba(192, 192, 192, 0.8)', 
-        outerGlow: 'rgba(192, 192, 192, 0.4)',
-        trailStart: 'rgba(192, 192, 192, 1)',
-        trailMid: 'rgba(192, 192, 192, 0.6)',
-      } // Silver
-    : { 
-        head: 'rgba(255, 215, 0, 1)', 
-        glow: 'rgba(255, 215, 0, 1)', 
-        outerGlow: 'rgba(255, 215, 0, 0.8)',
-        trailStart: 'rgba(255, 215, 0, 1)',
-        trailMid: 'rgba(255, 215, 0, 0.7)',
-      }; // Golden - more vibrant and prominent
+  const colors = isDark ? DARK_COLORS : LIGHT_COLORS;
 
   return (
-    <section ref={sectionRef} className="relative min-h-[600px]">
-      {/* Shooting Star Particles - Golden (light, prominent) / Silver (dark) */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        {shootingStars.map((star) => {
+    <section className="relative min-h-[600px]">
+      <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden" aria-hidden>
+        {stars.map((star) => {
           const angle = Math.atan2(star.vy, star.vx) * (180 / Math.PI);
-          const enhancedOpacity = isDark ? star.opacity : Math.min(1, star.opacity * 1.2); // Boost opacity in light mode
+          const enhancedOpacity = isDark ? star.opacity : Math.min(1, star.opacity * 1.2);
+          const headSize = star.size * (isDark ? 2 : 2.5);
           return (
             <div
               key={star.id}
@@ -133,25 +120,22 @@ export default function Cinema() {
                 opacity: enhancedOpacity,
                 transform: `rotate(${angle}deg)`,
                 transformOrigin: 'left center',
-                transition: 'none',
               }}
             >
-              {/* Star head - larger and brighter in light mode */}
               <div
                 className="absolute rounded-full"
                 style={{
                   left: 0,
                   top: '50%',
                   transform: 'translateY(-50%)',
-                  width: `${star.size * (isDark ? 2 : 2.5)}px`,
-                  height: `${star.size * (isDark ? 2 : 2.5)}px`,
-                  background: `radial-gradient(circle, ${starColor.head} 0%, ${starColor.glow} 50%, transparent 100%)`,
-                  boxShadow: isDark 
-                    ? `0 0 ${star.size * 4}px ${star.size}px ${starColor.glow}`
-                    : `0 0 ${star.size * 6}px ${star.size * 1.5}px ${starColor.glow}, 0 0 ${star.size * 10}px ${star.size * 2}px ${starColor.outerGlow}`,
+                  width: `${headSize}px`,
+                  height: `${headSize}px`,
+                  background: `radial-gradient(circle, ${colors.head} 0%, ${colors.glow} 50%, transparent 100%)`,
+                  boxShadow: isDark
+                    ? `0 0 ${star.size * 4}px ${star.size}px ${colors.glow}`
+                    : `0 0 ${star.size * 6}px ${star.size * 1.5}px ${colors.glow}, 0 0 ${star.size * 10}px ${star.size * 2}px ${colors.outerGlow}`,
                 }}
               />
-              {/* Star trail - thicker and brighter in light mode */}
               <div
                 className="absolute"
                 style={{
@@ -160,10 +144,10 @@ export default function Cinema() {
                   transform: 'translateY(-50%)',
                   width: `${star.length - star.size}px`,
                   height: isDark ? '1px' : '2px',
-                  background: `linear-gradient(to right, ${starColor.trailStart}, ${starColor.trailMid}, transparent)`,
+                  background: `linear-gradient(to right, ${colors.trailStart}, ${colors.trailMid}, transparent)`,
                   boxShadow: isDark
-                    ? `0 0 ${star.size * 2}px rgba(255, 255, 255, ${enhancedOpacity * 0.5}), 0 0 ${star.size * 4}px ${starColor.outerGlow}`
-                    : `0 0 ${star.size * 3}px ${starColor.trailStart}, 0 0 ${star.size * 6}px ${starColor.outerGlow}, 0 0 ${star.size * 10}px ${starColor.outerGlow}`,
+                    ? `0 0 ${star.size * 2}px rgba(255, 255, 255, ${enhancedOpacity * 0.5}), 0 0 ${star.size * 4}px ${colors.outerGlow}`
+                    : `0 0 ${star.size * 3}px ${colors.trailStart}, 0 0 ${star.size * 6}px ${colors.outerGlow}, 0 0 ${star.size * 10}px ${colors.outerGlow}`,
                 }}
               />
             </div>
@@ -172,18 +156,13 @@ export default function Cinema() {
       </div>
 
       <div className="relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div className="mb-8 grid grid-cols-1 gap-6 md:grid-cols-2">
           {currentPosts.map((post) => (
             <CinemaCard key={post.id} post={post} />
           ))}
         </div>
 
-        <Pagination
-          currentPage={currentPage}
-          totalPages={totalPages}
-          onPageChange={setCurrentPage}
-          color="cyan"
-        />
+        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} color="cyan" />
       </div>
     </section>
   );

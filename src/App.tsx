@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { AmbientBg } from './components/layout/AmbientBg';
 import { Navbar } from './components/layout/nav';
@@ -16,8 +16,14 @@ import BlogDetail from './pages/diary/BlogDetail';
 import Projects from './pages/projects';
 import Contact from './pages/contact';
 import Book from './pages/book';
-import Workspace from './pages/workspace';
 import NotFound from './pages/NotFound';
+import { DIARY_BLOGS_PATH, DIARY_MOVIES_PATH, DIARY_NOTES_PATH } from './config/sectionNav';
+
+/** Old URLs served blog posts under /diary/movies/:id */
+function RedirectOldMoviesPostToBlogs() {
+  const { id } = useParams<{ id: string }>();
+  return <Navigate to={`${DIARY_BLOGS_PATH}/${id}`} replace />;
+}
 
 function App() {
   const { loading, progress } = useImagePreloader();
@@ -57,12 +63,14 @@ function App() {
             <Route path="/diary/music" element={<Diary section="music" />} />
             <Route path="/diary/books" element={<Diary section="books" />} />
             <Route path="/diary/cinema" element={<Diary section="cinema" />} />
-            <Route path="/diary/blogs" element={<Diary section="blogs" />} />
-            <Route path="/diary/blogs/:id" element={<BlogDetail />} />
+            <Route path={DIARY_MOVIES_PATH} element={<Diary section="movies" />} />
+            <Route path={DIARY_NOTES_PATH} element={<Navigate to={DIARY_BLOGS_PATH} replace />} />
+            <Route path={DIARY_BLOGS_PATH} element={<Diary section="blogs" />} />
+            <Route path={`${DIARY_BLOGS_PATH}/:id`} element={<BlogDetail />} />
+            <Route path={`${DIARY_MOVIES_PATH}/:id`} element={<RedirectOldMoviesPostToBlogs />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/book" element={<Book />} />
-            <Route path="/workspace" element={<Workspace />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
@@ -74,4 +82,3 @@ function App() {
 }
 
 export default App;
-

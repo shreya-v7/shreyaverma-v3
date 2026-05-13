@@ -1,4 +1,4 @@
-/** Rotating “Sherrii” faces for the nudge bubble — playful, never crude */
+/** Rotating “Sherrii” faces for the nudge bubble; playful, never crude */
 export const sherriiAvatars = [
   '👩',
   '😏',

@@ -1,0 +1,15 @@
+import type { DiarySectionType, SectionType } from '../types';
+
+export const ABOUT_NAV: { id: SectionType; label: string; path: string }[] = [
+  { id: 'experience', label: 'Experience', path: '/about/experience' },
+  { id: 'education', label: 'Education', path: '/about/education' },
+  { id: 'certifications', label: 'Certifications', path: '/about/certifications' },
+  { id: 'achievements', label: 'Achievements', path: '/about/achievements' },
+];
+
+export const DIARY_NAV: { id: DiarySectionType; label: string; path: string }[] = [
+  { id: 'music', label: 'Music', path: '/diary/music' },
+  { id: 'books', label: 'Books', path: '/diary/books' },
+  { id: 'cinema', label: 'TV', path: '/diary/cinema' },
+  { id: 'blogs', label: 'Movies', path: '/diary/blogs' },
+];

@@ -191,3 +191,13 @@ export const cinemaPosts: PersonalPost[] = [
     }
   }
 ];
+
+/** TV-style entries (shows), not standalone film cards. */
+export function cinemaTvPosts(): PersonalPost[] {
+  return cinemaPosts.filter((p) => !p.metadata?.movie);
+}
+
+/** Film entries (`metadata.movie`). */
+export function cinemaMoviePosts(): PersonalPost[] {
+  return cinemaPosts.filter((p) => Boolean(p.metadata?.movie));
+}

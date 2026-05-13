@@ -1,14 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import DiaryBody from "./diarybody";
 import DiaryPreview from "./DiaryPreview";
-import { DiarySectionType } from "../../types";
+import { DIARY_NAV } from "../../config/sectionNav";
+import type { DiarySectionType } from "../../types";
 
-const sectionTitles: Record<DiarySectionType, string> = {
-  music: 'Music',
-  books: 'Books',
-  cinema: 'TV',
-  blogs: 'Movies',
-};
+const sectionTitles = Object.fromEntries(DIARY_NAV.map((s) => [s.id, s.label])) as Record<
+  DiarySectionType,
+  string
+>;
 
 interface DiaryProps {
   section?: DiarySectionType;
@@ -25,7 +24,7 @@ export default function Diary({ section }: DiaryProps) {
           content={
             section
               ? `Diary - ${sectionTitles[section]}`
-              : 'Diary - Music, Books, TV, and Movies'
+              : 'Diary - Blogs, Books, Music, Movies, and TV shows'
           }
         />
       </Helmet>

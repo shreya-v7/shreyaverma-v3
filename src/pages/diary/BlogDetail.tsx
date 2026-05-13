@@ -2,6 +2,7 @@ import { useParams, Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { blogsPosts } from '../../data/diary/blogs';
 import { formatDate } from '../../utils';
+import { DIARY_BLOGS_PATH } from '../../config/sectionNav';
 import { FiArrowLeft, FiCalendar } from 'react-icons/fi';
 
 export default function BlogDetail() {
@@ -11,8 +12,8 @@ export default function BlogDetail() {
   if (!post) {
     return (
       <div className="text-center py-16">
-        <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Blog Not Found</h1>
-        <Link to="/diary/blogs" className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400">
+        <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">Post not found</h1>
+        <Link to={DIARY_BLOGS_PATH} className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400">
           ← Back to Blogs
         </Link>
       </div>
@@ -22,12 +23,12 @@ export default function BlogDetail() {
   return (
     <>
       <Helmet>
-        <title>{post.title || 'Blog'} | Shreya Verma</title>
+        <title>{post.title || 'Blog post'} | Shreya Verma</title>
         <meta name="description" content={post.caption} />
       </Helmet>
       <article className="max-w-3xl mx-auto">
         <Link
-          to="/diary/blogs"
+          to={DIARY_BLOGS_PATH}
           className="inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 mb-6 transition-colors"
         >
           <FiArrowLeft className="w-4 h-4" />

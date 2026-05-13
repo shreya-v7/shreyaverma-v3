@@ -2,6 +2,26 @@ import { PersonalPost } from '../../types';
 
 export const booksPosts: PersonalPost[] = [
   {
+    id: 'book-10',
+    caption:
+      'hooked me on game dev friendship chaos then yeeted the plot into a wormhole of sadness (10/10 would cry again)',
+    type: 'books',
+    tags: ['fiction', 'games', 'friendship'],
+    date: '2026-05-09',
+    metadata: {
+      author: 'Gabrielle Zevin',
+      book: 'Tomorrow, and Tomorrow, and Tomorrow',
+      rating: 5,
+      detailedReview: [
+        'stayed up way too late because the craft and pacing are that good',
+        'the early energy (building things together, the shorthand of creative partners) felt so real',
+        'then the book does what it does and the emotional turn hits like a patch that breaks prod',
+        'not a cozy read by the end but it earns the sadness; still thinking about it weeks later',
+        'if you like sharp prose and games as metaphor for love, time, and failure, this one delivers',
+      ],
+    },
+  },
+  {
     id: 'book-1',
     caption: 'okay so this book made me quit my job and book a one-way ticket to spain (jk but the urge was REAL)',
     type: 'books',

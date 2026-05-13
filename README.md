@@ -14,7 +14,7 @@ Visit the live site: [https://shreyaverma.netlify.app](https://shreyaverma.netli
 - **Dynamic Routing**: Client-side routing with React Router v6
 - **SEO Optimized**: Meta tags and Open Graph support via React Helmet
 - **RSS Feeds**: Automatically generated Atom and JSON feeds for blog posts
-- **Interactive UI**: Swiper sliders, modals, pagination, and animated components
+- **Interactive UI**: Modals, pagination, Spotify embeds, and animated components
 - **Particle Effects**: Dynamic particle animations for music, books, cinema, and blog sections
 - **Personal Diary**: Showcase music, books, cinema, and blog posts with interactive cards
 - **Modular Architecture**: Reusable components, hooks, and utilities for maintainability
@@ -33,11 +33,8 @@ Visit the live site: [https://shreyaverma.netlify.app](https://shreyaverma.netli
 - **next-themes** - Theme switching (light/dark mode)
 
 ### UI Components & Libraries
-- **Swiper 12.0** - Touch slider for music and artist sections
 - **React Icons** - Comprehensive icon library
 - **React Helmet Async** - Document head management
-- **React Spring** - Animation library
-- **Three.js & React Three Fiber** - 3D graphics support
 
 ### Content & Media
 - **Feed** - RSS feed generation
@@ -53,8 +50,7 @@ shreyaverma-v3/
 │   ├── photos/               # Portfolio photos
 │   ├── work/                 # Project images
 │   ├── experience/           # Company logos
-│   ├── education/            # Institution logos
-│   └── music/                # Artist images
+│   └── education/            # Institution logos
 ├── src/
 │   ├── components/           # Reusable components
 │   │   ├── layout/          # Layout components
@@ -78,7 +74,6 @@ shreyaverma-v3/
 │   │   ├── certificates.ts  # Certifications
 │   │   ├── projects.ts      # Project portfolio
 │   │   ├── diary/           # Personal diary content
-│   │   │   ├── music.ts     # Music posts and artists
 │   │   │   ├── books.ts     # Book reviews
 │   │   │   ├── cinema.ts    # Movie/show reviews
 │   │   │   └── blogs.ts     # Blog posts
@@ -202,7 +197,7 @@ export const socialLinks = {
 - **Education**: Edit `src/data/education.ts`
 - **Certificates**: Edit `src/data/certificates.ts`
 - **Diary Content**:
-  - Music: `src/data/diary/music.ts`
+  - Music embeds: configure `SPOTIFY_*` env values
   - Books: `src/data/diary/books.ts`
   - Cinema: `src/data/diary/cinema.ts`
   - Blogs: `src/data/diary/blogs.ts`
@@ -266,6 +261,21 @@ VITE_BASE_URL=https://yourdomain.com
 
 Access them in code using `import.meta.env.VITE_BASE_URL`
 
+Optional: `VITE_PUBLIC_BOOKING_EMBED_URL` enables `/book` and the “Book a time” link on Contact (public embed URL only; never put OAuth secrets in `VITE_*`).
+
+### Spotify Music
+
+The Music page uses Spotify embeds served by `netlify/functions/spotify-playlist.mjs`. Add comma-separated Spotify URLs or IDs locally and in Netlify:
+
+```env
+SPOTIFY_PLAYLIST_IDS=https://open.spotify.com/playlist/...
+SPOTIFY_TOP_ARTIST_IDS=https://open.spotify.com/artist/...
+SPOTIFY_FAVORITE_TRACK_ID=https://open.spotify.com/track/...
+VITE_SPOTIFY_API_PROXY_TARGET=http://127.0.0.1:8888
+```
+
+For local API testing, run `npm run dev:netlify` and open the local URL Netlify prints.
+
 ## 🎯 Key Features Explained
 
 ### Theme Switching
@@ -281,9 +291,6 @@ Dynamic particle animations enhance various sections:
 - Shooting stars for the cinema section
 - Multicolored particles for the blogs section
 - Twinkling stars for the diary preview page
-
-### Swiper Integration
-Smooth, infinite carousels for music and artist sections with navigation arrows and pagination dots.
 
 ### Modal System
 Reusable modal system for displaying detailed information about companies, institutions, books, and cinema reviews.
@@ -306,7 +313,6 @@ This project is licensed under the MIT License.
 - Styled with [Tailwind CSS](https://tailwindcss.com/)
 - Fonts: [Geist](https://vercel.com/font) by Vercel
 - Icons: [React Icons](https://react-icons.github.io/react-icons/)
-- Sliders: [Swiper](https://swiperjs.com/)
 
 ---
 

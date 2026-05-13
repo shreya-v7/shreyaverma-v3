@@ -1,14 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import AboutBody from "./aboutbody";
 import AboutPreview from "./AboutPreview";
-import { SectionType } from "../../types";
+import { ABOUT_NAV } from "../../config/sectionNav";
+import type { SectionType } from "../../types";
 
-const sectionTitles: Record<SectionType, string> = {
-  experience: 'Experience',
-  education: 'Education',
-  certifications: 'Certifications',
-  achievements: 'Achievements',
-};
+const sectionTitles = Object.fromEntries(ABOUT_NAV.map((s) => [s.id, s.label])) as Record<
+  SectionType,
+  string
+>;
 
 interface AboutProps {
   section?: SectionType;

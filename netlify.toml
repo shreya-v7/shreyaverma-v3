@@ -1,13 +1,31 @@
 [build]
-  command = "pnpm run build"
+  # Use npm so Netlify works with package-lock.json without a pnpm store.
+  command = "npm run build"
   publish = "dist"
 
 [build.environment]
   NODE_VERSION = "22"
+  # Set in Netlify UI (Site settings → Environment variables), never commit:
+  # SPOTIFY_PLAYLIST_ID / SPOTIFY_PLAYLIST_IDS, SPOTIFY_TOP_ARTIST_IDS, SPOTIFY_FAVORITE_TRACK_ID
+  # Optional: VITE_PUBLIC_BOOKING_EMBED_URL, VITE_SPOTIFY_API_PROXY_TARGET (local proxy)
 
-# Redirect all routes to index.html for client-side routing
+[functions]
+  directory = "netlify/functions"
+
+[dev]
+  command = "npx vite --port 5173"
+  framework = "#custom"
+  targetPort = 5173
+  port = 8888
+  autoLaunch = false
+
+[[redirects]]
+  from = "/api/spotify-playlist"
+  to = "/.netlify/functions/spotify-playlist"
+  status = 200
+  force = true
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
-

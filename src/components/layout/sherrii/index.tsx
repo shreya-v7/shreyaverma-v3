@@ -125,7 +125,7 @@ const SherriiBubble = ({
 }) => (
   <div className="flex items-center gap-2 bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-full shadow-2xl px-3 py-2 pr-1.5 max-w-[calc(100vw-3rem)]">
     <div
-      className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-pink-500 to-purple-600 transition-[filter] duration-700 ease-out shadow-inner"
+      className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center bg-gradient-to-br from-neutral-800 to-neutral-500 transition-[filter] duration-700 ease-out shadow-inner dark:from-neutral-200 dark:to-neutral-500"
       style={{ filter: `hue-rotate(${avatarHueShift(avatar)}deg) saturate(1.12)` }}
     >
       <span key={avatar} className="sherrii-avatar-emoji text-base leading-none block select-none" aria-hidden="true">
@@ -161,37 +161,55 @@ const CuteButterfly = ({ isDragging }: { isDragging: boolean }) => (
     <svg
       viewBox="0 0 100 100"
       className="w-full h-full"
-      style={{ filter: 'drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15))' }}
+      style={{ filter: 'drop-shadow(0 10px 18px rgba(37, 99, 235, 0.28))' }}
     >
+      <defs>
+        <linearGradient id="butterflyBlueRed" x1="18" y1="14" x2="82" y2="86" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#1d4ed8" />
+          <stop offset="46%" stopColor="#2563eb" />
+          <stop offset="100%" stopColor="#dc2626" />
+        </linearGradient>
+        <linearGradient id="butterflyRedBlue" x1="18" y1="86" x2="82" y2="14" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stopColor="#b91c1c" />
+          <stop offset="52%" stopColor="#ef4444" />
+          <stop offset="100%" stopColor="#1e40af" />
+        </linearGradient>
+        <radialGradient id="butterflyWingLight" cx="35%" cy="28%" r="70%">
+          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.82" />
+          <stop offset="45%" stopColor="#93c5fd" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+        </radialGradient>
+      </defs>
+
       {/* Upper Left Wing */}
-      <ellipse cx="30" cy="35" rx="20" ry="25" fill="#ff6b9d" opacity="0.9" />
-      <ellipse cx="30" cy="35" rx="15" ry="20" fill="#ff8fab" />
-      <ellipse cx="25" cy="30" rx="8" ry="10" fill="#ffb3d9" />
+      <ellipse cx="30" cy="35" rx="20" ry="25" fill="url(#butterflyBlueRed)" opacity="0.96" />
+      <ellipse cx="30" cy="35" rx="15" ry="20" fill="url(#butterflyWingLight)" />
+      <ellipse cx="25" cy="30" rx="8" ry="10" fill="#dbeafe" opacity="0.52" />
       
       {/* Upper Right Wing */}
-      <ellipse cx="70" cy="35" rx="20" ry="25" fill="#ff6b9d" opacity="0.9" />
-      <ellipse cx="70" cy="35" rx="15" ry="20" fill="#ff8fab" />
-      <ellipse cx="75" cy="30" rx="8" ry="10" fill="#ffb3d9" />
+      <ellipse cx="70" cy="35" rx="20" ry="25" fill="url(#butterflyBlueRed)" opacity="0.96" />
+      <ellipse cx="70" cy="35" rx="15" ry="20" fill="url(#butterflyWingLight)" />
+      <ellipse cx="75" cy="30" rx="8" ry="10" fill="#dbeafe" opacity="0.52" />
       
       {/* Lower Left Wing */}
-      <ellipse cx="30" cy="65" rx="20" ry="25" fill="#c77dff" opacity="0.9" />
-      <ellipse cx="30" cy="65" rx="15" ry="20" fill="#d89eff" />
-      <ellipse cx="25" cy="70" rx="8" ry="10" fill="#e6b3ff" />
+      <ellipse cx="30" cy="65" rx="20" ry="25" fill="url(#butterflyRedBlue)" opacity="0.94" />
+      <ellipse cx="30" cy="65" rx="15" ry="20" fill="url(#butterflyWingLight)" />
+      <ellipse cx="25" cy="70" rx="8" ry="10" fill="#fee2e2" opacity="0.48" />
       
       {/* Lower Right Wing */}
-      <ellipse cx="70" cy="65" rx="20" ry="25" fill="#c77dff" opacity="0.9" />
-      <ellipse cx="70" cy="65" rx="15" ry="20" fill="#d89eff" />
-      <ellipse cx="75" cy="70" rx="8" ry="10" fill="#e6b3ff" />
+      <ellipse cx="70" cy="65" rx="20" ry="25" fill="url(#butterflyRedBlue)" opacity="0.94" />
+      <ellipse cx="70" cy="65" rx="15" ry="20" fill="url(#butterflyWingLight)" />
+      <ellipse cx="75" cy="70" rx="8" ry="10" fill="#fee2e2" opacity="0.48" />
       
       {/* Body */}
-      <ellipse cx="50" cy="50" rx="4" ry="35" fill="#4a5568" />
-      <ellipse cx="50" cy="45" rx="3" ry="8" fill="#2d3748" />
+      <ellipse cx="50" cy="50" rx="4" ry="35" fill="#0f172a" />
+      <ellipse cx="50" cy="45" rx="3" ry="8" fill="#020617" />
       
       {/* Antennae */}
-      <line x1="50" y1="15" x2="45" y2="10" stroke="#2d3748" strokeWidth="2" strokeLinecap="round" />
-      <line x1="50" y1="15" x2="55" y2="10" stroke="#2d3748" strokeWidth="2" strokeLinecap="round" />
-      <circle cx="45" cy="10" r="2" fill="#ff6b9d" />
-      <circle cx="55" cy="10" r="2" fill="#ff6b9d" />
+      <line x1="50" y1="15" x2="45" y2="10" stroke="#020617" strokeWidth="2" strokeLinecap="round" />
+      <line x1="50" y1="15" x2="55" y2="10" stroke="#020617" strokeWidth="2" strokeLinecap="round" />
+      <circle cx="45" cy="10" r="2" fill="#2563eb" />
+      <circle cx="55" cy="10" r="2" fill="#dc2626" />
       
       {/* Wing Patterns - Left Upper */}
       <circle cx="25" cy="30" r="3" fill="#ffffff" opacity="0.7" />
