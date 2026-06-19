@@ -10,13 +10,14 @@ import { useTwinkleStars } from '../../hooks/useTwinkleStars';
 import { DIARY_BLOGS_PATH, DIARY_MOVIES_PATH, DIARY_NAV, DIARY_TV_PATH } from '../../config/sectionNav';
 import { booksPosts } from '../../data/diary/books';
 import { cinemaMoviePosts, cinemaTvPosts } from '../../data/diary/cinema';
-import { blogsPosts } from '../../data/diary/blogs';
+import { useBlogPosts } from '../../hooks/useBlogPosts';
 import { fetchSpotifyEmbed } from '../../lib/spotifyPlaylist';
 import type { SpotifyEmbedItem } from '../../lib/spotifyPlaylist';
 
 export default function DiaryPreview() {
   const stars = useTwinkleStars();
   const isDark = useTheme();
+  const { posts: blogPosts, loading: blogsLoading } = useBlogPosts(6);
   const [spotifyArtists, setSpotifyArtists] = useState<SpotifyEmbedItem[]>([]);
   const [spotifyLoading, setSpotifyLoading] = useState(true);
 
@@ -64,9 +65,14 @@ export default function DiaryPreview() {
         <section>
           <SectionHeader title="Blogs" viewAllPath={DIARY_BLOGS_PATH} />
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {blogsPosts.slice(0, 2).map((post) => (
-              <BlogCard key={post.id} post={post} />
-            ))}
+            {blogsLoading && blogPosts.length === 0
+              ? Array.from({ length: 2 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="h-48 animate-pulse rounded-xl border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800/50"
+                  />
+                ))
+              : blogPosts.slice(0, 2).map((post) => <BlogCard key={post.id} post={post} />)}
           </div>
         </section>
 

@@ -1,2 +1,3 @@
 /api/spotify-playlist  /.netlify/functions/spotify-playlist  200!
+/api/substack-posts  /.netlify/functions/substack-posts  200!
 /*  /index.html  200

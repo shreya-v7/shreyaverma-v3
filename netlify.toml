@@ -7,6 +7,7 @@
   NODE_VERSION = "22"
   # Set in Netlify UI (Site settings → Environment variables), never commit:
   # SPOTIFY_PLAYLIST_ID / SPOTIFY_PLAYLIST_IDS, SPOTIFY_TOP_ARTIST_IDS, SPOTIFY_FAVORITE_TRACK_ID
+  # SUBSTACK_PUBLICATION_URL (@handle e.g. shreyaverma1, slug e.g. shreyave, or full URL)
   # Optional: VITE_PUBLIC_BOOKING_EMBED_URL, VITE_SPOTIFY_API_PROXY_TARGET (local proxy)
 
 [functions]
@@ -22,6 +23,12 @@
 [[redirects]]
   from = "/api/spotify-playlist"
   to = "/.netlify/functions/spotify-playlist"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/substack-posts"
+  to = "/.netlify/functions/substack-posts"
   status = 200
   force = true
 

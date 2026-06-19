@@ -12,7 +12,7 @@ import { metaData } from './config/config';
 import Home from './pages/Home';
 import About from './pages/about';
 import Diary from './pages/diary';
-import BlogDetail from './pages/diary/BlogDetail';
+import BlogPostRedirect from './pages/diary/BlogPostRedirect';
 import Projects from './pages/projects';
 import Contact from './pages/contact';
 import Book from './pages/book';
@@ -66,7 +66,7 @@ function App() {
             <Route path={DIARY_MOVIES_PATH} element={<Diary section="movies" />} />
             <Route path={DIARY_NOTES_PATH} element={<Navigate to={DIARY_BLOGS_PATH} replace />} />
             <Route path={DIARY_BLOGS_PATH} element={<Diary section="blogs" />} />
-            <Route path={`${DIARY_BLOGS_PATH}/:id`} element={<BlogDetail />} />
+            <Route path={`${DIARY_BLOGS_PATH}/:id`} element={<BlogPostRedirect />} />
             <Route path={`${DIARY_MOVIES_PATH}/:id`} element={<RedirectOldMoviesPostToBlogs />} />
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />

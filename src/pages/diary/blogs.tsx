@@ -3,8 +3,9 @@ import { useState } from 'react';
 import { BlogCard } from '../../components/ui/BlogCard';
 import { Pagination } from '../../components/ui/Pagination';
 import { ParticleField } from '../../components/ui/ParticleField';
+import { BlogLoadError } from '../../components/ui/BlogLoadError';
 import { useFloatingParticles } from '../../hooks/useFloatingParticles';
-import { blogsPosts } from '../../data/diary/blogs';
+import { useBlogPosts } from '../../hooks/useBlogPosts';
 
 const POSTS_PER_PAGE = 6;
 
@@ -23,6 +24,7 @@ const wrap = (v: number) => (v + 100) % 100;
 
 export default function Blogs() {
   const [currentPage, setCurrentPage] = useState(1);
+  const { posts, loading, error } = useBlogPosts(48);
 
   const particles = useFloatingParticles<BlogDot>({
     spawnIntervalMs: 500,
@@ -53,9 +55,9 @@ export default function Blogs() {
     }),
   });
 
-  const totalPages = Math.ceil(blogsPosts.length / POSTS_PER_PAGE);
+  const totalPages = Math.max(1, Math.ceil(posts.length / POSTS_PER_PAGE));
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
-  const currentPosts = blogsPosts.slice(startIndex, startIndex + POSTS_PER_PAGE);
+  const currentPosts = posts.slice(startIndex, startIndex + POSTS_PER_PAGE);
 
   return (
     <section className="relative min-h-[600px]">
@@ -77,13 +79,29 @@ export default function Blogs() {
       />
 
       <div className="relative z-10">
-        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-          {currentPosts.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
-        </div>
+        {error && !loading && posts.length === 0 ? <BlogLoadError message={error} /> : null}
 
-        <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} color="indigo" />
+        {loading && posts.length === 0 ? (
+          <p className="py-12 text-center text-sm text-neutral-500 dark:text-neutral-400">Loading posts from Substack…</p>
+        ) : null}
+
+        {!loading || posts.length > 0 ? (
+          <>
+            <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
+              {currentPosts.map((post) => (
+                <BlogCard key={post.id} post={post} />
+              ))}
+            </div>
+
+            {posts.length === 0 && !loading && !error ? (
+              <p className="py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+                No posts yet — publish on Substack and they will show up here automatically.
+              </p>
+            ) : null}
+
+            <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} color="indigo" />
+          </>
+        ) : null}
       </div>
     </section>
   );

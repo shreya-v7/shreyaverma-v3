@@ -10,9 +10,10 @@ import { FiMail } from 'react-icons/fi';
 import { socialLinks } from '../config/config';
 import { experienceData } from '../data/experience';
 import { projects } from '../data/projects';
-import { blogsPosts } from '../data/diary/blogs';
 import { formatShortDate } from '../utils';
 import { DIARY_BLOGS_PATH } from '../config/sectionNav';
+import { useBlogPosts } from '../hooks/useBlogPosts';
+import { BlogCard } from '../components/ui/BlogCard';
 
 const heroSocial = [
   { href: socialLinks.twitter, label: 'X', Icon: FaXTwitter },
@@ -31,9 +32,8 @@ export default function Page() {
   const researchHighlights = researchPapers.filter(
     (p) => p.title === 'Multifactor Authentication' || p.title === 'DiagZone',
   ).slice(0, 2);
-  const latestBlogs = [...blogsPosts]
-    .sort((a, b) => new Date(b.date ?? '').getTime() - new Date(a.date ?? '').getTime())
-    .slice(0, 2);
+  const { posts: blogPosts, loading: blogsLoading } = useBlogPosts(6);
+  const latestBlogs = blogPosts.slice(0, 2);
 
   return (
     <section className="space-y-12">
@@ -277,34 +277,14 @@ export default function Page() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-2">
-          {latestBlogs.map((post) => (
-            <article
-              key={post.id}
-              className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-neutral-50 p-4 shadow-sm dark:border-neutral-700 dark:bg-neutral-900"
-            >
-              <p className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
-                {formatShortDate(post.date)}
-              </p>
-              <h3 className="mt-2 text-base font-semibold text-neutral-900 dark:text-neutral-100">
-                {post.title}
-              </h3>
-              <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                {post.caption.length > 180 ? `${post.caption.slice(0, 180)}...` : post.caption}
-              </p>
-              <div className="mt-3 flex items-center justify-between">
-                <p className="min-w-0 flex-1 pr-3 text-[11px] leading-snug text-neutral-500 dark:text-neutral-500">
-                  {(post.tags ?? []).slice(0, 3).map((t) => `#${t}`).join(' · ')}
-                </p>
-                <Link
-                  to={`${DIARY_BLOGS_PATH}/${post.id}`}
-                  className="inline-flex shrink-0 items-center gap-1 rounded-full border border-neutral-400/90 bg-white/50 px-2.5 py-1 text-[11px] font-semibold text-neutral-900 shadow-sm backdrop-blur-sm transition hover:border-neutral-500 hover:bg-white/80 dark:border-neutral-500/90 dark:bg-neutral-800/50 dark:text-neutral-50 dark:shadow-none dark:hover:border-neutral-400 dark:hover:bg-neutral-800/80"
-                >
-                  <span>Read</span>
-                  <span className="text-[10px] opacity-80">→</span>
-                </Link>
-              </div>
-            </article>
-          ))}
+          {blogsLoading && latestBlogs.length === 0
+            ? Array.from({ length: 2 }).map((_, index) => (
+                <div
+                  key={index}
+                  className="h-48 animate-pulse rounded-xl border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800/50"
+                />
+              ))
+            : latestBlogs.map((post) => <BlogCard key={post.id} post={post} />)}
         </div>
       </section>
     </section>
