@@ -1,3 +1,5 @@
 /api/spotify-playlist  /.netlify/functions/spotify-playlist  200!
 /api/substack-posts  /.netlify/functions/substack-posts  200!
+/api/food-plan  /.netlify/functions/food-plan  200!
+/api/food-plan-chat  /.netlify/functions/food-plan-chat  200!
 /*  /index.html  200

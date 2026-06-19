@@ -1,0 +1,101 @@
+{
+  "title": "Your Complete Food Plan",
+  "dailyDefaults": [
+    "1 apple on empty stomach",
+    "Glass of warm water with lemon after",
+    "2.5-3 liters water through the day",
+    "Three meals, max 1 snack if hungry"
+  ],
+  "dailyTarget": {
+    "summary": "~1,300-1,450 calories / ~80-100g protein",
+    "floor": "Don't go below 1,300. If you feel exhausted, dizzy, or your sleep crashes, add food."
+  },
+  "weeklyFocus": [],
+  "breakfasts": [
+    { "title": "Eggs + toast + berries", "description": "2 boiled eggs + 1 slice whole wheat toast + 1/2 cup strawberries", "macros": "~280 cal / 18g protein" },
+    { "title": "Greek yogurt bowl", "description": "3/4 cup Greek yogurt + 6 almonds + 6 walnuts + 1/2 cup strawberries + tiny drizzle honey", "macros": "~280 cal / 22g protein" },
+    { "title": "Oatmeal", "description": "1/2 cup oats cooked in water + 1 tbsp almond butter + cinnamon + 1/2 cup strawberries", "macros": "~310 cal / 10g protein" },
+    { "title": "Besan chillas", "description": "2 chillas (1/4 cup besan each, onion + tomato + coriander, 1/2 tsp oil) + 1/2 cup curd", "macros": "~310 cal / 15g protein" },
+    { "title": "Vermicelli upma", "description": "1/2 cup vermicelli + frozen peas + carrot + mustard seeds + 5 peanuts + 1/2 tsp oil + 1/2 cup curd", "macros": "~320 cal / 12g protein" },
+    { "title": "Uttapam", "description": "1 medium uttapam (store batter) + onion + tomato + coriander topping + 1/2 tsp oil + chutney or 1/4 cup curd", "macros": "~280 cal / 9g protein" },
+    { "title": "Protein smoothie + egg", "description": "1 scoop whey + 3/4 cup Greek yogurt + 1/2 cup water + 1/2 cup strawberries + 6 almonds, blended + 1 boiled egg", "macros": "~340 cal / 35g protein" },
+    { "title": "Rava upma", "description": "1/2 cup rava roasted, cooked with mustard seeds, curry leaves, ginger, frozen peas, carrot, 1 tsp ghee + 1/2 cup curd", "macros": "~310 cal / 10g protein" },
+    { "title": "Cheese toast + egg", "description": "1 slice whole wheat toast + 1 slice cheese melted + 1 boiled egg + 1/2 cup strawberries", "macros": "~330 cal / 20g protein" },
+    { "title": "Savory rava chilla", "description": "1/2 cup rava + 1/4 cup curd + water + onion + tomato + coriander + 1 tsp oil, 1 large pancake + chutney", "macros": "~280 cal / 10g protein" }
+  ],
+  "lunches": [
+    { "title": "Dal + rice + boiled veg salad", "description": "1 cup dal + 1/2 cup rice + boiled veg salad + 2 tbsp curd", "macros": "~470 cal / 20g protein" },
+    { "title": "Curd rice + papad + cucumber", "description": "3/4 cup rice + 1/2 cup curd mixed in + mustard/curry leaf tempering + 1 papad + cucumber", "macros": "~400 cal / 12g protein" },
+    { "title": "Rice podi", "description": "3/4 cup rice + 2 tsp podi + 1 tsp ghee + 1/2 cup curd + boiled veg salad", "macros": "~470 cal / 16g protein" },
+    { "title": "Khichdi", "description": "1/4 cup moong dal + 1/4 cup rice + 1 tsp ghee + frozen veg + 1/2 cup curd", "macros": "~470 cal / 18g protein" },
+    { "title": "Uttapam meal", "description": "2 medium uttapams + chutney + 1/2 cup curd", "macros": "~450 cal / 16g protein" },
+    { "title": "Egg sandwich + dal", "description": "2 boiled eggs mashed + 2 slices whole wheat bread + mint chutney + cucumber + small bowl dal", "macros": "~470 cal / 28g protein" },
+    { "title": "Dal + rice + fried egg + salad", "description": "1 cup dal + 1/2 cup rice + 1 egg fried in 1/2 tsp ghee + boiled veg salad", "macros": "~510 cal / 26g protein" },
+    { "title": "Shakshuka + toast", "description": "2 eggs poached in 3/4 cup tomato basil sauce with sauteed onion + bell pepper + 1 slice whole wheat toast", "macros": "~380 cal / 20g protein" },
+    { "title": "Chole + rice + cucumber", "description": "3/4 cup chole (canned chickpeas simmered with onion, tomato, spices) + 1/3 cup rice + cucumber + lemon wedge", "macros": "~440 cal / 18g protein" },
+    { "title": "Rava idli", "description": "3 instant rava idlis + sambar + chutney", "macros": "~380 cal / 12g protein" }
+  ],
+  "dinners": [
+    { "title": "Omelette + roti + greens", "description": "2-egg omelette + 1 small roti + 1 cup sauteed spinach with garlic", "macros": "~390 cal / 22g protein" },
+    { "title": "Thin dal + cheese toast", "description": "1.5 cups thin dal (extra water + cumin, from Sunday batch) + 1 slice whole wheat toast with 1 slice cheese melted", "macros": "~360 cal / 18g protein" },
+    { "title": "Curd rice + veg salad", "description": "1/2 cup rice + 1/2 cup curd + tempering + boiled veg salad", "macros": "~360 cal / 14g protein" },
+    { "title": "Khichdi + curd (smaller portion)", "description": "1/4 cup dal + 1/4 cup rice + 1 tsp ghee + frozen veg + 1/2 cup curd", "macros": "~380 cal / 15g protein" },
+    { "title": "Veg salad + eggs + roti", "description": "Boiled veg salad + 2 boiled eggs + 1 small roti", "macros": "~390 cal / 22g protein" },
+    { "title": "Uttapam + chutney + curd", "description": "1 large uttapam + chutney + 1/2 cup curd", "macros": "~360 cal / 12g protein" },
+    { "title": "Dal + rice + egg + cucumber", "description": "1/2 cup dal + 1/3 cup rice + 1 boiled egg + cucumber slices", "macros": "~400 cal / 22g protein" },
+    { "title": "Shakshuka (lighter)", "description": "2 eggs poached in 1/2 cup tomato basil sauce + 1/2 slice toast", "macros": "~320 cal / 18g protein" },
+    { "title": "Moong dal chilla + curd", "description": "2 moong dal chillas (1/4 cup soaked moong blended, onion + coriander, 1/2 tsp oil) + mint chutney + 1/2 cup curd", "macros": "~350 cal / 18g protein" },
+    { "title": "Egg bhurji + roti + salad", "description": "2 eggs scrambled with onion, tomato, coriander (1/2 tsp ghee) + 1 small roti + boiled veg salad", "macros": "~380 cal / 22g protein" }
+  ],
+  "snacks": [
+    "10 almonds (70 cal)",
+    "3/4 cup Greek yogurt + 1 tsp honey (120 cal / 15g protein)",
+    "1/2 apple + 1 tbsp almond butter (130 cal)",
+    "Roasted makhana: 1 cup, dry-roasted with chili powder (90 cal)",
+    "1 boiled egg + cucumber (80 cal / 6g protein)",
+    "1/2 cup roasted chickpeas (120 cal / 7g protein)",
+    "2 squares (10g) 70%+ dark chocolate + 5 almonds (130 cal, max 2x/week)",
+    "Healthy mug cake: 3 tbsp oats blended into flour + 1 egg + 1 tbsp Greek yogurt + 1 tsp honey + cocoa powder + pinch baking powder, microwave 90 sec (180 cal / 10g protein)"
+  ],
+  "recipes": [
+    {
+      "title": "Boiled veg salad (stir-fry replacement)",
+      "lines": [
+        "Boil/steam 8-10 min: 1 cup broccoli florets, 1/2 cup carrots sliced, 1/2 cup green beans, 1/2 cup peas (frozen fine), 1/2 cup corn (optional).",
+        "Drain. Toss with 1/2 tsp olive oil or ghee, salt, black pepper, 1/2 tsp lemon juice, pinch chaat masala or roasted cumin, chopped coriander.",
+        "Makes 3 servings, ~110 cal each. Keeps 3 days."
+      ]
+    },
+    {
+      "title": "Shakshuka sauce batch (4 servings)",
+      "lines": [
+        "1 tbsp olive oil, 1 onion chopped, 4 garlic cloves, 1 red bell pepper chopped, 1 jar (~24 oz) tomato basil sauce, 1/2 tsp cumin, 1/2 tsp paprika, 1/2 tsp chili powder, salt to taste.",
+        "Saute onion + garlic + bell pepper 5 min, add spices 1 min, add tomato basil sauce, simmer 8 min.",
+        "Keeps 4-5 days in fridge. Freezes well.",
+        "To eat: heat 3/4 cup sauce in pan, crack 2 eggs in, cover 5 min until whites set. Serve with toast."
+      ]
+    }
+  ],
+  "sundayPrep": [
+    "Cook dal: big pot, 5 days",
+    "Cook rice: 4 cups cooked, 4 days",
+    "Boil 6 eggs: grab and go",
+    "Boil veg salad: 3 days",
+    "Shakshuka sauce: 4 servings, 4-5 days",
+    "After this, every weekday meal is 5-10 minutes of assembly."
+  ],
+  "grocery": {
+    "produce": "apples (7), strawberries (2 lbs), cucumber (3), tomatoes, onions, garlic, ginger, broccoli, carrots, green beans, lemons, mint, coriander, bell peppers (1 red, 1 green), spinach, frozen peas, frozen corn, frozen mixed veg",
+    "protein": "eggs (2 dozen), Greek yogurt (large), moong dal, masoor dal, chickpeas",
+    "pantry": "rice, whole wheat bread, frozen rotis (Indian store), oats, besan, vermicelli, rava, uttapam/dosa batter (Indian store), instant rava idli mix, rice podi, almonds, walnuts, almond butter, makhana, dark chocolate (70%+), ghee, olive oil, honey, papad, store chutney, sliced cheese, tomato basil sauce (jar), basic spices (mustard seeds, curry leaves, turmeric, cumin, paprika, chili powder, chaat masala), cocoa powder, baking powder, whey protein",
+    "budget": "~$75-95/week"
+  },
+  "rules": [
+    "All three meals, every day. No skipping.",
+    "Don't go below 1,300 cal.",
+    "Slow eating, 20 min, no phone.",
+    "Sunday prep is non-negotiable. Without it, this plan collapses by Wednesday.",
+    "If you start feeling weak, mood-crashy, or your sleep gets worse, add food. Don't push through.",
+    "One meal a week, eaten without thinking about any of this. Pizza, dinner with friends, whatever. Plan is not a prison."
+  ]
+}

@@ -17,7 +17,9 @@ import Projects from './pages/projects';
 import Contact from './pages/contact';
 import Book from './pages/book';
 import NotFound from './pages/NotFound';
+import FoodPlan from './pages/secret/FoodPlan';
 import { DIARY_BLOGS_PATH, DIARY_MOVIES_PATH, DIARY_NOTES_PATH } from './config/sectionNav';
+import { SECRET_FOOD_PLAN_PATH } from './config/secretRoutes';
 
 /** Old URLs served blog posts under /diary/movies/:id */
 function RedirectOldMoviesPostToBlogs() {
@@ -71,6 +73,7 @@ function App() {
             <Route path="/projects" element={<Projects />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/book" element={<Book />} />
+            <Route path={SECRET_FOOD_PLAN_PATH} element={<FoodPlan />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Footer />
