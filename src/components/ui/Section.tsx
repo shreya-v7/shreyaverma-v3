@@ -3,6 +3,7 @@ import { CompanyCard } from './CompanyCard';
 import { Modal } from './Modal';
 import { ModalContent } from './ModalContent';
 import { useCompanyModal } from '../../hooks/useCompanyModal';
+import { useTechStackColors } from '../../hooks/useTechStackColors';
 
 interface SectionProps {
   data: Company[];
@@ -27,6 +28,7 @@ export const Section = ({
     isClient,
     techStackLabel: modalTechStackLabel,
   } = useCompanyModal(techStackLabel);
+  const { colors: cardColors, isClient: cardColorsReady } = useTechStackColors(data);
 
   return (
     <section id={sectionId}>
@@ -37,6 +39,8 @@ export const Section = ({
             company={company}
             onClick={() => handleCardClick(company)}
             showAwards={showAwards}
+            tagColors={cardColors}
+            tagColorsReady={cardColorsReady}
           />
         ))}
       </div>
@@ -46,7 +50,6 @@ export const Section = ({
           <ModalContent
             company={selectedCompany}
             colors={colors}
-            isClient={isClient}
             techStackLabel={modalTechStackLabel}
           />
         )}

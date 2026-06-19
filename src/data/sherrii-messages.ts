@@ -10,7 +10,7 @@ export const sherriiMessages = [
   "Built real-time risk dashboards in React and Power BI to replace manual Excel processes.",
   "Led statistical validation in Python using NumPy, SciPy, and pandas under production constraints.",
   "Designed CI/CD pipelines for reproducible historical simulations and safer rollouts.",
-  "CMU MISM candidate in Business Intelligence and Data Analytics with a 3.93/4.00 GPA.",
+  "CMU MISM candidate in Business Intelligence and Data Analytics with a 3.88/4.00 GPA.",
   "Graduate Teaching Assistant at CMU for Advanced Business Analytics and Organizational Design.",
   "MISM Scholarship recipient and Dean's List honoree.",
   "Certified in Google Cloud Professional ML Engineer and Microsoft Azure AZ-900.",

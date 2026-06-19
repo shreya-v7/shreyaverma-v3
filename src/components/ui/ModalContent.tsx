@@ -1,13 +1,13 @@
 import { Company, Role } from '../../types';
+import { stableTagColor } from '../../utils';
 
 interface ModalContentProps {
   company: Company;
   colors: Record<string, string>;
-  isClient: boolean;
   techStackLabel?: string;
 }
 
-export const ModalContent = ({ company, colors, isClient, techStackLabel = 'Tech Stack:' }: ModalContentProps) => (
+export const ModalContent = ({ company, colors, techStackLabel = 'Tech Stack:' }: ModalContentProps) => (
   <div className="space-y-6">
     <div className="flex items-center border-b border-neutral-200 dark:border-neutral-700 pb-4">
       <img src={`/${company.logo}`} alt={`${company.company} Logo`} className="h-16 w-16 rounded-lg object-contain mr-4" width={64} height={64} />
@@ -36,7 +36,11 @@ export const ModalContent = ({ company, colors, isClient, techStackLabel = 'Tech
               <p className="text-sm font-semibold text-neutral-900 dark:text-neutral-100 mb-2">{techStackLabel}</p>
               <div className="flex flex-wrap gap-2">
                 {role.techStack.map((item, itemIndex) => (
-                  <span key={itemIndex} className="px-3 py-1 rounded-full text-white text-xs font-semibold" style={{ backgroundColor: isClient ? colors[item] : '#171717' }}>
+                  <span
+                    key={itemIndex}
+                    className="px-3 py-1 rounded-full text-white text-xs font-semibold"
+                    style={{ backgroundColor: colors[item] ?? stableTagColor(item) }}
+                  >
                     {item}
                   </span>
                 ))}

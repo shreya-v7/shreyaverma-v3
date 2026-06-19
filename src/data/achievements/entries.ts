@@ -10,7 +10,7 @@ const morganStanley: Achievement[] = [
     context: CTX.ms,
     highlight:
       'Recognized by a Managing Director for building a dynamic factor-based stress-testing framework and secure internal platform that improved risk analysis and automated data-quality workflows.',
-    details: ['Selected among ~500–1,000 employees within the department for innovation and impact.'],
+    details: ['Selected among ~500-1,000 employees within the department for innovation and impact.'],
   },
   {
     title: 'Team Engagement Champions',
@@ -70,7 +70,7 @@ const publications: Achievement[] = [
     year: 2023,
     context: CTX.cipr(2023),
     highlight: 'Research publication on an efficient multifactor authentication approach.',
-    details: ['Verma, S., Singh, M., Chaturvedi, K., Tripathy, B.K. · pp. 109–122'],
+    details: ['Verma, S., Singh, M., Chaturvedi, K., Tripathy, B.K. · pp. 109-122'],
     link: 'https://link.springer.com/chapter/10.1007/978-981-99-3734-9_10',
   },
   {
@@ -80,7 +80,7 @@ const publications: Achievement[] = [
     year: 2022,
     context: CTX.cipr(2022),
     highlight: 'Research publication proposing a medical diagnosis approach using a smart chatbot.',
-    details: ['Verma, S., Singh, M., Tiwari, I., Tripathy, B.K. · pp. 43–56'],
+    details: ['Verma, S., Singh, M., Tiwari, I., Tripathy, B.K. · pp. 43-56'],
     link: 'https://link.springer.com/chapter/10.1007/978-981-19-3089-8_5',
   },
 ];
@@ -105,6 +105,14 @@ const hpair: Achievement[] = [
 ];
 
 const cmu: Achievement[] = [
+  {
+    title: "Dean's List (Spring 2026)",
+    category: 'Award',
+    group: GROUP.cmu,
+    date: '2026-05',
+    context: CTX.cmu,
+    highlight: "Recognized on the Dean's List for Spring 2026.",
+  },
   {
     title: "Dean's List (Fall 2025)",
     category: 'Award',
@@ -139,7 +147,7 @@ const vit: Achievement[] = [
     date: '2022-10',
     context: CTX.vit,
     highlight:
-      'Recognized as a Dean’s list rank holder for outstanding academic performance (2021–22).',
+      "Recognized as a Dean's list rank holder for outstanding academic performance (2021-22).",
   },
   {
     title: 'Merit Scholarship (Dean’s List / Rank Holder)',
@@ -148,7 +156,7 @@ const vit: Achievement[] = [
     date: '2021-10',
     context: CTX.vit,
     highlight:
-      'Recognized as a Dean’s list rank holder for outstanding academic performance (2020–21).',
+      "Recognized as a Dean's list rank holder for outstanding academic performance (2020-21).",
   },
 ];
 

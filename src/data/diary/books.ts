@@ -2,6 +2,28 @@ import { PersonalPost } from '../../types';
 
 export const booksPosts: PersonalPost[] = [
   {
+    id: 'book-11',
+    caption:
+      'italy summer brain rot but she\'s also on a whole scavenger hunt and the dad plot said "we do NOT do wholesome reunions here" (3/5 gelato girl summer)',
+    type: 'books',
+    tags: ['fiction', 'romance', 'ya'],
+    date: '2026-06-12',
+    metadata: {
+      author: 'Jenna Evans Welch',
+      book: 'Love & Gelato',
+      rating: 3,
+      detailedReview: [
+        'overall? okay read. not life-changing but i didn\'t rage-quit so that\'s a win in this economy',
+        'the happy loose vibe slaps: florence summer energy, wandering around, gelato as a personality trait. very main character on a gap year (minus the toxic productivity)',
+        'loved that she was actually on a hunt, piecing clues together, snooping, connecting dots. gave the book a plot beyond "cute boy in a piazza" (there is still a cute boy. there is always a cute boy)',
+        'big W: no clichéd long-lost father runs to embrace his long-lost daughter moment. he\'s giving antagonist / complicated / "sir why are you like this" and that kept things interesting instead of Hallmark-core',
+        'some of the drama felt a little YA predictable if i\'m being honest but it didn\'t ruin the chill hunt energy',
+        'perfect for when you want something light, a little messy, and set somewhere pretty, not for when you want to sob into your pillow (see: Tomorrow x3)',
+        'verdict: soft recommend. borrow it, read in the sun, eat something cold, move on with your life no notes',
+      ],
+    },
+  },
+  {
     id: 'book-10',
     caption:
       'hooked me on game dev friendship chaos then yeeted the plot into a wormhole of sadness (10/10 would cry again)',

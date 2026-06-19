@@ -95,7 +95,7 @@ export default function Blogs() {
 
             {posts.length === 0 && !loading && !error ? (
               <p className="py-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
-                No posts yet — publish on Substack and they will show up here automatically.
+                No posts yet. Publish on Substack and they will show up here automatically.
               </p>
             ) : null}
 

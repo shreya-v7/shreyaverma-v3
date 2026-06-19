@@ -8,7 +8,7 @@ import {
 } from 'react-icons/fa6';
 import { FiMail } from 'react-icons/fi';
 import { socialLinks } from '../config/config';
-import { experienceData } from '../data/experience';
+import { getExperienceHighlights } from '../data/experience';
 import { projects } from '../data/projects';
 import { formatShortDate } from '../utils';
 import { DIARY_BLOGS_PATH } from '../config/sectionNav';
@@ -34,6 +34,7 @@ export default function Page() {
   ).slice(0, 2);
   const { posts: blogPosts, loading: blogsLoading } = useBlogPosts(6);
   const latestBlogs = blogPosts.slice(0, 2);
+  const experienceHighlights = getExperienceHighlights();
 
   return (
     <section className="space-y-12">
@@ -122,7 +123,7 @@ export default function Page() {
           <div className="absolute inset-y-0 left-[10px] w-px bg-neutral-200 dark:bg-neutral-700" />
 
           <ol className="space-y-5">
-            {experienceData.slice(0, 4).map((company, index) => {
+            {experienceHighlights.map((company, index) => {
               const role = company.roles[0];
               return (
                 <li key={company.company} className="relative flex gap-4">

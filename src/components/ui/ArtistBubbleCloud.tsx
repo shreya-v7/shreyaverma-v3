@@ -78,7 +78,7 @@ function buildLayout(items: SpotifyEmbedItem[]): LayoutCell[] {
   const base = Math.min(31, Math.max(15, 148 / Math.sqrt(n)));
 
   return shuffled.map((artist, i) => {
-    const w = 0.86 + (hashId(artist.id) % 30) / 100; // 0.86–1.15: gentle size variation
+    const w = 0.86 + (hashId(artist.id) % 30) / 100; // 0.86-1.15: gentle size variation
     const sizePct = Math.min(35, base * w);
     const half = sizePct / 100 / 2;
     const m = half - 0.048; // slight bleed past frame edges

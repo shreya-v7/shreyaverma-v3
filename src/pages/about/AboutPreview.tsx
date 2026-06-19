@@ -6,7 +6,7 @@ import { NavigationButtons } from '../../components/ui/NavigationButtons';
 import { SectionHeader } from '../../components/ui/SectionHeader';
 import { useCompanyModal } from '../../hooks/useCompanyModal';
 import { ABOUT_NAV } from '../../config/sectionNav';
-import { experienceData } from '../../data/experience';
+import { getExperienceHighlights } from '../../data/experience';
 import { educationData } from '../../data/education';
 import { certificates } from '../../data/certificates';
 import { achievementsData } from '../../data/achievements';
@@ -21,7 +21,7 @@ export default function AboutPreview() {
     techStackLabel,
   } = useCompanyModal();
 
-  const top2Experience = experienceData.slice(0, 2);
+  const top2Experience = getExperienceHighlights();
   const top2Education = educationData.slice(0, 2);
   const top2Certificates = certificates.slice(0, 2);
   const top2Achievements = achievementsData.slice(0, 2);
@@ -81,7 +81,6 @@ export default function AboutPreview() {
           <ModalContent
             company={selectedCompany}
             colors={colors}
-            isClient={isClient}
             techStackLabel={techStackLabel}
           />
         )}

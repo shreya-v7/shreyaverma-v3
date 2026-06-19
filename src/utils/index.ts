@@ -59,7 +59,7 @@ export const getCompanyDuration = (roles: Array<{ duration: string }>): string =
 };
 
 /** Deterministic hex color from a string (stable across reloads/SSR). */
-function hashColor(input: string): string {
+export function stableTagColor(input: string): string {
   let h = 0;
   for (let i = 0; i < input.length; i++) h = (Math.imul(31, h) + input.charCodeAt(i)) | 0;
   const hex = (h & 0xffffff).toString(16).padStart(6, '0');
@@ -73,7 +73,7 @@ export const generateTechStackColors = (
   for (const item of items) {
     const stack = item.roles ? item.roles.flatMap((r) => r.techStack) : item.techStack ?? [];
     for (const tech of stack) {
-      if (!colors[tech]) colors[tech] = hashColor(tech);
+      if (!colors[tech]) colors[tech] = stableTagColor(tech);
     }
   }
   return colors;

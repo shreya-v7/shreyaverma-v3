@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Company } from '../../types';
 import { CompanyCard } from './CompanyCard';
+import { useTechStackColors } from '../../hooks/useTechStackColors';
 
 interface PreviewSectionProps {
   title: string;
@@ -19,6 +20,8 @@ export const PreviewSection = ({
   showAwards = false,
   onCardClick,
 }: PreviewSectionProps) => {
+  const { colors: tagColors, isClient: tagColorsReady } = useTechStackColors(items);
+
   if (items.length === 0) return null;
 
   return (
@@ -31,7 +34,14 @@ export const PreviewSection = ({
       </div>
       <div className={`grid ${gridCols} gap-4`}>
         {items.map((item) => (
-          <CompanyCard key={item.company} company={item} onClick={() => onCardClick(item)} showAwards={showAwards} />
+          <CompanyCard
+            key={item.company}
+            company={item}
+            onClick={() => onCardClick(item)}
+            showAwards={showAwards}
+            tagColors={tagColors}
+            tagColorsReady={tagColorsReady}
+          />
         ))}
       </div>
     </section>

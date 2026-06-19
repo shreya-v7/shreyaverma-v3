@@ -1,13 +1,15 @@
 import { Company } from '../../types';
-import { getCompanyDuration } from '../../utils';
+import { getCompanyDuration, stableTagColor } from '../../utils';
 
 interface CompanyCardProps {
   company: Company;
   onClick: () => void;
   showAwards?: boolean;
+  tagColors?: Record<string, string>;
+  tagColorsReady?: boolean;
 }
 
-export const CompanyCard = ({ company, onClick, showAwards = false }: CompanyCardProps) => {
+export const CompanyCard = ({ company, onClick, showAwards = false, tagColors = {}, tagColorsReady = false }: CompanyCardProps) => {
   const latestRole = company.roles[0];
   const overallDuration = getCompanyDuration(company.roles);
 
@@ -52,16 +54,20 @@ export const CompanyCard = ({ company, onClick, showAwards = false }: CompanyCar
       {/* Tech Stack/Subjects Preview (first 3) */}
       {latestRole.techStack.length > 0 && (
         <div className="flex flex-wrap gap-1 mt-2">
-          {latestRole.techStack.slice(0, 3).map((item, index) => (
+          {latestRole.techStack.slice(0, 3).map((item, index) => {
+            const color = tagColors[item] ?? stableTagColor(item);
+            return (
             <span
               key={index}
-              className="px-2 py-1 text-xs rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300"
+              className="px-2 py-1 text-xs rounded-full font-semibold text-white"
+              style={{ backgroundColor: color }}
             >
               {item}
             </span>
-          ))}
+            );
+          })}
           {latestRole.techStack.length > 3 && (
-            <span className="px-2 py-1 text-xs rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300">
+            <span className="px-2 py-1 text-xs rounded-full bg-neutral-100 dark:bg-neutral-700 text-neutral-700 dark:text-neutral-300 font-semibold">
               +{latestRole.techStack.length - 3} more
             </span>
           )}

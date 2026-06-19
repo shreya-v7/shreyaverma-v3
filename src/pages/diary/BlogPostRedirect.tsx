@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { DIARY_BLOGS_PATH } from '../../config/sectionNav';
 import { useBlogPosts } from '../../hooks/useBlogPosts';
 
-/** Legacy /diary/blogs/:id URLs — send visitors to the live post when possible. */
+/** Legacy /diary/blogs/:id URLs: send visitors to the live post when possible. */
 export default function BlogPostRedirect() {
   const { id } = useParams<{ id: string }>();
   const { posts, loading } = useBlogPosts(48);

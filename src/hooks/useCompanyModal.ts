@@ -1,23 +1,36 @@
 import { useState, useMemo } from 'react';
 import { Company } from '../types';
 import { useTechStackColors } from './useTechStackColors';
+import { generateTechStackColors } from '../utils';
 import { experienceData } from '../data/experience';
 import { educationData } from '../data/education';
 
+function isEducationEntry(company: Company): boolean {
+  return educationData.some(
+    (edu) =>
+      edu.company === company.company &&
+      edu.roles.some((role) => company.roles.some((r) => r.title === role.title)),
+  );
+}
+
 export const useCompanyModal = (customTechStackLabel?: string) => {
   const [selectedCompany, setSelectedCompany] = useState<Company | null>(null);
-  const { colors: expColors, isClient: expIsClient } = useTechStackColors(experienceData);
-  const { colors: eduColors, isClient: eduIsClient } = useTechStackColors(educationData);
+  const { isClient: expIsClient } = useTechStackColors(experienceData);
+  const { isClient: eduIsClient } = useTechStackColors(educationData);
 
   const { colors, isClient, techStackLabel } = useMemo(() => {
-    if (!selectedCompany) return { colors: {}, isClient: false, techStackLabel: customTechStackLabel || 'Tech Stack:' };
-    const isEducation = educationData.some(edu => edu.company === selectedCompany.company);
+    if (!selectedCompany) {
+      return { colors: {}, isClient: false, techStackLabel: customTechStackLabel || 'Tech Stack:' };
+    }
+
+    const isEducation = isEducationEntry(selectedCompany);
+
     return {
-      colors: isEducation ? eduColors : expColors,
-      isClient: isEducation ? eduIsClient : expIsClient,
+      colors: generateTechStackColors([selectedCompany]),
+      isClient: expIsClient || eduIsClient,
       techStackLabel: customTechStackLabel || (isEducation ? 'Subjects/Courses:' : 'Tech Stack:'),
     };
-  }, [selectedCompany, expColors, eduColors, expIsClient, eduIsClient, customTechStackLabel]);
+  }, [selectedCompany, expIsClient, eduIsClient, customTechStackLabel]);
 
   return {
     selectedCompany,

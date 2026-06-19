@@ -2,6 +2,36 @@ import { Company } from '../types';
 
 export const experienceData: Company[] = [
   {
+    company: "Proofpoint",
+    logo: "experience/proofpoint.png",
+    roles: [
+      {
+        title: "SWE Intern",
+        duration: "Jun 2026 - Present",
+        content: [
+          "Software engineering intern building and shipping features on AWS-backed production systems.",
+          "Contributing to machine learning-driven product capabilities alongside the core engineering team.",
+        ],
+        techStack: ["Amazon Web Services (AWS)", "Machine Learning"],
+      },
+    ],
+  },
+  {
+    company: "Carnegie Mellon University",
+    logo: "education/cmu.png",
+    roles: [
+      {
+        title: "Visitor Experience Intern",
+        duration: "May 2026 - May 2026",
+        content: [
+          "Supported CMU visitor experience: campus tours, guest logistics, and front-of-house coordination for prospective students and families.",
+          "Managed documentation, scheduling, and day-of tour operations so visits ran smoothly end to end.",
+        ],
+        techStack: ["Visitor Experience", "Campus Tours", "Documentation"],
+      },
+    ],
+  },
+  {
     company: "Wolfram Alpha",
     logo: "experience/wolframalpha.png",
     roles: [
@@ -184,3 +214,11 @@ export const experienceData: Company[] = [
   return bDate - aDate;
 });
 
+const EXPERIENCE_HIGHLIGHT_NAMES = ['Proofpoint', 'Morgan Stanley'] as const;
+
+/** Curated roles for home + about preview quick looks. */
+export function getExperienceHighlights(): Company[] {
+  return EXPERIENCE_HIGHLIGHT_NAMES.map((name) => experienceData.find((c) => c.company === name)).filter(
+    (c): c is Company => c != null,
+  );
+}
