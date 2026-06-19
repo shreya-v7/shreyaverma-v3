@@ -6,8 +6,9 @@ export function BlogLoadError({ message }: Props) {
       <p className="font-medium text-neutral-900 dark:text-neutral-100">Could not load Substack posts</p>
       <p className="mt-1 whitespace-pre-wrap break-words">{message}</p>
       <p className="mt-2 text-xs text-neutral-500 dark:text-neutral-400">
-        Set <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">SUBSTACK_PUBLICATION_URL</code> to your @handle (
-        <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">shreyaverma1</code>). Locally run{' '}
+        Set <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">SUBSTACK_PUBLICATION_URL</code> in Netlify
+        (or <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">.env</code> locally) to your @handle or
+        publication slug. Locally run{' '}
         <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">netlify dev</code>.
       </p>
     </div>

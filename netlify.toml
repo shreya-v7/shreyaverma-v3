@@ -7,7 +7,7 @@
   NODE_VERSION = "22"
   # Set in Netlify UI (Site settings → Environment variables), never commit:
   # SPOTIFY_PLAYLIST_ID / SPOTIFY_PLAYLIST_IDS, SPOTIFY_TOP_ARTIST_IDS, SPOTIFY_FAVORITE_TRACK_ID
-  # SUBSTACK_PUBLICATION_URL (@handle e.g. shreyaverma1, slug e.g. shreyave, or full URL)
+  # SUBSTACK_PUBLICATION_URL (@handle, publication slug, or full URL)
   # ANTHROPIC_API_KEY (Ask Claude tab on /sherrii-heals)
   # Optional: VITE_PUBLIC_BOOKING_EMBED_URL, VITE_SPOTIFY_API_PROXY_TARGET (local proxy)
 

@@ -12,7 +12,7 @@ function json(statusCode, body, extraHeaders = {}) {
 
 const FETCH_HEADERS = {
   Accept: 'application/json',
-  'User-Agent': 'Mozilla/5.0 (compatible; shreyaverma-portfolio/1.0)',
+  'User-Agent': 'Mozilla/5.0 (compatible; portfolio-site/1.0)',
 };
 
 /**
@@ -201,7 +201,7 @@ export async function handler(event) {
       return json(503, {
         error: 'missing_env',
         message:
-          'Set SUBSTACK_PUBLICATION_URL to your @handle (e.g. shreyaverma1), publication slug (e.g. shreyave), or full URL.',
+          'Set SUBSTACK_PUBLICATION_URL to your @handle, publication slug, or full Substack URL.',
         posts: [],
       });
     }
