@@ -74,6 +74,16 @@ export const projects: Project[] = [
     tags: ["Web"],
   },
   {
+    title: "Women in Engineering in the Age of AI",
+    description:
+      "Keynote for IEEE SB JIIT Women in Engineering Day on navigating careers, industry change, and leadership with integrity.",
+    date: "2026-07-07",
+    category: "Talk",
+    image: "work/ieee-wie-keynote.png",
+    link: "https://www.instagram.com/p/DaW3ibiRu9Q/",
+    tags: ["Talk"],
+  },
+  {
     title: "Perception vs Perspective",
     description: "Speech promoting women in STEM.",
     date: "2023-05-18",

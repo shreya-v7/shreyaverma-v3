@@ -354,6 +354,19 @@ const toastmasters: Achievement[] = [
 
 const leadership: Achievement[] = [
   {
+    title: 'Keynote Speaker - IEEE WIE Day Webinar',
+    category: 'Leadership',
+    group: GROUP.leadership,
+    date: '2026-07',
+    context: CTX.ieeeJiitWie,
+    highlight:
+      'Delivered a virtual keynote on Women in Engineering in the Age of AI: navigating careers, industry change, and leadership with integrity.',
+    details: [
+      'Invited by IEEE SB JIIT for Women in Engineering Day under the theme Technology with Purpose.',
+    ],
+    link: 'https://www.instagram.com/p/DaW3ibiRu9Q/',
+  },
+  {
     title: 'Invited Speaker - Long Beach Immersive Summit',
     category: 'Leadership',
     group: GROUP.leadership,

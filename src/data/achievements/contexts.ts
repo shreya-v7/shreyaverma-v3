@@ -30,6 +30,7 @@ export const CTX = {
   ssn: 'SSN College of Engineering',
   toastmasters: 'Toastmasters International',
   wwt: 'Wonder Women Tech Network',
+  ieeeJiitWie: 'IEEE Student Branch · Jaypee Institute of Information Technology (WIE)',
 } as const;
 
 /** Section labels for clustering when a category filter is active. */
