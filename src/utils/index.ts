@@ -33,6 +33,13 @@ function parseMonthYear(value: string): Date {
   return Number.isNaN(y) || m === undefined ? new Date(0) : new Date(y, m);
 }
 
+/** Latest end date in a "Mon YYYY - Mon YYYY|Present" range. Present sorts as most recent. */
+export function durationEndDate(duration: string): Date {
+  const parts = duration.split(' - ').map((s) => s.trim());
+  const end = parts[1] || parts[0] || '';
+  return parseMonthYear(end || 'Present');
+}
+
 function formatMonthYear(date: Date): string {
   if (date.getFullYear() === 9999) return 'Present';
   return `${MONTH_NAMES[date.getMonth()]} ${date.getFullYear()}`;

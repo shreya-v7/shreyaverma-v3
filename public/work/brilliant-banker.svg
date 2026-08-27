@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Brilliant Banker">
+  <defs>
+    <linearGradient id="bb-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1e1b4b"/>
+      <stop offset="55%" stop-color="#312e81"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#bb-bg)"/>
+  <circle cx="640" cy="140" r="180" fill="#818cf8" fill-opacity="0.18"/>
+  <circle cx="120" cy="680" r="220" fill="#38bdf8" fill-opacity="0.14"/>
+  <rect x="210" y="210" width="380" height="420" rx="36" fill="#0f172a" fill-opacity="0.45" stroke="#c7d2fe" stroke-opacity="0.35" stroke-width="2"/>
+  <rect x="250" y="270" width="300" height="18" rx="9" fill="#e0e7ff" fill-opacity="0.9"/>
+  <rect x="250" y="310" width="210" height="12" rx="6" fill="#93c5fd" fill-opacity="0.7"/>
+  <rect x="250" y="360" width="300" height="70" rx="16" fill="#1e3a8a" fill-opacity="0.7"/>
+  <rect x="250" y="450" width="140" height="70" rx="16" fill="#4338ca" fill-opacity="0.85"/>
+  <rect x="410" y="450" width="140" height="70" rx="16" fill="#0ea5e9" fill-opacity="0.75"/>
+  <text x="400" y="150" text-anchor="middle" fill="#eef2ff" font-family="Georgia, serif" font-size="42" font-weight="700">Brilliant Banker</text>
+  <text x="400" y="700" text-anchor="middle" fill="#c7d2fe" font-family="ui-sans-serif, system-ui, sans-serif" font-size="20" letter-spacing="3">AI BANKING ASSISTANT</text>
+</svg>

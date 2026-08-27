@@ -2,6 +2,26 @@ import { Project } from '../types';
 
 export const projects: Project[] = [
   {
+    title: "Learned Orchestration for Efficient Deep Research Agents",
+    description:
+      "Industry-sponsored CMU capstone with Adobe. Replacing prompted LLM orchestrators in deep research agents with a small model trained via reinforcement learning to decide what context to keep, when to prune, and when to stop. In progress: problem formulation, architecture, baselines, and evaluation (quality, latency, cost, tool use).",
+    date: "2026-08-01",
+    category: "Research",
+    image: "work/adobe-capstone.svg",
+    link: "https://arxiv.org/abs/2510.05145",
+    tags: ["Research", "AI", "LLMs"],
+  },
+  {
+    title: "Brilliant Banker",
+    description:
+      "Solo Corporate Startup Lab build for PNC. SMB owners get an in-app financial advisor; relationship managers get a CRM with AI briefs, warm leads, and one-tap credit decisions. LangGraph plus Claude routes intent to tools, and credit requests above a set threshold auto-escalate over Server-Sent Events to a live RM queue.",
+    date: "2026-04-15",
+    category: "App & Web",
+    image: "work/brilliant-banker.svg",
+    link: "https://github.com/shreya-v7/brilliant-banker",
+    tags: ["App", "Web", "AI"],
+  },
+  {
     title: "Webi-Fi",
     description: "Education platform for kids and adults to learn web development in an animated and responsive way.",
     date: "2020-02-20",
@@ -113,7 +133,7 @@ export const projects: Project[] = [
   {
     title: "Quantastica - Fin.AI",
     description:
-      "Agentic AI-powered personal finance and investing platform, spanning analytical web dashboards and a conversational app experience.",
+      "Google Agentic AI Day Finalist. 26-agent personal finance and investing platform pairing retrieval-augmented context with a reasoning layer that emits schema-validated structured output behind a provider-agnostic model routing interface.",
     date: "2026-02-15",
     category: "App & Web",
     image: "work/quantastica.png",

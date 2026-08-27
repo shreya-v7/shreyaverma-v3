@@ -26,12 +26,10 @@ const heroSocial = [
 
 export default function Page() {
   const quantastica = projects.find((p) => p.title.startsWith('Quantastica'));
-  const researchPapers = projects
-    .filter((p) => p.category === 'Research')
-    .sort((a, b) => new Date(b.date ?? '').getTime() - new Date(a.date ?? '').getTime());
-  const researchHighlights = researchPapers.filter(
-    (p) => p.title === 'Multifactor Authentication' || p.title === 'DiagZone',
-  ).slice(0, 2);
+  const featuredSideProjects = [
+    projects.find((p) => p.title === 'Brilliant Banker'),
+    projects.find((p) => p.title.startsWith('Learned Orchestration')),
+  ].filter((p): p is (typeof projects)[number] => p != null);
   const { posts: blogPosts, loading: blogsLoading } = useBlogPosts(6);
   const latestBlogs = blogPosts.slice(0, 2);
   const experienceHighlights = getExperienceHighlights();
@@ -63,7 +61,7 @@ export default function Page() {
             </p>
             <p>
               Grad student at Carnegie Mellon University, breaking AI until it confesses how it works.
-              Backed by a strong academic foundation and industry experience at Morgan Stanley, I like
+              Backed by a strong academic foundation and industry experience at Proofpoint and Morgan Stanley, I like
               problems that don&apos;t have obvious answers.
             </p>
             <p>
@@ -163,7 +161,7 @@ export default function Page() {
           <div>
             <h2 className="text-xl font-semibold">Featured Projects</h2>
             <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-              Quantastica up front, with two research highlights.
+              Quantastica up front, with Brilliant Banker and the Adobe capstone.
             </p>
           </div>
           <Link to="/projects" className="text-sm underline underline-offset-4">
@@ -230,9 +228,9 @@ export default function Page() {
             </div>
           </article>
 
-          {/* Picks - two research papers stacked in second column */}
+          {/* Picks - Brilliant Banker and Adobe capstone */}
           <div className="flex flex-col gap-4">
-            {researchHighlights.map((p) => (
+            {featuredSideProjects.map((p) => (
               <a
                 key={p.title}
                 href={p.link}
@@ -254,7 +252,7 @@ export default function Page() {
                       {formatShortDate(p.date)}
                     </span>
                     <span className="text-xs font-semibold text-neutral-700 dark:text-neutral-200">
-                      View paper →
+                      View project →
                     </span>
                   </div>
                 </div>

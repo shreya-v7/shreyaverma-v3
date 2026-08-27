@@ -1,4 +1,5 @@
 import { Company } from '../types';
+import { durationEndDate } from '../utils';
 
 export const educationData: Company[] = [
   {
@@ -12,13 +13,27 @@ export const educationData: Company[] = [
           "3.88/4.00 GPA",
           "MISM Scholarship Recipient",
           "Campus Ambassador for Carnegie Mellon University",
-          "Visitor Experience Intern (May 2026)",
-          "Graduate Teaching Assistant for Advanced Business Analytics, Prof. Rahul Telang (Spring 2026)",
-          "Graduate Teaching Assistant for Organizational Design and Implementation, Dr. Lindsay Larson (Fall 2025)",
+          "Graduate Teaching Assistant for Machine Learning in Production / AI Engineering (17-745), Dr. Christian Kastner and Dr. Bogdan Vasilescu (Fall 2026)",
+          "Graduate Teaching Assistant for Organizational Design and Implementation (94-700), Dr. Lindsay Larson (Fall 2025, Fall 2026)",
+          "Graduate Teaching Assistant for Advanced Business Analytics (95-866), Prof. Rahul Telang (Spring 2026)",
+          "Graduate Program Assistant (May 2026)",
+          "Industry-sponsored capstone with Adobe: Learned Orchestration for Efficient Deep Research Agents",
           "Social Media and Marketing Manager for Indian Graduate Student Association (IGSA)",
         ],
         awards: "Dean's List for Fall 2025 and Spring 2026",
-        techStack: ["Machine Learning in Production", "AI Model Development", "Introduction to Deep Learning", "Corporate Startup Lab", "Applied Econometrics", "Unstructured Data Analytics", "Advanced Business Analytics", "Decision Making Under Uncertainty", "OOP in Java"],
+        techStack: [
+          "Machine Learning in Production",
+          "Deep Learning Systems",
+          "Distributed Systems",
+          "Applications of NL(X)",
+          "AI Model Development",
+          "Unstructured Data Analytics",
+          "Advanced Business Analytics",
+          "Decision Making Under Uncertainty",
+          "Object-Oriented Programming in Java",
+          "Digital Transformation",
+          "Corporate Startup Lab",
+        ],
       },
     ],
   },
@@ -76,9 +91,5 @@ export const educationData: Company[] = [
       },
     ],
   },
-].sort((a, b) => {
-  const aDate = new Date(a.roles[0].duration.split(' - ')[1] || 'Present').getTime();
-  const bDate = new Date(b.roles[0].duration.split(' - ')[1] || 'Present').getTime();
-  return bDate - aDate;
-});
+].sort((a, b) => durationEndDate(b.roles[0].duration).getTime() - durationEndDate(a.roles[0].duration).getTime());
 

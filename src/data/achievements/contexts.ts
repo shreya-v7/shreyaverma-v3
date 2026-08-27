@@ -31,6 +31,7 @@ export const CTX = {
   toastmasters: 'Toastmasters International',
   wwt: 'Wonder Women Tech Network',
   ieeeJiitWie: 'IEEE Student Branch · Jaypee Institute of Information Technology (WIE)',
+  googleAgentic: 'Google Agentic AI Day',
 } as const;
 
 /** Section labels for clustering when a category filter is active. */

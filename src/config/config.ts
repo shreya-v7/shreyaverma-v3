@@ -4,7 +4,7 @@ export const metaData = {
   name: "Shreya Verma",
   ogImage: "/profile.png",
   description:
-    "Machine Learning Practitioner and Front-End Developer",
+    "ML systems and AI engineering. Graduate student at Carnegie Mellon. Previously SWE Intern at Proofpoint and Software Engineer II at Morgan Stanley.",
 };
 
 export const socialLinks = {

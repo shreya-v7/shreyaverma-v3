@@ -8,7 +8,7 @@ export default function ProjectsInfo() {
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
-  const categories = ['All', 'Web', 'App', 'Talk', 'Research'];
+  const categories = ['All', 'AI', 'Web', 'App', 'Talk', 'Research'];
 
   const sortedProjects = useMemo(() => {
     const filtered = activeCategory === 'All' 

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Learned Orchestration Capstone">
+  <defs>
+    <linearGradient id="ac-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1917"/>
+      <stop offset="50%" stop-color="#7f1d1d"/>
+      <stop offset="100%" stop-color="#9a3412"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="800" fill="url(#ac-bg)"/>
+  <circle cx="160" cy="160" r="140" fill="#fecaca" fill-opacity="0.12"/>
+  <circle cx="700" cy="640" r="200" fill="#fdba74" fill-opacity="0.12"/>
+  <path d="M160 520 C260 360, 360 360, 400 480 C440 600, 540 600, 640 420" fill="none" stroke="#fed7aa" stroke-width="8" stroke-linecap="round" stroke-opacity="0.8"/>
+  <circle cx="160" cy="520" r="14" fill="#ffedd5"/>
+  <circle cx="400" cy="480" r="14" fill="#fdba74"/>
+  <circle cx="640" cy="420" r="14" fill="#fb923c"/>
+  <rect x="250" y="250" width="80" height="80" rx="18" fill="#fff7ed" fill-opacity="0.12" stroke="#fed7aa" stroke-opacity="0.4"/>
+  <rect x="360" y="220" width="80" height="80" rx="18" fill="#fff7ed" fill-opacity="0.16" stroke="#fed7aa" stroke-opacity="0.5"/>
+  <rect x="470" y="250" width="80" height="80" rx="18" fill="#fff7ed" fill-opacity="0.12" stroke="#fed7aa" stroke-opacity="0.4"/>
+  <text x="400" y="150" text-anchor="middle" fill="#fff7ed" font-family="Georgia, serif" font-size="34" font-weight="700">Learned Orchestration</text>
+  <text x="400" y="700" text-anchor="middle" fill="#fed7aa" font-family="ui-sans-serif, system-ui, sans-serif" font-size="18" letter-spacing="2.5">CMU CAPSTONE  ·  ADOBE</text>
+</svg>

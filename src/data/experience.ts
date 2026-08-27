@@ -1,4 +1,5 @@
 import { Company } from '../types';
+import { durationEndDate } from '../utils';
 
 export const experienceData: Company[] = [
   {
@@ -6,19 +7,15 @@ export const experienceData: Company[] = [
     logo: "experience/proofpoint.png",
     roles: [
       {
-        title: "SWE Intern",
-        duration: "Jun 2026 - Present",
+        title: "SWE Intern, Cloud and ML",
+        duration: "Jun 2026 - Aug 2026",
         content: [
-          "Benchmarked a lakehouse-based effective-access engine against an incumbent graph-database design, demonstrating sub-second query latency (651 ms) at ~1/140th the cost ($1.80/day vs $258/day) for the same security analytics workload.",
-          "Reduced query cost by 27x (60.46 MB to 2.27 MB scanned) by replacing query-time permission resolution with a precomputed transitive closure, bringing a failing 2.5-second query inside a 2-second SLA.",
-          "Validated the design at 100M-row scale, holding sub-1.1-second lookups (1,016 ms / 24.06 MB) via partition pruning and 512-way bucketing on Apache Hudi tables in S3.",
-          "Identified a 65x directional cost asymmetry in access queries (resource to principal vs principal to resource) and designed a dual-layout fix that eliminates full-tenant scans.",
-          "Built a daily rollup pipeline converting 6.2 GB whole-tenant aggregations into 0.24 MB dashboard reads (~690 ms), cutting analytics cost from $0.73 to $0.011 per thousand queries.",
-          "Head-to-head benchmarked a zero-ETL graph engine against Athena across 20+ query patterns, establishing an evidence-based boundary: graph traversal for path explanation, SQL for lookups and aggregation by up to 125x at scale.",
-          "Designed a generalized typed-edge data model unifying six relationship types into a single extensible table, and reframed access resolution as first-class path provenance readable as a precomputed sub-second SQL query.",
-          "Built Spark/EMR ETL pipelines normalizing nested permission structures into relational form across multi-million resource, multi-tenant datasets, with Hudi storage strategies matched to each table's read/write pattern.",
-          "Root-caused a data-correctness incident to Hudi/Glue manifest sync lag and designed a row-count reconciliation gate that blocks reads on inconsistent builds; every published figure carries an Athena query ID for independent verification.",
-          "Designed a tiered intelligence architecture that routes each task to its minimum sufficient technique (deterministic SQL, statistical baselines, unsupervised ML, or constrained LLM agents), with scan-cost guardrails, tenant isolation, and citation-to-query-ID grounding.",
+          "Designed a multi-tenant effective-access analytics pipeline over a Spark and Hudi data lake, resolving transitive access across direct grants, nested group membership, and folder inheritance for 8M+ resources and 1M+ identities without modifying source data or duplicating ownership of access relationships.",
+          "Built a 12-function bounded query API with tenant isolation at the query level, hard scan-cost caps, and a 28-question evaluation suite that reached 100% groundedness, isolation, and reproducibility, including SQL-injection attempts and cross-tenant adversarial probes.",
+          "Architected an autonomous investigation agent using priority-frontier search with budget, novelty, and coverage stopping conditions, paired with a separate LLM verification layer that grades groundedness and reasoning consistency after the fact instead of trusting the agent's own confidence.",
+          "Benchmarked a lakehouse-based access engine against an incumbent graph-database design, showing sub-second query latency (651 ms) at about 1/140th the cost ($1.80/day vs $258/day) for the same security analytics workload.",
+          "Reduced query scan cost by 27x (60.46 MB to 2.27 MB) by replacing query-time permission resolution with a precomputed transitive closure, bringing a failing 2.5-second query inside a 2-second SLA.",
+          "Designed a deterministic, fully explainable risk-scoring model as a weighted feature sum across role, exposure, path depth, and dormancy, avoiding ML complexity that the dataset could not support reliably.",
         ],
         techStack: [
           "Amazon Athena",
@@ -28,7 +25,8 @@ export const experienceData: Company[] = [
           "AWS Glue",
           "Amazon S3",
           "SQL",
-          "Gremlin",
+          "Python",
+          "Large Language Models (LLMs)",
           "Machine Learning",
           "Amazon Web Services (AWS)",
         ],
@@ -40,13 +38,49 @@ export const experienceData: Company[] = [
     logo: "education/cmu.png",
     roles: [
       {
-        title: "Visitor Experience Intern",
+        title: "Graduate Teaching Assistant, Machine Learning in Production",
+        duration: "Aug 2026 - Present",
+        content: [
+          "Teaching assistant for Machine Learning in Production / AI Engineering (17-745) with Dr. Christian Kastner and Dr. Bogdan Vasilescu at the School of Computer Science, Language Technologies Institute.",
+          "Support students on production ML systems: evaluation, reliability, and shipping models that hold up outside the notebook.",
+        ],
+        techStack: ["Machine Learning in Production", "AI Engineering", "Teaching Assistant"],
+      },
+      {
+        title: "Graduate Teaching Assistant, Organizational Design (Fall 2026)",
+        duration: "Aug 2026 - Present",
+        content: [
+          "Teaching assistant for Organizational Design and Implementation (94-700) with Dr. Lindsay Larson.",
+          "Help students apply organization design, team structure, and implementation frameworks to real operating contexts.",
+        ],
+        techStack: ["Organizational Design", "Teaching Assistant"],
+      },
+      {
+        title: "Graduate Program Assistant",
         duration: "May 2026 - May 2026",
         content: [
           "Supported CMU visitor experience: campus tours, guest logistics, and front-of-house coordination for prospective students and families.",
           "Managed documentation, scheduling, and day-of tour operations so visits ran smoothly end to end.",
         ],
-        techStack: ["Visitor Experience", "Campus Tours", "Documentation"],
+        techStack: ["Knowledge Engineering", "Team Management", "Visitor Experience"],
+      },
+      {
+        title: "Graduate Teaching Assistant, Advanced Business Analytics",
+        duration: "Mar 2026 - May 2026",
+        content: [
+          "Teaching assistant for Advanced Business Analytics (95-866) with Prof. Rahul Telang.",
+          "Supported students on statistical data analysis, modeling choices, and turning analytics into decisions.",
+        ],
+        techStack: ["Statistical Data Analysis", "Teaching Assistant", "Business Analytics"],
+      },
+      {
+        title: "Graduate Teaching Assistant, Organizational Design (Fall 2025)",
+        duration: "Oct 2025 - Dec 2025",
+        content: [
+          "Teaching assistant for Organizational Design and Implementation (94-700) with Dr. Lindsay Larson.",
+          "Supported instruction, office hours, and student work on organization design and implementation.",
+        ],
+        techStack: ["Organizational Design", "Teaching Assistant"],
       },
     ],
   },
@@ -55,16 +89,40 @@ export const experienceData: Company[] = [
     logo: "experience/wolframalpha.png",
     roles: [
       {
-        title: "Student Ambassador",
-        duration: "Dec 2025 - Present",
+        title: "Researcher",
+        duration: "Dec 2025 - May 2026",
         content: [
-          "Organize and lead hackathons and technical workshops to promote computational thinking and mathematical problem-solving within the student community.",
-          "Develop and execute promotional campaigns to increase awareness and adoption of Wolfram technologies among students and researchers.",
-          "Conduct research projects on quantitative modeling and mathematical computations, leveraging Wolfram's computational intelligence for complex problem-solving.",
-          "Create educational content and tutorials demonstrating advanced mathematical computations and quantitative analysis techniques.",
-          "Collaborate with the Wolfram team to gather feedback and improve product features based on student and academic use cases.",
+          "Conducted quantitative research and mathematical modeling using Wolfram computational tools.",
+          "Built educational content and tutorials on advanced mathematical computation and quantitative analysis.",
+          "Led technical workshops on computational thinking and mathematical problem-solving.",
         ],
-        techStack: ["Wolfram Language", "Mathematica", "Quantitative Modeling", "Mathematical Computation", "Data Analysis", "Research", "Event Organization", "Content Creation"],
+        techStack: ["Wolfram Language", "Mathematica", "Quantitative Modeling", "Mathematical Computation", "Research"],
+      },
+    ],
+  },
+  {
+    company: "Corporate Startup Lab",
+    logo: "experience/csl.png",
+    roles: [
+      {
+        title: "CSL Course Fellow, PNC Bank",
+        duration: "Jan 2026 - Apr 2026",
+        content: [
+          "Built Brilliant Banker, a 0-to-1 AI banking assistant for PNC, as a solo Corporate Startup Lab fellow: SMB owners get an in-app financial advisor, and relationship managers get a CRM with AI briefs, warm leads, and one-tap credit decisions.",
+          "Designed a LangGraph state-machine on the Claude API (intent classifier, tool router, reply composer, human escalation) so credit requests above a configurable threshold auto-escalate to a live RM queue instead of letting the model decide high-stakes credit on its own.",
+          "Shipped a FastAPI backend with REST and Server-Sent Events, a React and Vite frontend with two role experiences, Docker packaging, and structured user testing with both personas.",
+        ],
+        techStack: [
+          "LangGraph",
+          "Claude API",
+          "FastAPI",
+          "React",
+          "Vite",
+          "Server-Sent Events",
+          "SQLite",
+          "Docker",
+          "Artificial Intelligence (AI)",
+        ],
       },
     ],
   },
@@ -76,13 +134,13 @@ export const experienceData: Company[] = [
         title: "Software Engineer II",
         duration: "Sep 2024 - Aug 2025",
         content: [
-          "Designed and built a distributed stress-testing system for quant and hedge fund portfolios, simulating 100K+ scenarios over million-position datasets, with a focus on scalability, correctness, and failure handling under load.",
-          "Developed high-performance Java services (Spring Boot, DDD, multithreading) with CI/CD pipelines, enabling large-scale historical backtesting and reproducible risk simulations.",
-          "Led statistical validation and anomaly analysis of model outputs using Python (NumPy, SciPy, pandas), reconciling independent implementations to surface edge cases and silent failures.",
-          "Built a data-quality engine using deep learning autoencoders to detect anomalous risk outputs, automatically triggering recalculation pipelines and improving accuracy, compliance, and system trustworthiness.",
-          "Created real-time risk insight dashboards (React, Power BI) that replaced manual Excel workflows and enabled faster, more reliable decision-making for Prime Brokerage and Institutional clients.",
+          "Designed and built a distributed, factor-based portfolio stress-testing system covering 3,500+ funds, simulating 100K+ scenarios over million-position datasets with a focus on scalability, correctness, and failure handling under load.",
+          "Used Barra factor models and historical market events, integrating Monte Carlo simulations, tail-risk modeling, and loss-probability functions to disentangle risks and improve worst-loss prediction for quantitative and small-cap strategies.",
+          "Developed high-performance Java services (Spring Boot, DDD, multithreading) with CI/CD pipelines for large-scale historical backtesting and reproducible risk simulations.",
+          "Built a data-quality engine using a PyTorch autoencoder to detect anomalous risk outputs, automatically triggering recalculation pipelines and improving accuracy, compliance, and trust in reported figures.",
+          "Created real-time risk insight dashboards (React, Power BI, DAX) that replaced manual Excel workflows and enabled permission-controlled access to scenario-based portfolio risk insights for Prime Brokerage and Institutional Equities.",
           "Improved margin requirement accuracy (GAP), contributing to a ~20% impact on revenue strategy, by tightening model assumptions and validation logic.",
-          "Recognized with Best Innovative Project and Team Engagement Champion awards for technical impact and leadership.",
+          "Recognized with Best Innovative Project (among 2000+ department employees) and Team Engagement Champion awards.",
         ],
         awards: "Best Innovative Project Award, Team Engagement Champion 2024 Quarterly Awards",
         techStack: ["PyTorch", "Keras", "Tensorflow", "Java", "Springboot", "Python", "Angular", "React", "PowerBI", "Kafka", "Redis", "Kubernetes", "Podman", "Terraform", "Delphix", "Loki", "Prometheus", "Grafana", "Tempo", "Openshift"],
@@ -91,30 +149,32 @@ export const experienceData: Company[] = [
         title: "Technology Associate",
         duration: "Nov 2023 - Sep 2024",
         content: [
-          "Optimized a core exposure computation algorithm, reducing runtime from 4 hours to 30 minutes, enabling same-day analytics and improving system reliability under time constraints.",
-          "Automated infrastructure provisioning and deployment (Terraform, OpenShift), eliminating environment drift and reducing QA/test setup time by 40+ hours.",
-          "Built internal tooling for automated test generation (Python, LLM-assisted workflows), improving coverage and reducing regression risk.",
-          "Served as Scrum Master, driving execution clarity while building observability dashboards to monitor system health and delivery velocity.",
-          "Awarded IST Annual Circle of Excellence (top performer recognition).",
+          "Implemented a greedy algorithm for exposure risk calculations across 7000+ accounts at a decomposed level daily, reducing computation time from over 4 hours to 30 minutes.",
+          "Deployed a liquidity calculator to OpenShift using Kubernetes and Docker, and automated infrastructure with Terraform, eliminating environment drift and reducing QA/test setup time by 40+ hours per cycle.",
+          "Built internal tooling for automated test generation (Python, LLM-assisted workflows) with PyTest and JUnit, improving coverage and reducing regression risk.",
+          "Served as Scrum Master, driving execution clarity while building observability dashboards (Python Dash, Plotly, Rally) to monitor system health and delivery velocity.",
+          "Awarded IST Annual Circle of Excellence as the first technology analyst in the 2023 cohort.",
         ],
         awards: "IST Circle of Excellence Award",
         techStack: ["Python", "Java", "Spring Boot", "Azure Spring Apps", "Linux", "Terraform", "OpenShift", "Docker", "Git", "JUnit", "PyTest", "pandas", "NumPy", "React", "Power BI", "Jira", "Rally"]
-      }, 
+      },
       {
         title: "Technology Analyst",
         duration: "Jul 2023 - Oct 2023",
         content: [
-          "Graduated from Morgan Stanley's prestigious Technology Analyst Program (TAP), gaining expertise in software engineering, financial technology, and internal tech architecture.",
+          "Graduated from Morgan Stanley's Technology Analyst Program, specializing in software engineering, financial technology, and internal architecture.",
+          "Led my team to first place in the firm's Tech Principles Jeopardy Quiz.",
         ],
         awards: "First in Jeopardy Quiz on Tech Principles",
         techStack: ["React", "Java", "Python", "Azure Spring Functions", "Jira", "Rally", "Springboot", "Linux"],
-      }, 
+      },
       {
         title: "Spring Technology Analyst",
         duration: "Jan 2023 - Jul 2023",
         content: [
-          "Replaced a 40GB Hazelcast cache with Redis, optimizing the risk engine backend.",
-          "Reduced load times from three minutes to seconds, gaining recognition from senior executives."
+          "Replaced a 40GB Hazelcast (v3) cache with Redis in cluster mode for the Matrix platform, improving API performance and supporting high-frequency client calls.",
+          "Benchmarked Hazelcast and Redis with JMeter and JMH, reducing API response times from 3 minutes to 1 second.",
+          "Built a Grafana dashboard with Prometheus and Redis Exporter to monitor cluster health, and integrated Alertmanager for proactive issue resolution.",
         ],
         awards: "Technology Talent Showcase Runner Up",
         techStack: ["Java", "Springboot", "Redis", "Hazelcast", "JMeter", "Grafana", "Prometheus", "Java Microbenchmark Harness", "OpenAPI"],
@@ -123,10 +183,11 @@ export const experienceData: Company[] = [
         title: "Summer Technology Analyst",
         duration: "May 2022 - Jul 2022",
         content: [
-          "Implemented a Divide-and-Conquer solution in Java, using Kafka for high-volume messaging.",
-          "Revitalized a legacy system with an Angular interface, earning a pre-placement offer from 3,500+ applicants in college."
+          "Built a real-time risk measurement system (Spring Boot + Kafka) to calculate portfolio metrics (Beta, VaR, Exposure, Greeks, Deltas) across 4,000+ accounts in London, New York, and Hong Kong.",
+          "Re-engineered a legacy platform into a full-stack solution (Spring Boot, Angular, Kafka) with automated messaging pipelines, enabling risk managers to track margins and processing stages with fewer manual checks.",
+          "Secured a pre-placement offer from a pool of 3,500+ applicants based on internship performance and impact.",
         ],
-        awards: "Recevied Pre-Placement Offer for Exceptional Performance",
+        awards: "Received Pre-Placement Offer for Exceptional Performance",
         techStack: ["Java", "Springboot", "Angular", "rxjs", "Kafka"],
       }
     ],
@@ -136,14 +197,14 @@ export const experienceData: Company[] = [
     logo: "experience/hpair.png",
     roles: [
       {
-        title: "Tech Leader",
+        title: "Technology Associate",
         duration: "May 2022 - Aug 2022",
         content: [
-          "Worked on Squarespace and React to handle client-side application of the official Harvard Conference for Asia.",
-          "As an organiser, received a chance to meet field experts and interact with a diverse community of delegates."
+          "Worked on Angular and React for the client-side application of the official Harvard Conference for Asia.",
+          "As an organiser, met field experts and worked with a diverse community of delegates.",
         ],
         awards: "HCONF'23 Accepted Delegate",
-        techStack: ["Squarespace", "Wordpress", "React", "CMS"],
+        techStack: ["Angular", "React", "Squarespace", "CMS"],
       },
     ],
   },
@@ -155,13 +216,12 @@ export const experienceData: Company[] = [
         title: "President - Agua VIT",
         duration: "Jun 2020 - Sep 2022",
         content: [
-          "Presidents Distinguished Club Award, Triple Crown Winner, Golden Gavel Award",
-          "Held Executive Committee positions - Vice President Public Relations, Vice President Membership, President.",
-          "Bagged 2nd runner up in International Speech Contest, Area.",
-          "Stated 1st runner up in Table Topic Contest, Club."
+          "Held Executive Committee positions: President, Vice President Membership, and Vice President Public Relations.",
+          "Presidents Distinguished Club Award, Triple Crown Winner, Golden Gavel Award.",
+          "2nd runner up in International Speech Contest, Area. 1st runner up in Table Topics Contest, Club.",
         ],
-        awards: "Best Project Award - 2019",
-        techStack: ["Public Speaking", "Leadership", "Visionary", "Canva"],
+        awards: "Distinguished President Award, Triple Crown Award",
+        techStack: ["Public Speaking", "Leadership", "Strategic Communication"],
       },
     ],
   },
@@ -173,10 +233,24 @@ export const experienceData: Company[] = [
         title: "PRISM Research Intern",
         duration: "Oct 2021 - Mar 2022",
         content: [
-          "Optimal BS Transmit power for 5G & 6G System using ML.",
-          "Carried out Matlab Simulations with 5G toolkit."
+          "Researched optimal base-station transmit power for 5G and 6G systems using machine learning.",
+          "Ran MATLAB simulations with the 5G toolkit to evaluate power-control strategies.",
         ],
-        techStack: ["Matlab", "Machine Learning"],
+        techStack: ["MATLAB", "Machine Learning"],
+      },
+    ],
+  },
+  {
+    company: "IEEE Women in Engineering VIT",
+    logo: "experience/ieeewie.jpg",
+    roles: [
+      {
+        title: "Senior Core Committee Member",
+        duration: "Jul 2020 - Dec 2021",
+        content: [
+          "Supervised technical articles and published STEM updates for the IEEE WIE student community.",
+        ],
+        techStack: ["Technical Writing", "Content Development"],
       },
     ],
   },
@@ -185,15 +259,15 @@ export const experienceData: Company[] = [
     logo: "experience/cisco.jpg",
     roles: [
       {
-        title: "Frontend Developer",
+        title: "CWiCS Boost Program",
         duration: "Jul 2021 - Aug 2021",
         content: [
-          "Passed Networking Essentials and Advanced Networks course.",
-          "Training program to setup simulated networks in a WAN.",
-          "Merit Performer in CTF event - Rank 11."
+          "Completed Networking Essentials and Advanced Networks coursework.",
+          "Trained on setting up simulated networks in a WAN.",
+          "Merit Performer in the CTF event, rank 11.",
         ],
-        awards: "Best Project Award - 2019",
-        techStack: ["WAN Developer", "Cybersecurity", "Packet Tracer"],
+        awards: "Merit Performer, CTF",
+        techStack: ["Network Security", "Packet Tracer", "WAN"],
       },
     ],
   },
@@ -205,9 +279,9 @@ export const experienceData: Company[] = [
         title: "Campus Ambassador",
         duration: "Aug 2020 - Apr 2021",
         content: [
-          "Virtually hosting events and promoting shows to have a larger reach to the audience."
+          "Hosted virtual events and promoted shows to expand audience reach.",
         ],
-        techStack: ["Public Relations", "Leadership", "Instagram"],
+        techStack: ["Public Relations", "Leadership"],
       },
     ],
   },
@@ -216,22 +290,17 @@ export const experienceData: Company[] = [
     logo: "experience/max.png",
     roles: [
       {
-        title: "Industrial Intern",
-        duration: "Jan 2018 - Dec 2019",
+        title: "Industrial Trainee",
+        duration: "Dec 2020 - Jan 2021",
         content: [
-          "Worked with a full stack application for an analytics portal for doctors to perform CRUD operations viewing the history of their patients.",
-          "Alterations to admin panel backend by setting RESTful API cert."
+          "Worked on a full-stack analytics portal for doctors to perform CRUD operations and view patient history.",
+          "Updated the admin panel backend by adding RESTful API services.",
         ],
-        awards: "Best Project Award - 2019",
-        techStack: ["C#", "RESTful API", "Visual Studio"],
+        techStack: ["React.js", "ASP.NET MVC", "C#", "RESTful API"],
       },
     ],
   },
-].sort((a, b) => {
-  const aDate = new Date(a.roles[0].duration.split(' - ')[1] || 'Present').getTime();
-  const bDate = new Date(b.roles[0].duration.split(' - ')[1] || 'Present').getTime();
-  return bDate - aDate;
-});
+].sort((a, b) => durationEndDate(b.roles[0].duration).getTime() - durationEndDate(a.roles[0].duration).getTime());
 
 const EXPERIENCE_HIGHLIGHT_NAMES = ['Proofpoint', 'Morgan Stanley'] as const;
 

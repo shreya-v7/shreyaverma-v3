@@ -251,6 +251,16 @@ const certifications: Achievement[] = [
 
 const hackathons: Achievement[] = [
   {
+    title: 'Google Agentic AI Day Finalist',
+    category: 'Hackathon',
+    group: GROUP.hackathons,
+    date: '2026-02',
+    context: CTX.googleAgentic,
+    highlight:
+      'Finalist with Quantastica / FinAI, a 26-agent personal finance platform with retrieval-augmented context and schema-validated structured output.',
+    link: 'https://github.com/shreya-v7/Quantastica-Agentic-AI',
+  },
+  {
     title: 'First Overall - Support-a-Thon',
     category: 'Hackathon',
     group: GROUP.hackathons,
