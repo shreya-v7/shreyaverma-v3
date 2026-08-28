@@ -1,14 +1,18 @@
-import { Link } from 'react-router-dom';
-import { Helmet } from 'react-helmet-async';
+import { Link, useLocation } from 'react-router-dom';
+import { Seo } from '../components/seo/Seo';
+import { metaData } from '../config/config';
 import { FiHome, FiUser, FiBook, FiFolder, FiMail } from 'react-icons/fi';
 
 export default function NotFound() {
+  const { pathname } = useLocation();
   const pages = [
     { path: '/', label: 'Home', icon: FiHome },
     { path: '/about', label: 'About', icon: FiUser },
-    { path: '/about/experience', label: 'Experience', icon: FiUser },
+    { path: '/about/experience', label: 'Industry', icon: FiUser },
     { path: '/about/education', label: 'Education', icon: FiUser },
-    { path: '/about/certifications', label: 'Certifications', icon: FiUser },
+    { path: '/about/research', label: 'Research', icon: FiUser },
+    { path: '/about/leadership', label: 'Leadership', icon: FiUser },
+    { path: '/about/honors', label: 'Honors', icon: FiUser },
     { path: '/diary', label: 'Diary', icon: FiBook },
     { path: '/projects', label: 'Projects', icon: FiFolder },
     { path: '/contact', label: 'Contact', icon: FiMail },
@@ -16,16 +20,18 @@ export default function NotFound() {
 
   return (
     <>
-      <Helmet>
-        <title>404 - Page Not Found | Shreya Verma</title>
-        <meta name="description" content="Page not found" />
-      </Helmet>
+      <Seo
+        title={`404 - Page Not Found | ${metaData.name}`}
+        description="Page not found"
+        path={pathname}
+        noindex
+      />
       <div className="text-center py-16">
         <h1 className="text-6xl font-bold text-neutral-900 dark:text-neutral-100 mb-4">404</h1>
         <h2 className="text-2xl font-semibold text-neutral-700 dark:text-neutral-300 mb-2">Oops! Wrong landing</h2>
         <p className="text-neutral-600 dark:text-neutral-400 mb-8">The page you're looking for doesn't exist. Try one of these:</p>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto">
+        <div className="mx-auto grid max-w-3xl grid-cols-2 gap-3 sm:gap-4">
           {pages.map(({ path, label, icon: Icon }) => (
             <Link
               key={path}

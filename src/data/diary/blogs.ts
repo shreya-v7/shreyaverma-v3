@@ -1,13 +1,16 @@
-import { PersonalPost } from '../../types';
+import type { BlogPost } from '../../lib/substackPosts';
 
-export const blogsPosts: PersonalPost[] = [
+/** Local posts that always show alongside Substack. */
+export const localBlogPosts: BlogPost[] = [
   {
-    id: 'blogs-2',
-    title: 'Extended Reality: Convincing Tomorrow\'s Imagination',
-    caption: 'A history of tomorrow. Exploring how Extended Reality (XR) technologies are reshaping our perception of reality itself.',
+    id: 'medium-extended-reality',
+    title: "Extended Reality: Convincing Tomorrow's Imagination",
+    caption:
+      'A history of tomorrow. Exploring how Extended Reality (XR) technologies are reshaping our perception of reality itself.',
     date: '2020-12-09',
     type: 'blogs',
     tags: ['AR', 'VR', 'MR', 'Extended Reality', 'Technology'],
-    link: 'https://medium.com/ieee-women-in-engineering-vit/extended-reality-319554e95071'
-  }
+    link: 'https://medium.com/ieee-women-in-engineering-vit/extended-reality-319554e95071',
+    source: 'medium',
+  },
 ];

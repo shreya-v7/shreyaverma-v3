@@ -11,7 +11,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Jenna Evans Welch',
       book: 'Love & Gelato',
-      rating: 3,
       detailedReview: [
         'overall? okay read. not life-changing but i didn\'t rage-quit so that\'s a win in this economy',
         'the happy loose vibe slaps: florence summer energy, wandering around, gelato as a personality trait. very main character on a gap year (minus the toxic productivity)',
@@ -33,7 +32,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Gabrielle Zevin',
       book: 'Tomorrow, and Tomorrow, and Tomorrow',
-      rating: 5,
       detailedReview: [
         'stayed up way too late because the craft and pacing are that good',
         'the early energy (building things together, the shorthand of creative partners) felt so real',
@@ -52,7 +50,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Paulo Coelho',
       book: 'The Alchemist',
-      rating: 5,
       detailedReview: [
         'the whole journey metaphor hits different when you\'re trying to figure out your own path',
         'made me realize that the obstacles we face are actually part of the journey, not detours',
@@ -71,7 +68,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Yuval Noah Harari',
       book: 'Nexus',
-      rating: 5,
       detailedReview: [
         'made me question everything i thought i knew about humans and society',
         'the way he connects past, present, and future is mind-blowing',
@@ -90,7 +86,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Robert Greene',
       book: '48 Laws of Power',
-      rating: 5,
       detailedReview: [
         'some of these laws are actually wild but they make sense',
         'taught me to be more observant about power dynamics in everyday situations',
@@ -109,7 +104,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Napoleon Hill',
       book: 'Think and Grow Rich',
-      rating: 5,
       detailedReview: [
         'the mindset shift this book gives you is unreal',
         'the concept of "definite purpose" changed how i set my goals',
@@ -128,7 +122,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Atul Gawande',
       book: 'The Checklist Manifesto',
-      rating: 4,
       detailedReview: [
         'the checklist thing is actually genius and so simple',
         'applied this to my coding projects and it reduced bugs significantly',
@@ -147,7 +140,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Lily Singh',
       book: 'How to Be a Bawse',
-      rating: 4,
       detailedReview: [
         'bawse energy is what we all need tbh, especially when things get tough',
         'the practical advice mixed with her personal stories is so relatable',
@@ -166,7 +158,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Vex King',
       book: 'Good Vibes, Good Life',
-      rating: 4,
       detailedReview: [
         'the whole good vibes only mentality but make it practical? yes please',
         'the law of attraction concepts are explained in a way that actually makes sense',
@@ -185,7 +176,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'T.M. Logan',
       book: 'Curfew',
-      rating: 4,
       detailedReview: [
         'this one had me on edge the whole time, couldn\'t put it down',
         'the plot twists were actually unexpected which is rare these days',
@@ -204,7 +194,6 @@ export const booksPosts: PersonalPost[] = [
     metadata: {
       author: 'Dandy Smith',
       book: 'The Wrong Daughter',
-      rating: 4,
       detailedReview: [
         'the plot twists were actually unexpected which is rare these days',
         'the psychological depth made it more than just a thriller',

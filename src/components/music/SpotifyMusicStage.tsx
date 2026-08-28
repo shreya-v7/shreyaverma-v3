@@ -23,7 +23,7 @@ export function SpotifyMusicStage({ embed }: Props) {
       {hasPlaylists ? (
         <div className={sectionWrap}>
           <Suspense fallback={<MusicBoxLoader compact />}>
-            <PlaylistCubeSwiper embedded hideSectionTitle items={embed.playlists} embedContext="Music box" />
+            <PlaylistCubeSwiper items={embed.playlists} embedContext="Music box" />
           </Suspense>
         </div>
       ) : null}

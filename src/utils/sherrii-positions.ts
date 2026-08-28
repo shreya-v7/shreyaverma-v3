@@ -4,14 +4,14 @@
  */
 import { Corner } from '../types';
 
-export const corners: Corner[] = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+const corners: Corner[] = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
 
 export const getCornerClasses = (corner: Corner): string => {
   switch (corner) {
-    case 'top-left': return 'top-6 left-6';
-    case 'top-right': return 'top-6 right-6';
-    case 'bottom-left': return 'bottom-6 left-6';
-    case 'bottom-right': return 'bottom-6 right-6';
+    case 'top-left': return 'top-4 left-4 sm:top-6 sm:left-6';
+    case 'top-right': return 'top-4 right-4 sm:top-6 sm:right-6';
+    case 'bottom-left': return 'bottom-4 left-4 sm:bottom-6 sm:left-6';
+    case 'bottom-right': return 'bottom-4 right-4 sm:bottom-6 sm:right-6';
     default: return 'bottom-6 right-6';
   }
 };

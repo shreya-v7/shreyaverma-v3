@@ -2,6 +2,8 @@ import { PersonalPost } from '../../types';
 import { FiFilm, FiTv } from 'react-icons/fi';
 import { useState } from 'react';
 import { Modal } from './Modal';
+import { ReviewDetails } from './ReviewDetails';
+import { SiteImage } from './SiteImage';
 
 interface CinemaCardProps {
   post: PersonalPost;
@@ -12,7 +14,7 @@ export const CinemaCard = ({ post }: CinemaCardProps) => {
   const isMovie = post.metadata?.movie;
   const Icon = isMovie ? FiFilm : FiTv;
 
-  const detailedReview = post.metadata?.detailedReview as string[] | undefined;
+  const detailedReview = post.metadata?.detailedReview;
 
   return (
     <>
@@ -34,7 +36,13 @@ export const CinemaCard = ({ post }: CinemaCardProps) => {
           {/* Image Placeholder */}
           <div className="w-full h-48 bg-gradient-to-br from-cyan-200 to-blue-200 dark:from-cyan-800 dark:to-blue-800 rounded-lg mb-4 flex items-center justify-center shadow-inner group-hover:scale-105 transition-transform duration-300 flex-shrink-0 overflow-hidden">
             {post.image ? (
-              <img src={`/${post.image}`} alt={post.metadata?.show} className="w-full h-full object-cover" />
+              <SiteImage
+                src={`/${post.image}`}
+                alt={post.metadata?.show || post.metadata?.movie || post.title || 'Poster'}
+                className="h-full w-full object-cover"
+                width={640}
+                height={192}
+              />
             ) : (
               <div className="text-center">
                 <Icon className="w-16 h-16 text-cyan-600 dark:text-cyan-400 mx-auto mb-2" />
@@ -69,18 +77,7 @@ export const CinemaCard = ({ post }: CinemaCardProps) => {
           </h2>
 
           {/* Detailed Review with Bullet Points */}
-          {detailedReview && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Review</h3>
-              <ul className="space-y-3 list-disc list-inside text-neutral-700 dark:text-neutral-300">
-                {detailedReview.map((point, index) => (
-                  <li key={index} className="text-base leading-relaxed">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <ReviewDetails points={detailedReview} />
         </div>
       </Modal>
     </>

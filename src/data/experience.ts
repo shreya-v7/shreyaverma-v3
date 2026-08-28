@@ -5,6 +5,8 @@ export const experienceData: Company[] = [
   {
     company: "Proofpoint",
     logo: "experience/proofpoint.png",
+    hook: "Multi-tenant access analytics on a Spark and Hudi lake, plus an investigation agent that has to stay grounded.",
+    highlights: ["Agentic systems", "LLM evaluation", "Apache Spark", "Apache Hudi", "Amazon Athena", "Python", "SQL", "AWS"],
     roles: [
       {
         title: "SWE Intern, Cloud and ML",
@@ -16,8 +18,13 @@ export const experienceData: Company[] = [
           "Benchmarked a lakehouse-based access engine against an incumbent graph-database design, showing sub-second query latency (651 ms) at about 1/140th the cost ($1.80/day vs $258/day) for the same security analytics workload.",
           "Reduced query scan cost by 27x (60.46 MB to 2.27 MB) by replacing query-time permission resolution with a precomputed transitive closure, bringing a failing 2.5-second query inside a 2-second SLA.",
           "Designed a deterministic, fully explainable risk-scoring model as a weighted feature sum across role, exposure, path depth, and dormancy, avoiding ML complexity that the dataset could not support reliably.",
+          "Placed 3rd in a firm-wide internal intern hackathon.",
         ],
+        awards: "3rd Place, Internal Intern Hackathon (Firm-wide)",
         techStack: [
+          "Agentic systems",
+          "LLM evaluation",
+          "Large Language Models (LLMs)",
           "Amazon Athena",
           "Apache Hudi",
           "Apache Spark",
@@ -26,7 +33,6 @@ export const experienceData: Company[] = [
           "Amazon S3",
           "SQL",
           "Python",
-          "Large Language Models (LLMs)",
           "Machine Learning",
           "Amazon Web Services (AWS)",
         ],
@@ -34,75 +40,10 @@ export const experienceData: Company[] = [
     ],
   },
   {
-    company: "Carnegie Mellon University",
-    logo: "education/cmu.png",
-    roles: [
-      {
-        title: "Graduate Teaching Assistant, Machine Learning in Production",
-        duration: "Aug 2026 - Present",
-        content: [
-          "Teaching assistant for Machine Learning in Production / AI Engineering (17-745) with Dr. Christian Kastner and Dr. Bogdan Vasilescu at the School of Computer Science, Language Technologies Institute.",
-          "Support students on production ML systems: evaluation, reliability, and shipping models that hold up outside the notebook.",
-        ],
-        techStack: ["Machine Learning in Production", "AI Engineering", "Teaching Assistant"],
-      },
-      {
-        title: "Graduate Teaching Assistant, Organizational Design (Fall 2026)",
-        duration: "Aug 2026 - Present",
-        content: [
-          "Teaching assistant for Organizational Design and Implementation (94-700) with Dr. Lindsay Larson.",
-          "Help students apply organization design, team structure, and implementation frameworks to real operating contexts.",
-        ],
-        techStack: ["Organizational Design", "Teaching Assistant"],
-      },
-      {
-        title: "Graduate Program Assistant",
-        duration: "May 2026 - May 2026",
-        content: [
-          "Supported CMU visitor experience: campus tours, guest logistics, and front-of-house coordination for prospective students and families.",
-          "Managed documentation, scheduling, and day-of tour operations so visits ran smoothly end to end.",
-        ],
-        techStack: ["Knowledge Engineering", "Team Management", "Visitor Experience"],
-      },
-      {
-        title: "Graduate Teaching Assistant, Advanced Business Analytics",
-        duration: "Mar 2026 - May 2026",
-        content: [
-          "Teaching assistant for Advanced Business Analytics (95-866) with Prof. Rahul Telang.",
-          "Supported students on statistical data analysis, modeling choices, and turning analytics into decisions.",
-        ],
-        techStack: ["Statistical Data Analysis", "Teaching Assistant", "Business Analytics"],
-      },
-      {
-        title: "Graduate Teaching Assistant, Organizational Design (Fall 2025)",
-        duration: "Oct 2025 - Dec 2025",
-        content: [
-          "Teaching assistant for Organizational Design and Implementation (94-700) with Dr. Lindsay Larson.",
-          "Supported instruction, office hours, and student work on organization design and implementation.",
-        ],
-        techStack: ["Organizational Design", "Teaching Assistant"],
-      },
-    ],
-  },
-  {
-    company: "Wolfram Alpha",
-    logo: "experience/wolframalpha.png",
-    roles: [
-      {
-        title: "Researcher",
-        duration: "Dec 2025 - May 2026",
-        content: [
-          "Conducted quantitative research and mathematical modeling using Wolfram computational tools.",
-          "Built educational content and tutorials on advanced mathematical computation and quantitative analysis.",
-          "Led technical workshops on computational thinking and mathematical problem-solving.",
-        ],
-        techStack: ["Wolfram Language", "Mathematica", "Quantitative Modeling", "Mathematical Computation", "Research"],
-      },
-    ],
-  },
-  {
     company: "Corporate Startup Lab",
     logo: "experience/csl.png",
+    hook: "Solo 0-to-1 AI banking assistant for PNC: advisor for SMBs, CRM for RMs, humans on the credit call.",
+    highlights: ["LangGraph", "Claude API", "Hugging Face Spaces", "FastAPI", "Tool calling", "Human-in-the-loop", "React", "PostgreSQL"],
     roles: [
       {
         title: "CSL Course Fellow, PNC Bank",
@@ -110,17 +51,21 @@ export const experienceData: Company[] = [
         content: [
           "Built Brilliant Banker, a 0-to-1 AI banking assistant for PNC, as a solo Corporate Startup Lab fellow: SMB owners get an in-app financial advisor, and relationship managers get a CRM with AI briefs, warm leads, and one-tap credit decisions.",
           "Designed a LangGraph state-machine on the Claude API (intent classifier, tool router, reply composer, human escalation) so credit requests above a configurable threshold auto-escalate to a live RM queue instead of letting the model decide high-stakes credit on its own.",
-          "Shipped a FastAPI backend with REST and Server-Sent Events, a React and Vite frontend with two role experiences, Docker packaging, and structured user testing with both personas.",
+          "Shipped a FastAPI backend with REST and Server-Sent Events, a React and Vite frontend with two role experiences, SQLite and PostgreSQL, Docker packaging, Hugging Face Spaces, and structured user testing with both personas.",
         ],
         techStack: [
           "LangGraph",
           "Claude API",
+          "Tool calling",
+          "Human-in-the-loop",
           "FastAPI",
           "React",
           "Vite",
           "Server-Sent Events",
           "SQLite",
+          "PostgreSQL",
           "Docker",
+          "Hugging Face Spaces",
           "Artificial Intelligence (AI)",
         ],
       },
@@ -129,6 +74,8 @@ export const experienceData: Company[] = [
   {
     company: "Morgan Stanley",
     logo: "experience/Ms.jpg",
+    hook: "Factor-based stress testing at fund scale, and a PyTorch autoencoder that flags bad risk numbers.",
+    highlights: ["PyTorch", "TensorFlow", "Keras", "pandas", "NumPy", "Java", "Kafka", "Kubernetes"],
     roles: [
       {
         title: "Software Engineer II",
@@ -143,7 +90,7 @@ export const experienceData: Company[] = [
           "Recognized with Best Innovative Project (among 2000+ department employees) and Team Engagement Champion awards.",
         ],
         awards: "Best Innovative Project Award, Team Engagement Champion 2024 Quarterly Awards",
-        techStack: ["PyTorch", "Keras", "Tensorflow", "Java", "Springboot", "Python", "Angular", "React", "PowerBI", "Kafka", "Redis", "Kubernetes", "Podman", "Terraform", "Delphix", "Loki", "Prometheus", "Grafana", "Tempo", "Openshift"],
+        techStack: ["PyTorch", "Keras", "TensorFlow", "pandas", "NumPy", "Java", "Springboot", "Python", "Angular", "React", "PowerBI", "Kafka", "Redis", "Kubernetes", "Podman", "Terraform", "Delphix", "Loki", "Prometheus", "Grafana", "Tempo", "Openshift"],
       },
       {
         title: "Technology Associate",
@@ -156,7 +103,7 @@ export const experienceData: Company[] = [
           "Awarded IST Annual Circle of Excellence as the first technology analyst in the 2023 cohort.",
         ],
         awards: "IST Circle of Excellence Award",
-        techStack: ["Python", "Java", "Spring Boot", "Azure Spring Apps", "Linux", "Terraform", "OpenShift", "Docker", "Git", "JUnit", "PyTest", "pandas", "NumPy", "React", "Power BI", "Jira", "Rally"]
+        techStack: ["Python", "Java", "Spring Boot", "Azure Spring Apps", "Linux", "Terraform", "OpenShift", "Docker", "Git", "JUnit", "PyTest", "pandas", "NumPy", "Large Language Models (LLMs)", "React", "Power BI", "Jira", "Rally"]
       },
       {
         title: "Technology Analyst",
@@ -193,41 +140,10 @@ export const experienceData: Company[] = [
     ],
   },
   {
-    company: "Harvard University (HPAIR)",
-    logo: "experience/hpair.png",
-    roles: [
-      {
-        title: "Technology Associate",
-        duration: "May 2022 - Aug 2022",
-        content: [
-          "Worked on Angular and React for the client-side application of the official Harvard Conference for Asia.",
-          "As an organiser, met field experts and worked with a diverse community of delegates.",
-        ],
-        awards: "HCONF'23 Accepted Delegate",
-        techStack: ["Angular", "React", "Squarespace", "CMS"],
-      },
-    ],
-  },
-  {
-    company: "Toastmasters International",
-    logo: "experience/toastmasters.png",
-    roles: [
-      {
-        title: "President - Agua VIT",
-        duration: "Jun 2020 - Sep 2022",
-        content: [
-          "Held Executive Committee positions: President, Vice President Membership, and Vice President Public Relations.",
-          "Presidents Distinguished Club Award, Triple Crown Winner, Golden Gavel Award.",
-          "2nd runner up in International Speech Contest, Area. 1st runner up in Table Topics Contest, Club.",
-        ],
-        awards: "Distinguished President Award, Triple Crown Award",
-        techStack: ["Public Speaking", "Leadership", "Strategic Communication"],
-      },
-    ],
-  },
-  {
     company: "Samsung R&D",
     logo: "experience/samsung.jpg",
+    hook: "Machine learning for optimal base-station transmit power in 5G and 6G systems.",
+    highlights: ["MATLAB", "Machine Learning"],
     roles: [
       {
         title: "PRISM Research Intern",
@@ -241,53 +157,10 @@ export const experienceData: Company[] = [
     ],
   },
   {
-    company: "IEEE Women in Engineering VIT",
-    logo: "experience/ieeewie.jpg",
-    roles: [
-      {
-        title: "Senior Core Committee Member",
-        duration: "Jul 2020 - Dec 2021",
-        content: [
-          "Supervised technical articles and published STEM updates for the IEEE WIE student community.",
-        ],
-        techStack: ["Technical Writing", "Content Development"],
-      },
-    ],
-  },
-  {
-    company: "Cisco",
-    logo: "experience/cisco.jpg",
-    roles: [
-      {
-        title: "CWiCS Boost Program",
-        duration: "Jul 2021 - Aug 2021",
-        content: [
-          "Completed Networking Essentials and Advanced Networks coursework.",
-          "Trained on setting up simulated networks in a WAN.",
-          "Merit Performer in the CTF event, rank 11.",
-        ],
-        awards: "Merit Performer, CTF",
-        techStack: ["Network Security", "Packet Tracer", "WAN"],
-      },
-    ],
-  },
-  {
-    company: "TribeVibe Pvt. Ltd.",
-    logo: "experience/tribevibe.png",
-    roles: [
-      {
-        title: "Campus Ambassador",
-        duration: "Aug 2020 - Apr 2021",
-        content: [
-          "Hosted virtual events and promoted shows to expand audience reach.",
-        ],
-        techStack: ["Public Relations", "Leadership"],
-      },
-    ],
-  },
-  {
     company: "MAX Healthcare Ltd.",
     logo: "experience/max.png",
+    hook: "Full-stack analytics portal for doctors, with REST APIs on the admin backend.",
+    highlights: ["React.js", "ASP.NET MVC", "C#"],
     roles: [
       {
         title: "Industrial Trainee",
@@ -302,9 +175,9 @@ export const experienceData: Company[] = [
   },
 ].sort((a, b) => durationEndDate(b.roles[0].duration).getTime() - durationEndDate(a.roles[0].duration).getTime());
 
-const EXPERIENCE_HIGHLIGHT_NAMES = ['Proofpoint', 'Morgan Stanley'] as const;
+const EXPERIENCE_HIGHLIGHT_NAMES = ['Proofpoint', 'Morgan Stanley', 'Corporate Startup Lab'] as const;
 
-/** Curated roles for home + about preview quick looks. */
+/** Curated roles for about preview quick looks. */
 export function getExperienceHighlights(): Company[] {
   return EXPERIENCE_HIGHLIGHT_NAMES.map((name) => experienceData.find((c) => c.company === name)).filter(
     (c): c is Company => c != null,

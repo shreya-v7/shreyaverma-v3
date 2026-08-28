@@ -1,11 +1,12 @@
 /** Issuer / venue line (shown under each title). */
 export const CTX = {
+  proofpoint: 'Proofpoint',
   ms: 'Morgan Stanley',
   msTap: 'Morgan Stanley · Technology Analyst Program (TAP)',
   msSpringTa: 'Morgan Stanley · Spring Technology Analyst',
   msSummerTa: 'Morgan Stanley · Summer Technology Analyst',
   cipr: (year: number) =>
-    `CIPR ${year} · Computational Intelligence in Pattern Recognition`,
+    `CIPR ${year} · Computational Intelligence in Pattern Recognition · Springer Nature`,
   vit: 'Vellore Institute of Technology',
   iet: 'IET',
   lwt: 'Learn While Travelling (LWT)',
@@ -13,6 +14,7 @@ export const CTX = {
   gcp: 'Google Cloud',
   microsoft: 'Microsoft',
   dlai: 'DeepLearning.AI',
+  yale: 'Yale University',
   skillUp: 'SkillUp',
   guvi: 'GUVI',
   mlh: 'Major League Hacking (MLH)',
@@ -36,6 +38,7 @@ export const CTX = {
 
 /** Section labels for clustering when a category filter is active. */
 export const GROUP = {
+  proofpoint: 'Proofpoint',
   morganStanley: 'Morgan Stanley',
   publications: 'Research publications',
   hpair: 'Harvard / HPAIR',
@@ -49,23 +52,3 @@ export const GROUP = {
   leadership: 'Leadership & speaking',
 } as const;
 
-/** Order for clustering when a single category filter is active. */
-export const ACHIEVEMENT_GROUP_ORDER: string[] = [
-  GROUP.morganStanley,
-  GROUP.publications,
-  GROUP.hpair,
-  GROUP.cmu,
-  GROUP.vit,
-  GROUP.amity,
-  GROUP.scholarships,
-  GROUP.certifications,
-  GROUP.hackathons,
-  GROUP.toastmasters,
-  GROUP.leadership,
-];
-
-export function achievementGroupSortIndex(group: string | undefined): number {
-  const g = group ?? '';
-  const i = ACHIEVEMENT_GROUP_ORDER.indexOf(g);
-  return i === -1 ? 999 : i;
-}

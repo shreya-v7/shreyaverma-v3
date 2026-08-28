@@ -566,7 +566,7 @@ export const Sherrii = () => {
       {showAnnoyingToast && <Toast message="fine! I won't annoy!" duration={2000} onClose={() => setShowAnnoyingToast(false)} />}
       {isAnnoyingOpen && !isDismissed && (
         <div
-          className={`fixed ${getCornerClasses(currentCorner)} z-50 animate-in slide-in-from-bottom-4 fade-in duration-500 transition-[top,left,right,bottom] duration-500 ease-out`}
+          className={`fixed ${getCornerClasses(currentCorner)} z-50 transition-[top,left,right,bottom] duration-500 ease-out`}
         >
           <SherriiBubble message={currentMessage} isTyping={isTyping} avatar={currentAvatar} onClose={handleCloseAnnoying} />
         </div>

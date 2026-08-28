@@ -3,6 +3,7 @@ import { FiMusic } from 'react-icons/fi';
 
 import type { SpotifyEmbedItem } from '../../lib/spotifyPlaylist';
 import { stripSpotifyTitleSuffix } from '../../lib/spotifyStrings';
+import { SiteImage } from './SiteImage';
 
 const GOLDEN = Math.PI * (3 - Math.sqrt(5));
 
@@ -250,12 +251,12 @@ export function ArtistBubbleCloud({ items }: Props) {
             >
               <span className="sr-only">{title}</span>
               {showImg ? (
-                <img
+                <SiteImage
                   src={artist.imageUrl}
                   alt=""
                   className="h-full w-full rounded-full object-cover transition-transform duration-500 ease-out motion-safe:group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
+                  width={160}
+                  height={160}
                   referrerPolicy="no-referrer"
                   onError={() => setFailed((f) => ({ ...f, [artist.id]: true }))}
                 />

@@ -46,6 +46,3 @@ export function loadProjectEnv() {
   }
 }
 
-export function env(name) {
-  return (process.env[name] || '').trim();
-}

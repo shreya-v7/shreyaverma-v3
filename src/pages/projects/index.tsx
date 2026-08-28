@@ -1,13 +1,15 @@
-import { Helmet } from "react-helmet-async";
-import ProjectsInfo from "./projects-info";
+import { Seo } from '../../components/seo/Seo';
+import { metaData } from '../../config/config';
+import ProjectsInfo from './ProjectsInfo';
 
 export default function Projects() {
   return (
     <>
-      <Helmet>
-        <title>Projects | Shreya Verma</title>
-        <meta name="description" content="My Projects" />
-      </Helmet>
+      <Seo
+        title={`Projects | ${metaData.name}`}
+        description="Selected software, ML, research, and speaking projects."
+        path="/projects"
+      />
       <section>
         <h1 className="mb-8 text-2xl font-medium tracking-tight">Projects</h1>
         <ProjectsInfo />

@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+.pnpm-store/
 .pnp
 .pnp.js
 .yarn/cache
@@ -124,10 +125,6 @@ $RECYCLE.BIN/
 *.tmp
 *.temp
 .cache/
-
-# RSS feed outputs (generated during build)
-atom.xml
-feed.json
 
 # Private docs (infra, setup, runbooks; keep local only)
 docs/WORKSPACE-AWS-ARCHITECTURE.md

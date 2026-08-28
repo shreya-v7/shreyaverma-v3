@@ -1,45 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useMemo } from 'react';
 
-interface Star {
+export type TwinkleStar = {
   id: number;
-  x: number;
-  y: number;
+  top: string;
+  left: string;
   size: number;
-  opacity: number;
-  twinkleSpeed: number;
+  delay: string;
+  duration: string;
+};
+
+function prefersReducedMotion(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-export function useTwinkleStars(count = 100) {
-  const [stars, setStars] = useState<Star[]>([]);
-
-  useEffect(() => {
-    setStars(
-      Array.from({ length: count }, (_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 2 + 0.5,
-        opacity: Math.random() * 0.8 + 0.2,
-        twinkleSpeed: Math.random() * 0.02 + 0.01,
-      })),
-    );
-
-    const id = setInterval(() => {
-      setStars((prev) =>
-        prev.map((star) => {
-          const next = star.opacity + star.twinkleSpeed;
-          const bounce = next > 1 || next < 0.2;
-          return {
-            ...star,
-            opacity: bounce ? (next > 1 ? 0.2 : 1) : next,
-            twinkleSpeed: bounce ? -star.twinkleSpeed : star.twinkleSpeed,
-          };
-        }),
-      );
-    }, 50);
-
-    return () => clearInterval(id);
+/** Soft twinkle dots for the diary landing. */
+export function useTwinkleStars(count = 28): TwinkleStar[] {
+  return useMemo(() => {
+    if (!count || prefersReducedMotion()) return [];
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      top: `${(i * 17 + 5) % 100}%`,
+      left: `${(i * 29 + 9) % 100}%`,
+      size: 1 + (i % 3),
+      delay: `${((i * 0.41) % 4).toFixed(2)}s`,
+      duration: `${(2.2 + (i % 4) * 0.6).toFixed(2)}s`,
+    }));
   }, [count]);
-
-  return stars;
 }

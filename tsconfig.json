@@ -15,11 +15,7 @@
     "jsx": "react-jsx",
     "esModuleInterop": true,
     "allowJs": true,
-    "forceConsistentCasingInFileNames": true,
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"]
-    }
+    "forceConsistentCasingInFileNames": true
   },
   "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "dist"]

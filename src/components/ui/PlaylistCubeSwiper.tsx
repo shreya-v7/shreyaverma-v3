@@ -11,19 +11,13 @@ import 'swiper/css/autoplay';
 
 type Props = {
   items: SpotifyEmbedItem[];
-  /** When true, no in-component heading (parent renders “Music box” + icon). */
-  hideSectionTitle?: boolean;
   /** Used in iframe titles when playlist title is missing. */
   embedContext?: string;
-  /** Nested inside music “stage” card: no duplicate grid bg, tighter bottom space for pagination. */
-  embedded?: boolean;
 };
 
 export function PlaylistCubeSwiper({
   items,
-  hideSectionTitle = false,
   embedContext = 'Music box',
-  embedded = false,
 }: Props) {
   const [reduceMotion, setReduceMotion] = useState(false);
 
@@ -42,7 +36,7 @@ export function PlaylistCubeSwiper({
         const item = items[index];
         if (item?.imageUrl) {
           const src = item.imageUrl.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
-          return `<span class="${className}"><img src="${src}" alt="" referrerpolicy="no-referrer" loading="lazy" decoding="async" class="playlist-cube-bullet-img" /></span>`;
+          return `<span class="${className}"><img src="${src}" alt="" width="44" height="44" referrerpolicy="no-referrer" loading="lazy" decoding="async" class="playlist-cube-bullet-img" /></span>`;
         }
         return `<span class="${className}"><span class="playlist-cube-pagenum">${index + 1}</span></span>`;
       },
@@ -57,22 +51,8 @@ export function PlaylistCubeSwiper({
   const autoplayOn = rewindEnabled && !reduceMotion;
 
   return (
-    <section className={embedded ? 'space-y-0' : 'space-y-5'}>
-      {!hideSectionTitle && (
-        <div className="flex items-center justify-between gap-3">
-          <h2 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-white sm:text-2xl">
-            {embedContext}
-          </h2>
-        </div>
-      )}
-      <div
-        className={`playlist-cube-swiper-wrap relative mx-auto w-full max-w-[min(100%,28rem)] ${
-          embedded ? 'pb-8' : 'pb-12'
-        }`}
-      >
-        {!embedded && (
-          <div className="spotify-grid-bg absolute -inset-x-6 -top-4 bottom-8 -z-10 rounded-[2rem] opacity-50" aria-hidden />
-        )}
+    <section className="space-y-0">
+      <div className="playlist-cube-swiper-wrap relative mx-auto w-full max-w-[min(100%,28rem)] pb-8">
         <Swiper
           key={items.map((i) => i.id).join('-')}
           modules={[EffectCube, Pagination, ...(autoplayOn ? [Autoplay] : [])]}
@@ -101,8 +81,8 @@ export function PlaylistCubeSwiper({
               }
             : {})}
           pagination={pagination}
-          className="playlist-cube-swiper"
-          style={{ width: '100%', height: 412 }}
+          className="playlist-cube-swiper aspect-[4/5] w-full max-h-[26rem]"
+          style={{ width: '100%' }}
         >
           {items.map((item) => (
             <SwiperSlide key={`${item.type}-${item.id}`}>
@@ -111,10 +91,10 @@ export function PlaylistCubeSwiper({
                   title={item.title ? `${item.title} (Spotify)` : `${embedContext} · Spotify`}
                   src={item.embedUrl}
                   width="100%"
-                  height={item.height}
+                  height="100%"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
-                  className="block w-full shrink-0 rounded-2xl"
+                  className="block min-h-[220px] w-full flex-1 rounded-2xl sm:min-h-[280px]"
                 />
                 <a
                   href={item.spotifyUrl}

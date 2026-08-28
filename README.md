@@ -1,319 +1,163 @@
-# Shreya Verma - Portfolio Website
+# Shreya Verma
 
-A modern, responsive portfolio website built with React, TypeScript, and Vite. This project showcases professional experience, education, projects, and a personal diary section with interactive features, particle effects, and a clean, minimalist design.
+Personal portfolio: ML systems, AI engineering, and the work around it. Live at [shreyaverma.netlify.app](https://shreyaverma.netlify.app).
 
-## 🚀 Live Demo
+React 18, TypeScript, Vite 7, Tailwind, React Router v6. Deployed on Netlify.
 
-Visit the live site: [https://shreyaverma.netlify.app](https://shreyaverma.netlify.app)
+## Features
 
-## ✨ Features
+- About sections: Industry, Education, Research, Leadership, Honors
+- Project grid with Agentic / AI / Research filters
+- Diary: blogs (Substack plus a local Medium piece), books, music (Spotify), cinema
+- Click-through modals for industry, education, leadership, books, and cinema
+- Light / dark theme with system preference
+- Sherrii, a small floating assistant with rotating notes
+- Profile image preloaded; below-the-fold images lazy-load
 
-- **Modern Tech Stack**: Built with React 18, TypeScript, and Vite 7 for optimal performance
-- **Responsive Design**: Fully responsive layout that works seamlessly on all devices
-- **Dark Mode**: Toggle between light and dark themes with system preference detection
-- **Dynamic Routing**: Client-side routing with React Router v6
-- **SEO Optimized**: Meta tags and Open Graph support via React Helmet
-- **RSS Feeds**: Automatically generated Atom and JSON feeds for blog posts
-- **Interactive UI**: Modals, pagination, Spotify embeds, and animated components
-- **Particle Effects**: Dynamic particle animations for music, books, cinema, and blog sections
-- **Personal Diary**: Showcase music, books, cinema, and blog posts with interactive cards
-- **Modular Architecture**: Reusable components, hooks, and utilities for maintainability
+## Tech stack
 
-## 🛠️ Tech Stack
+- React 18.3, TypeScript 5.5, Vite 7.3
+- React Router 6.26
+- Tailwind CSS 3.4, next-themes
+- React Helmet Async, React Icons, Swiper
+- Netlify Functions for Spotify embeds and Substack posts
 
-### Core
-- **React 18.3** - UI library
-- **TypeScript 5.5** - Type safety
-- **Vite 7.3** - Build tool and dev server
-- **React Router 6.26** - Client-side routing
+## Routes
 
-### Styling
-- **Tailwind CSS 3.4** - Utility-first CSS framework
-- **@tailwindcss/typography** - Beautiful typography for prose content
-- **next-themes** - Theme switching (light/dark mode)
+| Path | Page |
+| --- | --- |
+| `/` | Home |
+| `/about` | About preview |
+| `/about/experience` | Industry (labeled Industry in the nav) |
+| `/about/education` | Education |
+| `/about/research` | Research |
+| `/about/leadership` | Leadership |
+| `/about/honors` | Honors (awards, publications, scholarships, hackathons, speaking, certifications) |
+| `/diary` | Diary preview |
+| `/diary/blogs` | Writing |
+| `/diary/books` | Books |
+| `/diary/music` | Music |
+| `/diary/cinema` | Cinema |
+| `/projects` | Projects |
+| `/contact` | Contact |
 
-### UI Components & Libraries
-- **React Icons** - Comprehensive icon library
-- **React Helmet Async** - Document head management
+Old URLs return HTTP 301: `/about/certifications` and `/about/achievements` to `/about/honors`; `/diary/movies` to `/diary/cinema`. In-app redirects still cover local Vite.
 
-### Content & Media
-- **Feed** - RSS feed generation
-- **KaTeX** - Math equation rendering
-- **Sugar High** - Syntax highlighting
-
-## 📁 Project Structure
+## Project structure
 
 ```
 shreyaverma-v3/
-├── public/                    # Static assets
-│   ├── fonts/                # Geist font files
-│   ├── photos/               # Portfolio photos
-│   ├── work/                 # Project images
-│   ├── experience/           # Company logos
-│   └── education/            # Institution logos
+├── public/                 # Static assets
+│   ├── work/               # Project images
+│   ├── experience/         # Company logos
+│   ├── education/          # School logos
+│   ├── leadership/         # Org logos
+│   └── certs/              # Certificate images
 ├── src/
-│   ├── components/           # Reusable components
-│   │   ├── layout/          # Layout components
-│   │   │   ├── nav.tsx      # Navigation bar
-│   │   │   ├── footer.tsx   # Footer
-│   │   │   ├── theme-switch.tsx  # Theme toggle
-│   │   │   └── sherrii/     # Interactive assistant
-│   │   └── ui/              # UI components
-│   │       ├── NavigationButtons.tsx  # Reusable nav buttons
-│   │       ├── Pagination.tsx         # Reusable pagination
-│   │       ├── SectionHeader.tsx      # Section headers
-│   │       ├── SectionRouter.tsx      # Generic section router
-│   │       ├── Modal.tsx              # Modal dialogs
-│   │       ├── Toast.tsx              # Toast notifications
-│   │       └── [Card components]     # Various card types
-│   ├── config/              # Configuration files
-│   │   └── config.ts        # Site metadata and social links
-│   ├── data/                # Data files
-│   │   ├── experience.ts    # Work experience
-│   │   ├── education.ts     # Education history
-│   │   ├── certificates.ts  # Certifications
-│   │   ├── projects.ts      # Project portfolio
-│   │   ├── diary/           # Personal diary content
-│   │   │   ├── books.ts     # Book reviews
-│   │   │   ├── cinema.ts    # Movie/show reviews
-│   │   │   └── blogs.ts     # Blog posts
-│   │   └── sherrii-messages.ts  # Assistant messages
-│   ├── hooks/               # Custom React hooks
-│   │   ├── useTheme.ts      # Theme detection
-│   │   ├── useCompanyModal.ts  # Modal state management
-│   │   └── useTechStackColors.ts  # Tech stack color generation
-│   ├── pages/               # Page components
-│   │   ├── Home.tsx         # Landing page
-│   │   ├── NotFound.tsx     # 404 page
-│   │   ├── about/           # About section
-│   │   │   ├── index.tsx    # About page router
-│   │   │   ├── AboutPreview.tsx  # Preview page
-│   │   │   ├── aboutbody.tsx     # Section router
-│   │   │   ├── experience.tsx    # Experience page
-│   │   │   ├── education.tsx     # Education page
-│   │   │   └── certlist.tsx      # Certifications page
-│   │   ├── diary/           # Personal diary section
-│   │   │   ├── index.tsx    # Diary page router
-│   │   │   ├── DiaryPreview.tsx  # Preview page
-│   │   │   ├── diarybody.tsx     # Section router
-│   │   │   ├── music.tsx         # Music page
-│   │   │   ├── books.tsx         # Books page
-│   │   │   ├── cinema.tsx        # Cinema page
-│   │   │   ├── blogs.tsx         # Blogs page
-│   │   │   └── BlogDetail.tsx   # Individual blog post
-│   │   ├── projects/        # Projects section
-│   │   │   ├── index.tsx    # Projects page
-│   │   │   └── projects-info.tsx  # Projects listing
-│   │   └── contact/         # Contact page
-│   ├── styles/              # Global styles
-│   │   └── global.css       # Global CSS and font definitions
-│   ├── types/               # TypeScript definitions
-│   │   └── index.ts         # Shared types and interfaces
-│   ├── utils/               # Utility functions
-│   │   ├── index.ts         # Common utilities
-│   │   └── sherrii-positions.ts  # Assistant positioning
-│   ├── App.tsx              # Main app component with routing
-│   └── main.tsx             # Application entry point
-├── scripts/                 # Build scripts
-│   └── generate-feed.ts    # RSS feed generator
-├── dist/                    # Build output (generated)
-├── index.html               # HTML entry point
-├── vite.config.ts           # Vite configuration
-├── tailwind.config.js       # Tailwind CSS configuration
-├── tsconfig.json            # TypeScript configuration
-├── netlify.toml             # Netlify deployment config
-└── package.json             # Dependencies and scripts
+│   ├── components/
+│   │   ├── layout/         # Navbar, Footer, theme, Sherrii
+│   │   ├── music/          # Spotify stage and favorite track
+│   │   ├── achievement/    # Honor rows
+│   │   ├── seo/            # Helmet title, OG, canonical, JSON-LD
+│   │   └── ui/             # Cards, modal, pagination, SiteImage
+│   ├── config/             # Site metadata and section nav
+│   ├── data/               # Experience, education, research, leadership, projects, diary, honors
+│   ├── hooks/              # Blog posts, company modal, diary particles
+│   ├── lib/                # Spotify and Substack fetch helpers
+│   ├── pages/              # Home, About, Diary, Projects, Contact
+│   ├── styles/
+│   ├── types/
+│   └── utils/
+├── netlify/functions/      # spotify-playlist, substack-posts
+├── netlify.toml
+└── package.json
 ```
 
-## 🚦 Getting Started
+## Getting started
 
-### Prerequisites
+Node 22 is what Netlify uses. npm is the install path the deploy config expects.
 
-- **Node.js** 18.x or higher
-- **npm** 9.x or higher (or pnpm/yarn)
-
-### Installation
-
-1. Clone the repository:
 ```bash
 git clone https://github.com/shreya-v7/shreyaverma-v3.git
 cd shreyaverma-v3
-```
-
-2. Install dependencies:
-```bash
 npm install
-# or
-pnpm install
-```
-
-3. Start the development server:
-```bash
+cp .env.example .env   # then fill in Spotify / Substack if you need those pages
 npm run dev
 ```
 
-The application will be available at `http://localhost:3000`
+Vite serves the app at [http://localhost:3000](http://localhost:3000). If that port is taken, Vite picks the next one (often 3001 or 3002).
 
-## 📜 Available Scripts
+For Spotify and Substack locally, run Netlify Dev so `/api/*` hits the functions:
 
-- `npm run dev` - Start the development server with hot module replacement
-- `npm run build` - Build the project for production (includes type checking and RSS feed generation)
-- `npm run preview` - Preview the production build locally
-
-### Build Process
-
-The build process includes:
-1. TypeScript type checking
-2. Vite production build with optimizations
-3. RSS feed generation (atom.xml and feed.json)
-
-## 🎨 Customization
-
-### Updating Personal Information
-
-Edit the configuration file at `src/config/config.ts`:
-
-```typescript
-export const metaData = {
-  baseUrl: "https://yourdomain.com",
-  title: "Your Name",
-  name: "Your Name",
-  ogImage: "/profile.png",
-  description: "Your description",
-};
-
-export const socialLinks = {
-  twitter: "https://x.com/yourhandle",
-  github: "https://github.com/yourusername",
-  linkedin: "https://linkedin.com/in/yourprofile",
-  // ... other social links
-};
+```bash
+npm run dev:netlify
 ```
 
-### Adding/Updating Content
+Then open the URL Netlify prints (usually port 8888). Vite still proxies `/api` to `VITE_SPOTIFY_API_PROXY_TARGET` (default `http://127.0.0.1:8888`).
 
-- **Projects**: Edit `src/data/projects.ts`
-- **Experience**: Edit `src/data/experience.ts`
-- **Education**: Edit `src/data/education.ts`
-- **Certificates**: Edit `src/data/certificates.ts`
-- **Diary Content**:
-  - Music embeds: configure `SPOTIFY_*` env values
-  - Books: `src/data/diary/books.ts`
-  - Cinema: `src/data/diary/cinema.ts`
-  - Blogs: `src/data/diary/blogs.ts`
+## Scripts
 
-### Styling
+- `npm run dev` - Vite with HMR
+- `npm run dev:netlify` - Vite plus Netlify functions
+- `npm run build` - `tsc` then Vite production build
+- `npm run preview` - preview the `dist` folder
 
-- Global styles: `src/styles/global.css`
-- Tailwind configuration: `tailwind.config.js`
-- Component-specific styles use Tailwind utility classes
+## Content
 
-## 🏗️ Architecture Highlights
+| What | Where |
+| --- | --- |
+| Name, socials, meta | `src/config/config.ts` |
+| Industry | `src/data/experience.ts` |
+| Education | `src/data/education.ts` |
+| Research | `src/data/research.ts` |
+| Leadership | `src/data/leadership.ts` |
+| Projects | `src/data/projects.ts` |
+| Certificates | `src/data/certificates.ts` |
+| Honors list | `src/data/achievements/` |
+| Books / cinema | `src/data/diary/books.ts`, `src/data/diary/cinema.ts` |
+| Local blog posts | `src/data/diary/blogs.ts` (shown with Substack) |
+| Sherrii copy | `src/data/sherrii-messages.ts` |
 
-### Reusable Components
+Set `metaData.baseUrl` if the live origin changes. It is used for canonical, Open Graph, JSON-LD, and `public/sitemap.xml`. `public/robots.txt` points at that sitemap.
 
-The project follows a modular architecture with reusable components:
+Substack posts are listed on `/diary/blogs` and open on Substack or Medium. They are not duplicated as first-party article URLs, so they are omitted from the sitemap.
 
-- **NavigationButtons**: Consistent navigation button styling across sections
-- **Pagination**: Reusable pagination component with color variants
-- **SectionHeader**: Standardized section headers with "View All" links
-- **SectionRouter**: Generic router component for sectioned pages
-- **Modal**: Reusable modal dialog component
-- **Toast**: Toast notification component
-
-### Custom Hooks
-
-- **useTheme**: Theme detection and management
-- **useCompanyModal**: Modal state management for company/institution details
-- **useTechStackColors**: Dynamic color generation for tech stack badges
-
-### Type Safety
-
-All components and data structures are fully typed with TypeScript. Type definitions are centralized in `src/types/index.ts`.
-
-## 🚢 Deployment
-
-### Netlify (Recommended)
-
-The project includes a `netlify.toml` configuration file. Simply connect your Git repository to Netlify, and it will automatically:
-
-- Use `pnpm` for dependency installation
-- Run the build command
-- Deploy from the `dist` directory
-- Handle client-side routing with redirects
-
-### Other Platforms
-
-The project can be deployed to any static hosting service:
-
-- **Vercel**: Connect your Git repository (auto-detects Vite)
-- **GitHub Pages**: Deploy the `dist` folder to the `gh-pages` branch
-- **Cloudflare Pages**: Connect repository and set build command
-- **Any static host**: Upload the contents of the `dist` folder
-
-### Environment Variables
-
-If needed, create a `.env` file in the root directory:
+### Spotify
 
 ```env
-VITE_BASE_URL=https://yourdomain.com
-```
-
-Access them in code using `import.meta.env.VITE_BASE_URL`
-
-Optional: `VITE_PUBLIC_BOOKING_EMBED_URL` enables `/book` and the “Book a time” link on Contact (public embed URL only; never put OAuth secrets in `VITE_*`).
-
-### Spotify Music
-
-The Music page uses Spotify embeds served by `netlify/functions/spotify-playlist.mjs`. Add comma-separated Spotify URLs or IDs locally and in Netlify:
-
-```env
-SPOTIFY_PLAYLIST_IDS=https://open.spotify.com/playlist/...
-SPOTIFY_TOP_ARTIST_IDS=https://open.spotify.com/artist/...
-SPOTIFY_FAVORITE_TRACK_ID=https://open.spotify.com/track/...
+SPOTIFY_PLAYLIST_IDS=
+SPOTIFY_TOP_ARTIST_IDS=
+SPOTIFY_FAVORITE_TRACK_ID=
 VITE_SPOTIFY_API_PROXY_TARGET=http://127.0.0.1:8888
 ```
 
-For local API testing, run `npm run dev:netlify` and open the local URL Netlify prints.
+Values can be full Spotify URLs or IDs. Playlists and artists are comma-separated. Served by `netlify/functions/spotify-playlist.mjs`.
 
-## 🎯 Key Features Explained
+### Substack
 
-### Theme Switching
-Uses `next-themes` for theme management with system preference detection. The theme persists across page reloads.
+```env
+SUBSTACK_PUBLICATION_URL=@yourhandle
+```
 
-### Interactive Assistant (Sherrii)
-A playful page assistant that displays tech-focused messages. Can be dismissed and restarted via a quirky button.
+Slug or full `https://yourname.substack.com` also works. Public posts appear on `/diary/blogs`. Paid-only posts are skipped. If the function is missing, the page shows an error, not a fake feed.
 
-### Particle Effects
-Dynamic particle animations enhance various sections:
-- Music notes for the music section
-- Book emojis for the books section
-- Shooting stars for the cinema section
-- Multicolored particles for the blogs section
-- Twinkling stars for the diary preview page
+Do not commit `.env`.
 
-### Modal System
-Reusable modal system for displaying detailed information about companies, institutions, books, and cinema reviews.
+## Deploy
 
-## 📝 License
+Netlify reads `netlify.toml`: npm install, `npm run build`, publish `dist`, SPA fallback to `index.html`, and `/api/*` rewritten to functions. Set the same env vars in the Netlify UI.
 
-This project is licensed under the MIT License.
+Any static host that can serve `dist` will run the UI. Spotify and Substack need the Netlify functions (or another backend that implements those two `/api` routes).
 
-## 👤 Author
+## License
+
+MIT.
+
+## Author
 
 **Shreya Verma**
-- Portfolio: [https://shreyaverma.netlify.app](https://shreyaverma.netlify.app)
-- GitHub: [@shreya-v7](https://github.com/shreya-v7)
-- Twitter: [@shreyasapphire](https://x.com/shreyasapphire)
+- Site: [shreyaverma.netlify.app](https://shreyaverma.netlify.app)
+- GitHub: [shreya-v7](https://github.com/shreya-v7)
 - LinkedIn: [shreya-verma-1sv](https://in.linkedin.com/in/shreya-verma-1sv)
-
-## 🙏 Acknowledgments
-
-- Built with [Vite](https://vitejs.dev/)
-- Styled with [Tailwind CSS](https://tailwindcss.com/)
-- Fonts: [Geist](https://vercel.com/font) by Vercel
-- Icons: [React Icons](https://react-icons.github.io/react-icons/)
-
----
-
-⭐ If you find this project helpful, please consider giving it a star!
+- X: [shreyasapphire](https://x.com/shreyasapphire)
+- Instagram: [shreyaver.ma](https://www.instagram.com/shreyaver.ma)

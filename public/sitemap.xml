@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Static first-party routes only. Substack/Medium posts are runtime-fetched and canonical on those hosts. -->
+  <url><loc>https://shreyaverma.netlify.app/</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/about</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/about/experience</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/about/education</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/about/research</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/about/leadership</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/about/honors</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/diary</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/diary/blogs</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/diary/books</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/diary/music</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/diary/cinema</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/projects</loc><changefreq>weekly</changefreq></url>
+  <url><loc>https://shreyaverma.netlify.app/contact</loc><changefreq>monthly</changefreq></url>
+</urlset>

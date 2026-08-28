@@ -3,39 +3,35 @@ import { FiMusic } from 'react-icons/fi';
 
 import type { SpotifyEmbedItem } from '../../lib/spotifyPlaylist';
 import { stripSpotifyTitleSuffix } from '../../lib/spotifyStrings';
+import { SiteImage } from './SiteImage';
 
 export function SpotifyArtistCard({
   artist,
   compact = false,
-  bare = false,
 }: {
   artist: SpotifyEmbedItem;
   compact?: boolean;
-  bare?: boolean;
 }) {
   const title = stripSpotifyTitleSuffix(artist.title, 'Spotify artist');
   const [imageFailed, setImageFailed] = useState(false);
   const showImage = Boolean(artist.imageUrl && !imageFailed);
-  const shellClass = bare
-    ? 'group block overflow-hidden rounded-2xl transition-transform duration-300 hover:-translate-y-1'
-    : 'spotify-card group block overflow-hidden p-2 transition-transform duration-300 hover:-translate-y-1';
 
   return (
     <a
       href={artist.spotifyUrl}
       target="_blank"
       rel="noopener noreferrer"
-      className={shellClass}
+      className="spotify-card group block overflow-hidden p-2 transition-transform duration-300 hover:-translate-y-1"
     >
       <div className="relative overflow-hidden rounded-2xl bg-zinc-950">
         {showImage ? (
-          <img
+          <SiteImage
             src={artist.imageUrl}
             alt={title}
-            loading="lazy"
-            decoding="async"
             referrerPolicy="no-referrer"
             onError={() => setImageFailed(true)}
+            width={400}
+            height={compact ? 224 : 288}
             className={`w-full object-cover transition duration-500 group-hover:scale-105 ${compact ? 'h-56' : 'h-72'}`}
           />
         ) : (

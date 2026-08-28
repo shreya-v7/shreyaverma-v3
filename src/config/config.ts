@@ -1,5 +1,5 @@
 export const metaData = {
-  baseUrl: "",
+  baseUrl: "https://shreyaverma.netlify.app",
   title: "Shreya Verma",
   name: "Shreya Verma",
   ogImage: "/profile.png",

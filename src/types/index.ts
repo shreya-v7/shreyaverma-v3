@@ -12,6 +12,10 @@ export interface Company {
   company: string;
   logo: string;
   roles: Role[];
+  /** One-line collapsed preview. Grounded in the role writeup, not extra claims. */
+  hook?: string;
+  /** Skills to surface on the collapsed card. */
+  highlights?: string[];
 }
 
 export interface Certificate {
@@ -20,20 +24,10 @@ export interface Certificate {
   image: string;
 }
 
-export interface Blog {
-  title: string;
-  description: string;
-  date: string;
-  author: string;
-  tags: string[];
-  url: string;
-}
-
 export interface Project {
   title: string;
   description: string;
   date: string;
-  category: string;
   image: string;
   link: string;
   tags: string[];
@@ -67,9 +61,8 @@ export interface Achievement {
   link?: string;
 }
 
-export type SortOrder = 'latest' | 'oldest';
-export type SectionType = 'experience' | 'education' | 'certifications' | 'achievements';
-export type DiarySectionType = 'music' | 'books' | 'cinema' | 'movies' | 'blogs';
+export type SectionType = 'experience' | 'education' | 'research' | 'leadership' | 'honors';
+export type DiarySectionType = 'music' | 'books' | 'cinema' | 'blogs';
 
 // Personal content types
 export interface PersonalPost {
@@ -80,17 +73,12 @@ export interface PersonalPost {
   date?: string;
   tags?: string[];
   link?: string;
-  content?: string; // Added for blog write-ups
   type: 'books' | 'cinema' | 'blogs';
   metadata?: {
-    artist?: string;
-    album?: string;
     author?: string;
     book?: string;
     movie?: string;
     show?: string;
-    location?: string;
-    rating?: number;
     detailedReview?: string[];
   };
 }

@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { NavigationButtons } from './NavigationButtons';
 import type { ReactNode } from 'react';
 
@@ -11,33 +10,22 @@ interface Section {
 
 interface SectionRouterProps<T extends string> {
   sections: Section[];
-  defaultSection: T;
-  basePath: string;
   renderSection: (activeSection: T) => ReactNode;
   getActiveSection: (pathname: string) => T;
 }
 
 export const SectionRouter = <T extends string>({
   sections,
-  defaultSection,
-  basePath,
   renderSection,
   getActiveSection,
 }: SectionRouterProps<T>) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  const activeSection = getActiveSection(location.pathname);
-
-  useEffect(() => {
-    if (location.pathname === basePath) {
-      navigate(`${basePath}/${defaultSection}`, { replace: true });
-    }
-  }, [defaultSection, location.pathname, navigate, basePath]);
+  const { pathname } = useLocation();
+  const activeSection = getActiveSection(pathname);
 
   return (
     <div>
-      <NavigationButtons 
-        buttons={sections} 
+      <NavigationButtons
+        buttons={sections}
         activeId={activeSection}
       />
       <div>
@@ -46,4 +34,3 @@ export const SectionRouter = <T extends string>({
     </div>
   );
 };
-

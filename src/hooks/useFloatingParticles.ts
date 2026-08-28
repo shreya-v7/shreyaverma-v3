@@ -1,82 +1,32 @@
-import { useEffect, useState } from 'react';
+import { useMemo } from 'react';
 
-export interface FloatingParticle {
+export type FloatingParticle = {
   id: number;
-  x: number;
-  y: number;
-  vx: number;
-  vy: number;
-  rotation: number;
-  /** Renderer-specific payload (glyph, color, size, etc.). */
-  data: unknown;
+  icon: string;
+  left: string;
+  delay: string;
+  duration: string;
+  size: string;
+  opacity: number;
+};
+
+function prefersReducedMotion(): boolean {
+  if (typeof window === 'undefined') return false;
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 }
 
-export interface UseFloatingParticlesOptions<TData> {
-  /** Build a fresh particle (position/velocity/data) for a given moment. */
-  spawn: () => Omit<FloatingParticle, 'id'> & { data: TData };
-  /** Spawn cadence in ms. */
-  spawnIntervalMs: number;
-  /** Animation tick in ms (default 50ms ~ 20fps). */
-  tickMs?: number;
-  /** Max retained particles (older ones are dropped). */
-  maxParticles?: number;
-  /** Rotation delta applied each tick. */
-  rotationStep?: number;
-  /** Initial population. */
-  initialCount?: number;
-  /** Custom filter after each tick (defaults to removing particles drifting offscreen vertically). */
-  isAlive?: (p: FloatingParticle) => boolean;
-  /** Optional extra mutation per tick (e.g. opacity drift). */
-  onTick?: (p: FloatingParticle) => FloatingParticle;
-}
-
-const defaultAlive = (p: FloatingParticle) => p.y > -12 && p.y < 130 && p.x > -30 && p.x < 130;
-
-export function useFloatingParticles<TData = unknown>({
-  spawn,
-  spawnIntervalMs,
-  tickMs = 50,
-  maxParticles = 40,
-  rotationStep = 1.2,
-  initialCount = 0,
-  isAlive = defaultAlive,
-  onTick,
-}: UseFloatingParticlesOptions<TData>): FloatingParticle[] {
-  const [particles, setParticles] = useState<FloatingParticle[]>([]);
-
-  useEffect(() => {
-    const mint = (): FloatingParticle => ({ id: Date.now() + Math.random(), ...spawn() });
-
-    if (initialCount > 0) {
-      setParticles(Array.from({ length: initialCount }, mint));
-    }
-
-    const spawner = window.setInterval(() => {
-      setParticles((prev) => [...prev.slice(-(maxParticles - 1)), mint()]);
-    }, spawnIntervalMs);
-
-    const ticker = window.setInterval(() => {
-      setParticles((prev) =>
-        prev
-          .map((p) => {
-            const next: FloatingParticle = {
-              ...p,
-              x: p.x + p.vx,
-              y: p.y + p.vy,
-              rotation: p.rotation + rotationStep,
-            };
-            return onTick ? onTick(next) : next;
-          })
-          .filter(isAlive),
-      );
-    }, tickMs);
-
-    return () => {
-      window.clearInterval(spawner);
-      window.clearInterval(ticker);
-    };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  return particles;
+/** Random floating icons for diary sections. Empty when the user prefers reduced motion. */
+export function useFloatingParticles(count: number, icons: readonly string[]): FloatingParticle[] {
+  return useMemo(() => {
+    if (!count || icons.length === 0 || prefersReducedMotion()) return [];
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      icon: icons[i % icons.length],
+      left: `${(i * 37 + 11) % 100}%`,
+      delay: `${((i * 0.73) % 8).toFixed(2)}s`,
+      duration: `${(14 + (i % 9)).toFixed(1)}s`,
+      size: `${(0.8 + (i % 5) * 0.22).toFixed(2)}rem`,
+      opacity: 0.28 + ((i * 13) % 40) / 100,
+    }));
+  }, [count, icons]);
 }

@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import {
   FaXTwitter,
   FaGithub,
@@ -7,13 +6,20 @@ import {
   FaCode,
 } from 'react-icons/fa6';
 import { FiMail } from 'react-icons/fi';
-import { socialLinks } from '../config/config';
+import { metaData, socialLinks } from '../config/config';
+import { Seo, personJsonLd } from '../components/seo/Seo';
+import { SiteImage } from '../components/ui/SiteImage';
+import { CompanyCard } from '../components/ui/CompanyCard';
+import { ProjectCard } from '../components/ui/ProjectCard';
+import { BlogCard } from '../components/ui/BlogCard';
+import { SectionHeader } from '../components/ui/SectionHeader';
+import { Modal } from '../components/ui/Modal';
+import { ModalContent } from '../components/ui/ModalContent';
 import { getExperienceHighlights } from '../data/experience';
 import { projects } from '../data/projects';
-import { formatShortDate } from '../utils';
 import { DIARY_BLOGS_PATH } from '../config/sectionNav';
 import { useBlogPosts } from '../hooks/useBlogPosts';
-import { BlogCard } from '../components/ui/BlogCard';
+import { useCompanyModal } from '../hooks/useCompanyModal';
 
 const heroSocial = [
   { href: socialLinks.twitter, label: 'X', Icon: FaXTwitter },
@@ -24,56 +30,66 @@ const heroSocial = [
   { href: socialLinks.code, label: 'Code', Icon: FaCode },
 ] as const;
 
-export default function Page() {
-  const quantastica = projects.find((p) => p.title.startsWith('Quantastica'));
-  const featuredSideProjects = [
-    projects.find((p) => p.title === 'Brilliant Banker'),
-    projects.find((p) => p.title.startsWith('Learned Orchestration')),
-  ].filter((p): p is (typeof projects)[number] => p != null);
+export default function Home() {
   const { posts: blogPosts, loading: blogsLoading } = useBlogPosts(6);
-  const latestBlogs = blogPosts.slice(0, 2);
-  const experienceHighlights = getExperienceHighlights();
+  const industryHighlights = getExperienceHighlights();
+  const {
+    selectedCompany,
+    handleCardClick,
+    handleCloseModal,
+    techStackLabel,
+  } = useCompanyModal();
+  const featuredProjects = [
+    projects.find((p) => p.title.startsWith('Learned Orchestration')),
+    projects.find((p) => p.title.startsWith('Quantastica')),
+    projects.find((p) => p.title === 'Brilliant Banker'),
+  ].filter((p): p is (typeof projects)[number] => p != null);
 
   return (
-    <section className="space-y-12">
-      <div className="flex min-h-[min(85dvh,820px)] flex-col py-4 md:min-h-[72vh] md:py-8">
-        {/* flow-root contains the floated avatar so height is correct; flex-1 fills hero when copy is short */}
-        <div className="flow-root min-h-0 flex-1">
+    <>
+      <Seo
+        title={metaData.title}
+        description={metaData.description}
+        path="/"
+        jsonLd={personJsonLd()}
+      />
+      <section className="flex flex-col py-4 md:py-6">
+        <div className="flow-root">
           <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
-            <img
+            <SiteImage
               src="/profile.png"
               alt="Shreya Verma"
-              className="mx-auto mb-8 mt-0 block rounded-full sm:float-right sm:mb-5 sm:ml-5 lg:mb-5 lg:mt-5"
+              className="mx-auto mb-6 mt-0 block rounded-full sm:float-right sm:mb-5 sm:ml-5 lg:mb-5 lg:mt-5"
               width={160}
               height={160}
+              priority
             />
           </a>
 
-          <div className="mb-3 font-medium">
+          <h1 className="mb-4 font-medium">
             <span className="text-2xl">Deep Learning!</span>{' '}
             <span className="text-sm text-neutral-600 dark:text-neutral-400">shallow humor :)</span>
-          </div>
+          </h1>
 
-          <div className="prose prose-neutral dark:prose-invert text-justify">
+          <div className="space-y-4 text-left text-[15px] leading-7 text-neutral-800 dark:text-neutral-200 sm:text-base sm:leading-7">
             <p>
-              Hello, I&apos;m Shreya, dedicated science fiction enthusiast and unapologetic geek, diving deep
-              into the captivating worlds of machine learning and deep learning.
+              Hello, I&apos;m Shreya. I started in backend and distributed systems, then moved toward the ML
+              layer: how models actually run, fail, and get evaluated in production.
             </p>
             <p>
-              Grad student at Carnegie Mellon University, breaking AI until it confesses how it works.
-              Backed by a strong academic foundation and industry experience at Proofpoint and Morgan Stanley, I like
-              problems that don&apos;t have obvious answers.
+              Grad student at Carnegie Mellon. Previously Software Engineer II at Morgan Stanley, and a
+              summer intern at Proofpoint on data-security analytics.
             </p>
             <p>
-              I chase the uncomfortable questions in ML, why models look intelligent on paper, misbehave
-              in reality, and how to close that gap.
+              I like the gap between models and systems: agents that stay grounded, models that get
+              evaluated, and systems that stay fast, safe, and reliable in production. Off the clock I play
+              piano, read, hike, travel, and collect tech memes.
             </p>
           </div>
         </div>
 
-        {/* In document flow below copy; avoids overlap with absolute + float height bugs */}
-        <div className="mt-10 flex w-full shrink-0 flex-col items-center gap-4 px-2 sm:mt-12 md:mt-14">
-          <div className="flex max-w-full flex-wrap items-center justify-center gap-x-4 gap-y-3 sm:gap-x-5">
+        <div className="mt-8 flex flex-col items-center gap-3">
+          <div className="flex w-full items-center justify-center gap-x-5 gap-y-3 px-2">
             {heroSocial.map(({ href, label, Icon }) => (
               <a
                 key={label}
@@ -89,203 +105,61 @@ export default function Page() {
           </div>
 
           <a
-            href="#experience"
-            className="group flex flex-col items-center gap-2 pb-1 text-neutral-600 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
-            aria-label="Scroll to experience section"
+            href="#home-preview"
+            className="group flex flex-col items-center gap-2 text-neutral-500 transition hover:text-neutral-900 dark:text-neutral-400 dark:hover:text-neutral-100"
+            aria-label="Scroll to preview"
           >
             <span className="home-scroll-wheel-track">
               <span className="home-scroll-wheel-dot" />
             </span>
-            <span className="text-[10px] font-medium uppercase tracking-[0.32em] text-neutral-500 dark:text-neutral-500">
-              Scroll
-            </span>
           </a>
         </div>
-      </div>
-
-      <section id="experience" className="space-y-4 scroll-mt-28">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-xl font-semibold">Experience Timeline</h2>
-            <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-              A quick vertical view of recent roles.
-            </p>
-          </div>
-          <Link to="/about/experience" className="text-sm underline underline-offset-4">
-            View full timeline
-          </Link>
-        </div>
-
-        <div className="relative pl-4">
-          {/* vertical line */}
-          <div className="absolute inset-y-0 left-[10px] w-px bg-neutral-200 dark:bg-neutral-700" />
-
-          <ol className="space-y-5">
-            {experienceHighlights.map((company, index) => {
-              const role = company.roles[0];
-              return (
-                <li key={company.company} className="relative flex gap-4">
-                  <div className="relative mt-1 flex h-5 w-5 items-center justify-center">
-                    <span className="absolute h-4 w-4 rounded-full bg-neutral-900 dark:bg-neutral-100" />
-                    <span className="relative h-2 w-2 rounded-full bg-white dark:bg-neutral-900" />
-                  </div>
-                  <article className="flex-1 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 shadow-sm dark:border-neutral-700 dark:bg-neutral-900">
-                    <div className="flex items-start justify-between gap-3">
-                      <div className="min-w-0">
-                        <p className="text-[11px] font-mono uppercase tracking-[0.18em] text-neutral-500 dark:text-neutral-400">
-                          {String(index + 1).padStart(2, '0')} · {company.company}
-                        </p>
-                        <p className="mt-1 text-sm font-semibold text-neutral-900 dark:text-neutral-50">
-                          {role?.title}
-                        </p>
-                      </div>
-                      <time className="shrink-0 text-xs text-right text-neutral-500 dark:text-neutral-400">
-                        {role?.duration}
-                      </time>
-                    </div>
-                    {role?.content?.[0] ? (
-                      <p className="mt-2 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
-                        {role.content[0]}
-                      </p>
-                    ) : null}
-                  </article>
-                </li>
-              );
-            })}
-          </ol>
-        </div>
       </section>
 
-      <section id="projects" className="space-y-4 scroll-mt-28">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-semibold">Featured Projects</h2>
-            <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-              Quantastica up front, with Brilliant Banker and the Adobe capstone.
-            </p>
-          </div>
-          <Link to="/projects" className="text-sm underline underline-offset-4">
-            See all projects
-          </Link>
-        </div>
-
-        <div className="grid gap-4 md:grid-cols-[minmax(0,_1.1fr)_minmax(0,_0.9fr)] md:auto-rows-[minmax(0,_1fr)]">
-          {/* Spotlight - Quantastica, square-ish tile in first column */}
-          <article className="relative overflow-hidden rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm transition hover:shadow-md dark:border-neutral-700 dark:bg-neutral-900 md:aspect-square md:flex md:flex-col md:justify-between">
-            <div className="absolute inset-0">
-              {quantastica?.image ? (
-                <img
-                  src={`/${quantastica.image}`}
-                  alt={quantastica.title}
-                  className="h-full w-full object-cover opacity-30 transition-transform duration-300 group-hover:scale-[1.03]"
-                  loading="lazy"
-                />
-              ) : null}
-              <div className="absolute inset-0 bg-gradient-to-br from-neutral-900/60 via-transparent to-neutral-900/10 dark:from-black/50" />
-            </div>
-
-            <div className="relative">
-              <div className="flex items-start justify-between gap-4">
-                <div>
-                  <p className="text-xs font-semibold uppercase tracking-widest text-neutral-200/90 dark:text-neutral-200/90">
-                    {quantastica?.category}
-                  </p>
-                  <h3 className="mt-2 text-xl font-semibold text-neutral-50">
-                    {quantastica?.title}
-                  </h3>
-                </div>
-                <a
-                  href={quantastica?.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center rounded-lg bg-white/90 px-3 py-2 text-sm font-semibold text-neutral-900 shadow-sm ring-1 ring-black/5 transition hover:bg-white dark:bg-neutral-800/95 dark:text-neutral-100 dark:ring-white/10"
-                >
-                  Open
-                  <span className="ml-2 inline-block translate-y-[1px]">→</span>
-                </a>
-              </div>
-
-              <p className="mt-3 text-sm leading-relaxed text-neutral-100/90 dark:text-neutral-100/90">
-                {quantastica?.description}
-              </p>
-
-              <div className="mt-4 flex flex-wrap gap-2">
-                {quantastica?.tags?.slice(0, 4).map((t) => (
-                  <span
-                    key={t}
-                    className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-neutral-100 ring-1 ring-white/15 backdrop-blur-sm"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-
-              <div className="mt-5 flex items-center justify-between text-xs text-neutral-200/70 dark:text-neutral-200/70">
-                <span className="font-mono">
-                  {formatShortDate(quantastica?.date ?? undefined)}
-                </span>
-              </div>
-            </div>
-          </article>
-
-          {/* Picks - Brilliant Banker and Adobe capstone */}
-          <div className="flex flex-col gap-4">
-            {featuredSideProjects.map((p) => (
-              <a
-                key={p.title}
-                href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative overflow-hidden rounded-2xl border border-neutral-200 bg-white/70 p-4 text-left shadow-sm transition hover:bg-white hover:shadow-md dark:border-neutral-700 dark:bg-neutral-950/40 dark:hover:bg-neutral-900/70"
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/10 via-transparent to-sky-500/10 opacity-0 transition-opacity group-hover:opacity-100" />
-                <div className="relative">
-                  <p className="text-xs font-semibold uppercase tracking-widest text-neutral-500 dark:text-neutral-400">
-                    {p.category}
-                  </p>
-                  <p className="mt-2 font-semibold text-neutral-900 dark:text-neutral-100">{p.title}</p>
-                  <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-300 line-clamp-3">
-                    {p.description}
-                  </p>
-                  <div className="mt-3 flex items-center justify-between">
-                    <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
-                      {formatShortDate(p.date)}
-                    </span>
-                    <span className="text-xs font-semibold text-neutral-700 dark:text-neutral-200">
-                      View project →
-                    </span>
-                  </div>
-                </div>
-              </a>
+      <div id="home-preview" className="mt-16 scroll-mt-24 space-y-12">
+        <section>
+          <SectionHeader title="Industry" viewAllPath="/about/experience" />
+          <div className="grid grid-cols-1 gap-3">
+            {industryHighlights.map((company) => (
+              <CompanyCard
+                key={company.company}
+                company={company}
+                compact
+                onClick={() => handleCardClick(company)}
+              />
             ))}
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section id="writing" className="space-y-4 scroll-mt-28">
-        <div className="flex items-center justify-between gap-4">
-          <div>
-            <h2 className="text-xl font-semibold">Latest Writing</h2>
-            <p className="mt-1 text-sm text-neutral-600 dark:text-neutral-400">
-              Recent posts as simple tiles.
-            </p>
+        <section>
+          <SectionHeader title="Projects" viewAllPath="/projects" />
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.title} project={project} />
+            ))}
           </div>
-          <Link to={DIARY_BLOGS_PATH} className="text-sm underline underline-offset-4">
-            Open blog posts
-          </Link>
-        </div>
+        </section>
 
-        <div className="grid gap-4 md:grid-cols-2">
-          {blogsLoading && latestBlogs.length === 0
-            ? Array.from({ length: 2 }).map((_, index) => (
-                <div
-                  key={index}
-                  className="h-48 animate-pulse rounded-xl border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800/50"
-                />
-              ))
-            : latestBlogs.map((post) => <BlogCard key={post.id} post={post} />)}
-        </div>
-      </section>
-    </section>
+        <section>
+          <SectionHeader title="Writing" viewAllPath={DIARY_BLOGS_PATH} />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {blogsLoading && blogPosts.length === 0
+              ? Array.from({ length: 2 }).map((_, index) => (
+                  <div
+                    key={index}
+                    className="h-48 animate-pulse rounded-xl border border-neutral-200 bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800/50"
+                  />
+                ))
+              : blogPosts.slice(0, 2).map((post) => <BlogCard key={post.id} post={post} />)}
+          </div>
+        </section>
+      </div>
+
+      <Modal isOpen={selectedCompany !== null} onClose={handleCloseModal}>
+        {selectedCompany && (
+          <ModalContent company={selectedCompany} techStackLabel={techStackLabel} />
+        )}
+      </Modal>
+    </>
   );
 }

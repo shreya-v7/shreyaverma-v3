@@ -1,6 +1,17 @@
 import type { Achievement } from '../../types';
 import { CTX, GROUP } from './contexts';
 
+const proofpoint: Achievement[] = [
+  {
+    title: '3rd Place - Internal Intern Hackathon',
+    category: 'Hackathon',
+    group: GROUP.proofpoint,
+    year: 2026,
+    context: CTX.proofpoint,
+    highlight: 'Placed 3rd in a firm-wide internal intern hackathon.',
+  },
+];
+
 const morganStanley: Achievement[] = [
   {
     title: 'Best Innovative Project',
@@ -67,7 +78,7 @@ const publications: Achievement[] = [
     title: 'An Efficient Multifactor Authentication System',
     category: 'Publication',
     group: GROUP.publications,
-    year: 2023,
+    date: '2023-09-01',
     context: CTX.cipr(2023),
     highlight: 'Research publication on an efficient multifactor authentication approach.',
     details: ['Verma, S., Singh, M., Chaturvedi, K., Tripathy, B.K. · pp. 109-122'],
@@ -77,7 +88,7 @@ const publications: Achievement[] = [
     title: 'An Approach to Medical Diagnosis using Smart Chatbot',
     category: 'Publication',
     group: GROUP.publications,
-    year: 2022,
+    date: '2022-06-21',
     context: CTX.cipr(2022),
     highlight: 'Research publication proposing a medical diagnosis approach using a smart chatbot.',
     details: ['Verma, S., Singh, M., Tiwari, I., Tripathy, B.K. · pp. 43-56'],
@@ -207,6 +218,14 @@ const scholarships: Achievement[] = [
 ];
 
 const certifications: Achievement[] = [
+  {
+    title: 'Yale Financial Markets',
+    category: 'Certification',
+    group: GROUP.certifications,
+    date: '2025-05-23',
+    context: CTX.yale,
+    highlight: 'Certificate in Financial Markets from Yale University.',
+  },
   {
     title: 'Google Cloud Professional Machine Learning Engineer',
     category: 'Certification',
@@ -388,6 +407,7 @@ const leadership: Achievement[] = [
 ];
 
 export const allAchievementEntries: Achievement[] = [
+  ...proofpoint,
   ...morganStanley,
   ...publications,
   ...hpair,

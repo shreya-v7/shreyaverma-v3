@@ -1,5 +1,5 @@
 /**
- * In-page loading UI for /diary/music (not the global site preloader).
+ * In-page loading UI for /diary/music.
  */
 export function MusicBoxLoader({ compact = false }: { compact?: boolean }) {
   const h = compact ? 'min-h-[412px]' : 'min-h-[min(60vh,480px)]';

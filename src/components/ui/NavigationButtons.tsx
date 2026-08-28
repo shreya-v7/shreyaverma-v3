@@ -17,14 +17,14 @@ export const NavigationButtons = ({ buttons, activeId }: NavigationButtonsProps)
     : buttons[0]?.id ?? '';
 
   return (
-    <div className="flex justify-center items-center mb-8 flex-wrap gap-2">
+    <div className="mb-8 flex w-full flex-nowrap items-center justify-between gap-1 sm:justify-center sm:gap-1.5">
       {buttons.map((button) => (
         <Link 
           key={button.id} 
           to={button.path} 
           aria-current={resolvedActiveId === button.id ? 'page' : undefined}
           className={[
-            'inline-flex items-center justify-center px-3 py-2 text-sm font-medium rounded-xl',
+            'inline-flex items-center justify-center whitespace-nowrap rounded-xl px-1.5 py-1.5 text-[11px] font-medium sm:px-2.5 sm:text-sm',
             'transition-all duration-200 ease-in-out',
             'border backdrop-blur-[2px]',
             resolvedActiveId === button.id

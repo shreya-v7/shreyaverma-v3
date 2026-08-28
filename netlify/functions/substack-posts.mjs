@@ -1,19 +1,5 @@
-function json(statusCode, body, extraHeaders = {}) {
-  return {
-    statusCode,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Access-Control-Allow-Origin': '*',
-      ...extraHeaders,
-    },
-    body: JSON.stringify(body),
-  };
-}
-
-const FETCH_HEADERS = {
-  Accept: 'application/json',
-  'User-Agent': 'Mozilla/5.0 (compatible; portfolio-site/1.0)',
-};
+import { loadProjectEnv } from './_env.mjs';
+import { FETCH_HEADERS, corsPreflight, json } from './_http.mjs';
 
 /**
  * @param {string | undefined} raw
@@ -79,9 +65,10 @@ async function resolvePublicationFromHandle(handle) {
  */
 async function fetchArchiveRows(base, limit, offset) {
   const archiveUrl = `${base.replace(/\/+$/, '')}/api/v1/archive?limit=${limit}&offset=${offset}&sort=new`;
-  const res = await fetch(archiveUrl, { headers: FETCH_HEADERS, redirect: 'follow' });
-  const contentType = res.headers.get('content-type') || '';
+  const res = await fetch(archiveUrl, { headers: FETCH_HEADERS, redirect: 'manual' });
+  if (res.status >= 300 && res.status < 400) return { ok: false };
 
+  const contentType = res.headers.get('content-type') || '';
   if (!res.ok || !contentType.includes('application/json')) {
     return { ok: false };
   }
@@ -119,17 +106,20 @@ async function resolvePublicationBase(raw) {
   }
 
   const publicationBase = `https://${input.slug}.substack.com`;
-  const probe = await fetchArchiveRows(publicationBase, 1, 0);
+  const [probe, fromHandle] = await Promise.all([
+    fetchArchiveRows(publicationBase, 1, 0),
+    resolvePublicationFromHandle(input.slug),
+  ]);
   if (probe.ok) return publicationBase;
-
-  return resolvePublicationFromHandle(input.slug);
+  return fromHandle;
 }
 
 /**
  * @param {unknown} item
+ * @param {string} base
  * @returns {Record<string, unknown> | null}
  */
-function mapArchivePost(item) {
+function mapArchivePost(item, base) {
   if (!item || typeof item !== 'object') return null;
   const row = /** @type {Record<string, unknown>} */ (item);
 
@@ -138,7 +128,7 @@ function mapArchivePost(item) {
   if (!slug || !title) return null;
 
   const audience = typeof row.audience === 'string' ? row.audience : 'everyone';
-  if (audience !== 'everyone') return null;
+  if (audience === 'only_paid' || audience === 'founding') return null;
 
   const postDate = typeof row.post_date === 'string' ? row.post_date : '';
   const date = postDate ? postDate.slice(0, 10) : undefined;
@@ -149,9 +139,8 @@ function mapArchivePost(item) {
     (typeof row.truncated_body_text === 'string' && row.truncated_body_text.trim()) ||
     '';
 
-  const link =
-    (typeof row.canonical_url === 'string' && row.canonical_url) ||
-    `https://substack.com/p/${slug}`;
+  const canonical = typeof row.canonical_url === 'string' ? row.canonical_url : '';
+  const link = canonical || `${base.replace(/\/+$/, '')}/p/${slug}`;
 
   const image = typeof row.cover_image === 'string' ? row.cover_image : undefined;
 
@@ -174,18 +163,81 @@ function mapArchivePost(item) {
   };
 }
 
-export async function handler(event) {
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-      body: '',
-    };
+function decodeXml(value) {
+  return value
+    .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, '$1')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .trim();
+}
+
+function stripHtml(value) {
+  return value.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+/**
+ * @param {string} xml
+ * @param {string} base
+ */
+function parseRssPosts(xml, base) {
+  const blocks = [...xml.matchAll(/<item>([\s\S]*?)<\/item>/gi)];
+  return blocks
+    .map((match, index) => {
+      const block = match[1] || '';
+      const title = decodeXml(block.match(/<title>([\s\S]*?)<\/title>/i)?.[1] || '');
+      const link = decodeXml(block.match(/<link>([\s\S]*?)<\/link>/i)?.[1] || '');
+      if (!title || !link) return null;
+
+      const pubDate = block.match(/<pubDate>([\s\S]*?)<\/pubDate>/i)?.[1];
+      const rawDesc = decodeXml(block.match(/<description>([\s\S]*?)<\/description>/i)?.[1] || '');
+      const image =
+        block.match(/<enclosure[^>]+url=["']([^"']+)["']/i)?.[1] ||
+        block.match(/<media:content[^>]+url=["']([^"']+)["']/i)?.[1];
+      const slug = link.replace(/\/+$/, '').split('/').pop() || `rss-${index}`;
+      let date;
+      if (pubDate) {
+        const parsed = new Date(pubDate);
+        if (!Number.isNaN(parsed.getTime())) date = parsed.toISOString().slice(0, 10);
+      }
+
+      return {
+        id: slug,
+        title,
+        caption: stripHtml(rawDesc).slice(0, 280),
+        date,
+        tags: [],
+        link,
+        image,
+        type: 'blogs',
+        source: 'substack',
+      };
+    })
+    .filter(Boolean);
+}
+
+async function fetchRssPosts(base) {
+  try {
+    const feedUrl = `${base.replace(/\/+$/, '')}/feed`;
+    const res = await fetch(feedUrl, {
+      headers: { ...FETCH_HEADERS, Accept: 'application/rss+xml, application/xml, text/xml, */*' },
+      redirect: 'follow',
+    });
+    if (!res.ok) return [];
+    const xml = await res.text();
+    if (!xml.includes('<item')) return [];
+    return parseRssPosts(xml, base);
+  } catch {
+    return [];
   }
+}
+
+export async function handler(event) {
+  loadProjectEnv();
+
+  if (event.httpMethod === 'OPTIONS') return corsPreflight();
 
   if (event.httpMethod !== 'GET') {
     return { statusCode: 405, body: 'Method Not Allowed' };
@@ -207,7 +259,14 @@ export async function handler(event) {
     }
 
     const archive = await fetchArchiveRows(base, limit, offset);
-    if (!archive.ok) {
+    let posts = archive.ok ? archive.rows.map((row) => mapArchivePost(row, base)).filter(Boolean) : [];
+
+    if (posts.length === 0) {
+      const rssPosts = await fetchRssPosts(base);
+      posts = rssPosts.slice(offset, offset + limit);
+    }
+
+    if (!archive.ok && posts.length === 0) {
       return json(502, {
         error: 'substack_fetch_failed',
         message: `Could not load posts from ${base}. Check SUBSTACK_PUBLICATION_URL.`,
@@ -215,8 +274,6 @@ export async function handler(event) {
         publicationUrl: base,
       });
     }
-
-    const posts = archive.rows.map(mapArchivePost).filter(Boolean);
 
     return json(
       200,

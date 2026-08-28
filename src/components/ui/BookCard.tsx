@@ -1,6 +1,7 @@
 import { PersonalPost } from '../../types';
 import { useState } from 'react';
 import { Modal } from './Modal';
+import { ReviewDetails } from './ReviewDetails';
 
 interface BookCardProps {
   post: PersonalPost;
@@ -9,7 +10,7 @@ interface BookCardProps {
 export const BookCard = ({ post }: BookCardProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const detailedReview = post.metadata?.detailedReview as string[] | undefined;
+  const detailedReview = post.metadata?.detailedReview;
 
   return (
     <>
@@ -58,18 +59,7 @@ export const BookCard = ({ post }: BookCardProps) => {
           )}
 
           {/* Detailed Review with Bullet Points */}
-          {detailedReview && (
-            <div className="space-y-4">
-              <h3 className="text-xl font-semibold text-neutral-900 dark:text-neutral-100 mb-4">Review</h3>
-              <ul className="space-y-3 list-disc list-inside text-neutral-700 dark:text-neutral-300">
-                {detailedReview.map((point, index) => (
-                  <li key={index} className="text-base leading-relaxed">
-                    {point}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+          <ReviewDetails points={detailedReview} />
         </div>
       </Modal>
     </>

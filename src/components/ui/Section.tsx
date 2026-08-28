@@ -3,7 +3,6 @@ import { CompanyCard } from './CompanyCard';
 import { Modal } from './Modal';
 import { ModalContent } from './ModalContent';
 import { useCompanyModal } from '../../hooks/useCompanyModal';
-import { useTechStackColors } from '../../hooks/useTechStackColors';
 
 interface SectionProps {
   data: Company[];
@@ -11,36 +10,34 @@ interface SectionProps {
   gridCols?: string;
   showAwards?: boolean;
   techStackLabel?: string;
+  compact?: boolean;
 }
 
 export const Section = ({
   data,
   sectionId,
-  gridCols = 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
+  gridCols = 'grid-cols-1 sm:grid-cols-2',
   showAwards = false,
   techStackLabel = 'Tech Stack:',
+  compact = false,
 }: SectionProps) => {
   const {
     selectedCompany,
     handleCardClick,
     handleCloseModal,
-    colors,
-    isClient,
     techStackLabel: modalTechStackLabel,
   } = useCompanyModal(techStackLabel);
-  const { colors: cardColors, isClient: cardColorsReady } = useTechStackColors(data);
 
   return (
     <section id={sectionId}>
-      <div className={`grid ${gridCols} gap-4`}>
+      <div className={`grid ${gridCols} gap-3`}>
         {data.map((company) => (
           <CompanyCard
             key={company.company}
             company={company}
             onClick={() => handleCardClick(company)}
             showAwards={showAwards}
-            tagColors={cardColors}
-            tagColorsReady={cardColorsReady}
+            compact={compact}
           />
         ))}
       </div>
@@ -49,7 +46,6 @@ export const Section = ({
         {selectedCompany && (
           <ModalContent
             company={selectedCompany}
-            colors={colors}
             techStackLabel={modalTechStackLabel}
           />
         )}
@@ -57,4 +53,3 @@ export const Section = ({
     </section>
   );
 };
-

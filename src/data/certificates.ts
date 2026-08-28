@@ -2,6 +2,11 @@ import { Certificate } from '../types';
 
 export const certificates: Certificate[] = [
   {
+    title: "Yale Financial Markets",
+    date: "May 23, 2025",
+    image: "/certs/financialmarkets.png",
+  },
+  {
     title: "Google Cloud Professional Machine Learning Engineer Certification",
     date: "Dec 2023",
     image: "/certs/googleml.png",

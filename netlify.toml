@@ -6,10 +6,9 @@
 [build.environment]
   NODE_VERSION = "22"
   # Set in Netlify UI (Site settings → Environment variables), never commit:
-  # SPOTIFY_PLAYLIST_ID / SPOTIFY_PLAYLIST_IDS, SPOTIFY_TOP_ARTIST_IDS, SPOTIFY_FAVORITE_TRACK_ID
+  # SPOTIFY_PLAYLIST_IDS, SPOTIFY_TOP_ARTIST_IDS, SPOTIFY_FAVORITE_TRACK_ID
   # SUBSTACK_PUBLICATION_URL (@handle, publication slug, or full URL)
-  # ANTHROPIC_API_KEY (Ask Claude tab on /sherrii-heals)
-  # Optional: VITE_PUBLIC_BOOKING_EMBED_URL, VITE_SPOTIFY_API_PROXY_TARGET (local proxy)
+  # Optional: VITE_SPOTIFY_API_PROXY_TARGET (local proxy)
 
 [functions]
   directory = "netlify/functions"
@@ -35,16 +34,19 @@
   force = true
 
 [[redirects]]
-  from = "/api/food-plan"
-  to = "/.netlify/functions/food-plan"
-  status = 200
-  force = true
+  from = "/about/certifications"
+  to = "/about/honors"
+  status = 301
 
 [[redirects]]
-  from = "/api/food-plan-chat"
-  to = "/.netlify/functions/food-plan-chat"
-  status = 200
-  force = true
+  from = "/about/achievements"
+  to = "/about/honors"
+  status = 301
+
+[[redirects]]
+  from = "/diary/movies"
+  to = "/diary/cinema"
+  status = 301
 
 [[redirects]]
   from = "/*"

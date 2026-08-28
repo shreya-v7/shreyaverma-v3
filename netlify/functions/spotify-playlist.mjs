@@ -1,20 +1,11 @@
-function json(statusCode, body, extraHeaders = {}) {
-  return {
-    statusCode,
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'Access-Control-Allow-Origin': '*',
-      ...extraHeaders,
-    },
-    body: JSON.stringify(body),
-  };
-}
+import { loadProjectEnv } from './_env.mjs';
+import { CORS_HEADERS, FETCH_HEADERS, corsPreflight, json } from './_http.mjs';
 
 function binary(statusCode, body, headers = {}) {
   return {
     statusCode,
     headers: {
-      'Access-Control-Allow-Origin': '*',
+      ...CORS_HEADERS,
       ...headers,
     },
     body,
@@ -69,17 +60,23 @@ function readItems(kind, envName, fallbackName) {
     });
 }
 
+function proxiedImageUrl(rawUrl) {
+  if (!rawUrl) return undefined;
+  return `/api/spotify-playlist?mode=image&url=${encodeURIComponent(rawUrl)}`;
+}
+
 async function withOEmbedMeta(item) {
   try {
     const url = `https://open.spotify.com/oembed?url=${encodeURIComponent(item.spotifyUrl)}`;
-    const response = await fetch(url);
+    const response = await fetch(url, { headers: FETCH_HEADERS });
     if (!response.ok) return item;
 
     const meta = await response.json();
+    const thumbnail = typeof meta.thumbnail_url === 'string' ? meta.thumbnail_url : undefined;
     return {
       ...item,
       title: typeof meta.title === 'string' ? meta.title.replace(/\s*\|\s*Spotify\s*$/i, '') : undefined,
-      imageUrl: typeof meta.thumbnail_url === 'string' ? meta.thumbnail_url : undefined,
+      imageUrl: proxiedImageUrl(thumbnail),
     };
   } catch {
     return item;
@@ -117,17 +114,9 @@ async function imageResponse(rawUrl) {
 }
 
 export async function handler(event) {
-  if (event.httpMethod === 'OPTIONS') {
-    return {
-      statusCode: 204,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type',
-      },
-      body: '',
-    };
-  }
+  loadProjectEnv();
+
+  if (event.httpMethod === 'OPTIONS') return corsPreflight();
 
   if (event.httpMethod !== 'GET') return { statusCode: 405, body: 'Method Not Allowed' };
 
@@ -139,7 +128,8 @@ export async function handler(event) {
     readItems('playlist', 'SPOTIFY_PLAYLIST_IDS', 'SPOTIFY_PLAYLIST_ID').map(withOEmbedMeta),
   );
   const topArtists = await Promise.all(readItems('artist', 'SPOTIFY_TOP_ARTIST_IDS').map(withOEmbedMeta));
-  const favoriteTrack = embedItem('track', process.env.SPOTIFY_FAVORITE_TRACK_ID);
+  const favoriteRaw = embedItem('track', process.env.SPOTIFY_FAVORITE_TRACK_ID);
+  const favoriteTrack = favoriteRaw ? await withOEmbedMeta(favoriteRaw) : null;
 
   if (!playlists.length && !topArtists.length && !favoriteTrack) {
     return json(503, {

@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      feed:
-        specifier: ^4.2.2
-        version: 4.2.2
       next-themes:
         specifier: ^0.3.0
         version: 0.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -32,13 +29,7 @@ importers:
       swiper:
         specifier: ^11.2.10
         version: 11.2.10
-      typescript:
-        specifier: 5.5.4
-        version: 5.5.4
     devDependencies:
-      '@tailwindcss/typography':
-        specifier: ^0.5.14
-        version: 0.5.14(tailwindcss@3.4.10)
       '@types/node':
         specifier: ^22.12.0
         version: 22.19.3
@@ -50,7 +41,7 @@ importers:
         version: 18.3.0
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.7.0(vite@7.3.0(@types/node@22.19.3)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.5.0))
+        version: 4.7.0(vite@7.3.0(@types/node@22.19.3)(jiti@1.21.6)(yaml@2.5.0))
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.4.41)
@@ -60,12 +51,12 @@ importers:
       tailwindcss:
         specifier: 3.4.10
         version: 3.4.10
-      tsx:
-        specifier: ^4.7.0
-        version: 4.21.0
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
       vite:
         specifier: ^7.3.0
-        version: 7.3.0(@types/node@22.19.3)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.5.0)
+        version: 7.3.0(@types/node@22.19.3)(jiti@1.21.6)(yaml@2.5.0)
 
 packages:
 
@@ -487,11 +478,6 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@tailwindcss/typography@0.5.14':
-    resolution: {integrity: sha512-ZvOCjUbsJBjL9CxQBn+VEnFpouzuKhxh2dH8xMIWHILL+HfOYtlAkWcyoon8LlzE53d2Yo6YO6pahKKNW3q1YQ==}
-    peerDependencies:
-      tailwindcss: '>=3.0.0 || insiders'
-
   '@types/babel__core@7.20.5':
     resolution: {integrity: sha512-qoQprZvz5wQFJwMDqeseRXWv3rqMvhgpbXFfVyWhbx9X47POIA6i/+dXefEmZKoAgOaTdaIgNSMqMIU61yRyzA==}
 
@@ -685,10 +671,6 @@ packages:
       picomatch:
         optional: true
 
-  feed@4.2.2:
-    resolution: {integrity: sha512-u5/sxGfiMfZNtJ3OvQpXcvotFpYkL0n9u9mM2vkui2nGo8b4wvDkJ8gAkYqbA8QpGyFCv3RK0Z+Iv+9veCS9bQ==}
-    engines: {node: '>=0.4.0'}
-
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
@@ -711,9 +693,6 @@ packages:
   gensync@1.0.0-beta.2:
     resolution: {integrity: sha512-3hN7NaskYvMDLQY55gnW3NQ+mesEAepTqlg+VEbj7zzqEMBVNhzcGYYeqFo/TlYz6eQiFcp1HcsCZO+nGgS8zg==}
     engines: {node: '>=6.9.0'}
-
-  get-tsconfig@4.13.0:
-    resolution: {integrity: sha512-1VKTZJCwBrvbd+Wn3AOgQP/2Av+TfTCOlE4AcRJE72W1ksZXbAx8PPBR9RzgTeSPzlPMHrbANMH3LbltH73wxQ==}
 
   glob-parent@5.1.2:
     resolution: {integrity: sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==}
@@ -792,15 +771,6 @@ packages:
 
   lines-and-columns@1.2.4:
     resolution: {integrity: sha512-7ylylesZQ/PV29jhEDl3Ufjo6ZX7gCqJr5F7PKrqc93v7fzSymt1BpwEU8nAUXs8qzzvqhbjhK5QZg6Mt/HkBg==}
-
-  lodash.castarray@4.4.0:
-    resolution: {integrity: sha512-aVx8ztPv7/2ULbArGJ2Y42bG1mEQ5mGjpdvrbJcJFU3TbYybe+QlLS4pst9zV52ymy2in1KpFPiZnAOATxD4+Q==}
-
-  lodash.isplainobject@4.0.6:
-    resolution: {integrity: sha512-oSXzaWypCMHkPC3NvBEaPHf0KsA5mvPrOPgQWDsbg8n7orZ290M0BmC/jgRZ4vcJ6DTAhjrsSYgdsW/F+MFOBA==}
-
-  lodash.merge@4.6.2:
-    resolution: {integrity: sha512-0KpjqXRVvrYyCsX1swR/XTK0va6VQkQM6MNo7PqW77ByjAhoARA8EfrP1N4+KlKj8YS0ZUCtRT/YUuhyYDujIQ==}
 
   loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
@@ -938,10 +908,6 @@ packages:
     peerDependencies:
       postcss: ^8.2.14
 
-  postcss-selector-parser@6.0.10:
-    resolution: {integrity: sha512-IQ7TZdoaqbT+LCpShg46jnZVlhWD2w6iQYAcYXfHARZ7X1t/UGhhceQDs5X0cGqKvYlHNOuv7Oa1xmb0oQuA3w==}
-    engines: {node: '>=4'}
-
   postcss-selector-parser@6.1.2:
     resolution: {integrity: sha512-Q8qQfPiZ+THO/3ZrOrO0cJJKfpYCagtMUkXbnEfmgUjwXg6z/WBeOyS9APBBPCTSiDV+s4SwQGu8yFsiMRIudg==}
     engines: {node: '>=4'}
@@ -1006,9 +972,6 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
-  resolve-pkg-maps@1.0.0:
-    resolution: {integrity: sha512-seS2Tj26TBVOC2NIc2rOe2y2ZO7efxITtLZcGSOnHHNOQ7CkiUBfw0Iw2ck6xkIhPwLhKNLS8BO+hEpngQlqzw==}
-
   resolve@1.22.8:
     resolution: {integrity: sha512-oKWePCxqpd6FlLvGV1VU0x7bkPmmCNolxzjMf4NczoDnQcIWrAF+cPtZn5i6n+RfD2d9i0tzpKnG6Yk168yIyw==}
     hasBin: true
@@ -1024,9 +987,6 @@ packages:
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
-
-  sax@1.4.1:
-    resolution: {integrity: sha512-+aWOz7yVScEGoKNd4PA10LZ8sk0A/z5+nXQG5giUO5rprX9jgYsTdov9qCchZiPIZezbZH+jRut8nPodFAX4Jg==}
 
   scheduler@0.23.2:
     resolution: {integrity: sha512-UOShsPwz7NrMUqhR6t0hWjFduvOzbtv7toDH1/hIrfRNIDBnnBWd0CwJTGvTpngVlmwGCdP9/Zl/tVrDqcuYzQ==}
@@ -1110,11 +1070,6 @@ packages:
   ts-interface-checker@0.1.13:
     resolution: {integrity: sha512-Y/arvbn+rrz3JCKl9C4kVNfTfSm2/mEp5FSz5EsZSANGPSlQrpRI5M4PKF+mJnE52jOO90PnPSc3Ur3bTQw0gA==}
 
-  tsx@4.21.0:
-    resolution: {integrity: sha512-5C1sg4USs1lfG0GFb2RLXsdpXqBSEhAaA/0kPL01wxzpMqLILNxIxIOKiILz+cdg/pLnOUxFYOR5yhHU666wbw==}
-    engines: {node: '>=18.0.0'}
-    hasBin: true
-
   typescript@5.5.4:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
     engines: {node: '>=14.17'}
@@ -1190,10 +1145,6 @@ packages:
   wrap-ansi@8.1.0:
     resolution: {integrity: sha512-si7QWI6zUMq56bESFvagtmzMdGOtoxfR+Sez11Mobfc7tm+VkUckk9bW2UeffTGVUbOksxmSw0AA2gs8g71NCQ==}
     engines: {node: '>=12'}
-
-  xml-js@1.6.11:
-    resolution: {integrity: sha512-7rVi2KMfwfWFl+GpPg6m80IVMWXLRjO+PxTq7V2CDhoGak0wzYzFgUY2m4XJ47OGdXd8eLE8EmwfAmdjw7lC1g==}
-    hasBin: true
 
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
@@ -1523,14 +1474,6 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.54.0':
     optional: true
 
-  '@tailwindcss/typography@0.5.14(tailwindcss@3.4.10)':
-    dependencies:
-      lodash.castarray: 4.4.0
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
-      postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.10
-
   '@types/babel__core@7.20.5':
     dependencies:
       '@babel/parser': 7.28.5
@@ -1569,7 +1512,7 @@ snapshots:
       '@types/prop-types': 15.7.12
       csstype: 3.1.3
 
-  '@vitejs/plugin-react@4.7.0(vite@7.3.0(@types/node@22.19.3)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.5.0))':
+  '@vitejs/plugin-react@4.7.0(vite@7.3.0(@types/node@22.19.3)(jiti@1.21.6)(yaml@2.5.0))':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.5)
@@ -1577,7 +1520,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 7.3.0(@types/node@22.19.3)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.5.0)
+      vite: 7.3.0(@types/node@22.19.3)(jiti@1.21.6)(yaml@2.5.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1744,10 +1687,6 @@ snapshots:
     optionalDependencies:
       picomatch: 4.0.3
 
-  feed@4.2.2:
-    dependencies:
-      xml-js: 1.6.11
-
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
@@ -1765,10 +1704,6 @@ snapshots:
   function-bind@1.1.2: {}
 
   gensync@1.0.0-beta.2: {}
-
-  get-tsconfig@4.13.0:
-    dependencies:
-      resolve-pkg-maps: 1.0.0
 
   glob-parent@5.1.2:
     dependencies:
@@ -1834,12 +1769,6 @@ snapshots:
   lilconfig@3.1.2: {}
 
   lines-and-columns@1.2.4: {}
-
-  lodash.castarray@4.4.0: {}
-
-  lodash.isplainobject@4.0.6: {}
-
-  lodash.merge@4.6.2: {}
 
   loose-envify@1.4.0:
     dependencies:
@@ -1940,11 +1869,6 @@ snapshots:
       postcss: 8.4.41
       postcss-selector-parser: 6.1.2
 
-  postcss-selector-parser@6.0.10:
-    dependencies:
-      cssesc: 3.0.0
-      util-deprecate: 1.0.2
-
   postcss-selector-parser@6.1.2:
     dependencies:
       cssesc: 3.0.0
@@ -2011,8 +1935,6 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
-  resolve-pkg-maps@1.0.0: {}
-
   resolve@1.22.8:
     dependencies:
       is-core-module: 2.15.1
@@ -2052,8 +1974,6 @@ snapshots:
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
-
-  sax@1.4.1: {}
 
   scheduler@0.23.2:
     dependencies:
@@ -2155,13 +2075,6 @@ snapshots:
 
   ts-interface-checker@0.1.13: {}
 
-  tsx@4.21.0:
-    dependencies:
-      esbuild: 0.27.2
-      get-tsconfig: 4.13.0
-    optionalDependencies:
-      fsevents: 2.3.3
-
   typescript@5.5.4: {}
 
   undici-types@6.21.0: {}
@@ -2180,7 +2093,7 @@ snapshots:
 
   util-deprecate@1.0.2: {}
 
-  vite@7.3.0(@types/node@22.19.3)(jiti@1.21.6)(tsx@4.21.0)(yaml@2.5.0):
+  vite@7.3.0(@types/node@22.19.3)(jiti@1.21.6)(yaml@2.5.0):
     dependencies:
       esbuild: 0.27.2
       fdir: 6.5.0(picomatch@4.0.3)
@@ -2192,7 +2105,6 @@ snapshots:
       '@types/node': 22.19.3
       fsevents: 2.3.3
       jiti: 1.21.6
-      tsx: 4.21.0
       yaml: 2.5.0
 
   which@2.0.2:
@@ -2210,10 +2122,6 @@ snapshots:
       ansi-styles: 6.2.1
       string-width: 5.1.2
       strip-ansi: 7.1.0
-
-  xml-js@1.6.11:
-    dependencies:
-      sax: 1.4.1
 
   yallist@3.1.1: {}
 

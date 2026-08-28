@@ -2,6 +2,7 @@ import { PersonalPost } from '../../types';
 import { formatDate } from '../../utils';
 import { getBlogReadLabel } from '../../lib/substackPosts';
 import { FiExternalLink, FiCalendar } from 'react-icons/fi';
+import { SiteImage } from './SiteImage';
 
 interface BlogCardProps {
   post: PersonalPost;
@@ -15,12 +16,12 @@ export const BlogCard = ({ post }: BlogCardProps) => {
     <article className="group overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-md transition-all duration-300 hover:shadow-lg dark:border-neutral-700 dark:bg-neutral-800">
       {post.image ? (
         <div className="aspect-[2/1] overflow-hidden bg-neutral-100 dark:bg-neutral-900">
-          <img
+          <SiteImage
             src={post.image}
-            alt=""
+            alt={post.title || ''}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-            loading="lazy"
-            decoding="async"
+            width={640}
+            height={320}
             referrerPolicy="no-referrer"
           />
         </div>
