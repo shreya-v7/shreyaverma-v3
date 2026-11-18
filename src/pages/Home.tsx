@@ -5,7 +5,7 @@ import {
   FaLinkedinIn,
   FaCode,
 } from 'react-icons/fa6';
-import { FiMail } from 'react-icons/fi';
+import { FiArrowUpRight, FiDownload, FiFileText, FiMail } from 'react-icons/fi';
 import { metaData, socialLinks } from '../config/config';
 import { Seo, personJsonLd } from '../components/seo/Seo';
 import { SiteImage } from '../components/ui/SiteImage';
@@ -70,6 +70,23 @@ export default function Home() {
             <span className="text-2xl">Deep Learning!</span>{' '}
             <span className="text-sm text-neutral-600 dark:text-neutral-400">shallow humor :)</span>
           </h1>
+
+          <section aria-labelledby="resume-heading" className="mb-6 clear-both rounded-2xl border border-teal-300 bg-teal-50 p-4 dark:border-teal-800 dark:bg-teal-950/40">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <h2 id="resume-heading" className="flex items-center gap-2 text-base font-semibold text-neutral-950 dark:text-neutral-50">
+                <FiFileText aria-hidden="true" className="h-5 w-5 text-teal-700 dark:text-teal-300" />
+                Check my resume
+              </h2>
+              <div className="flex flex-wrap items-center gap-3">
+                <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" aria-label="View my resume, PDF, opens in a new tab" className="inline-flex min-h-11 items-center gap-2 rounded-lg bg-teal-700 px-4 py-2 text-sm font-semibold text-white transition hover:bg-teal-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600 dark:bg-teal-400 dark:text-neutral-950 dark:hover:bg-teal-300">
+                  View resume <FiArrowUpRight aria-hidden="true" />
+                </a>
+                <a href="/resume.pdf" download="Shreya-Verma-Resume.pdf" className="inline-flex min-h-11 items-center gap-2 rounded-lg px-2 text-sm font-medium text-teal-800 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-teal-600 dark:text-teal-200">
+                  <FiDownload aria-hidden="true" /> Download PDF
+                </a>
+              </div>
+            </div>
+          </section>
 
           <div className="space-y-4 text-left text-[15px] leading-7 text-neutral-800 dark:text-neutral-200 sm:text-base sm:leading-7">
             <p>
