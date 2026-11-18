@@ -136,10 +136,10 @@ Values can be full Spotify URLs or IDs. Playlists and artists are comma-separate
 ### Substack
 
 ```env
-SUBSTACK_PUBLICATION_URL=@yourhandle
+SUBSTACK_PUBLICATION_URL=https://shreyave.substack.com
 ```
 
-Slug or full `https://yourname.substack.com` also works. Public posts appear on `/diary/blogs`. Paid-only posts are skipped. If the function is missing, the page shows an error, not a fake feed.
+Defaults to `https://shreyave.substack.com` when unset. A publication URL, slug, or @handle can override it. Public posts appear on `/diary/blogs`. Paid-only posts are skipped. If the function is missing, the page shows an error, not a fake feed.
 
 Do not commit `.env`.
 

@@ -19,6 +19,8 @@ function parsePublicationInput(raw) {
     return { kind: 'empty' };
   }
 
+  if (value.startsWith('@')) return { kind: 'handle', handle: value.slice(1).split('/')[0] };
+
   const slug = value.replace(/^@/, '').replace(/\.substack\.com\/?$/i, '').split('/')[0];
   if (!slug) return { kind: 'empty' };
 
@@ -34,7 +36,7 @@ function parsePublicationInput(raw) {
 async function resolvePublicationFromHandle(handle) {
   const res = await fetch(
     `https://substack.com/api/v1/user/${encodeURIComponent(handle)}/public_profile`,
-    { headers: FETCH_HEADERS },
+    { headers: FETCH_HEADERS, signal: AbortSignal.timeout(5000) },
   );
 
   if (!res.ok) return null;
@@ -64,19 +66,21 @@ async function resolvePublicationFromHandle(handle) {
  * @returns {Promise<{ ok: true; rows: unknown[] } | { ok: false }>}
  */
 async function fetchArchiveRows(base, limit, offset) {
-  const archiveUrl = `${base.replace(/\/+$/, '')}/api/v1/archive?limit=${limit}&offset=${offset}&sort=new`;
-  const res = await fetch(archiveUrl, { headers: FETCH_HEADERS, redirect: 'manual' });
-  if (res.status >= 300 && res.status < 400) return { ok: false };
-
-  const contentType = res.headers.get('content-type') || '';
-  if (!res.ok || !contentType.includes('application/json')) {
+  try {
+    const archiveUrl = `${base.replace(/\/+$/, '')}/api/v1/archive?limit=${limit}&offset=${offset}&sort=new`;
+    const res = await fetch(archiveUrl, {
+      headers: FETCH_HEADERS,
+      redirect: 'manual',
+      signal: AbortSignal.timeout(5000),
+    });
+    const contentType = res.headers.get('content-type') || '';
+    if (!res.ok || !contentType.includes('application/json')) return { ok: false };
+    const data = await res.json();
+    return Array.isArray(data) ? { ok: true, rows: data } : { ok: false };
+  } catch {
+    // A timeout, network error, or malformed archive must still allow RSS fallback.
     return { ok: false };
   }
-
-  const data = await res.json();
-  if (!Array.isArray(data)) return { ok: false };
-
-  return { ok: true, rows: data };
 }
 
 /**
@@ -91,27 +95,13 @@ async function resolvePublicationBase(raw) {
     return resolvePublicationFromHandle(input.handle);
   }
 
-  if (input.kind === 'publication') {
-    const probe = await fetchArchiveRows(input.base, 1, 0);
-    if (probe.ok) return input.base.replace(/\/+$/, '');
-
-    const host = input.base.replace(/^https?:\/\//i, '').split('/')[0] ?? '';
-    const sub = host.replace(/\.substack\.com$/i, '');
-    if (sub && sub !== host) {
-      const fromHandle = await resolvePublicationFromHandle(sub);
-      if (fromHandle) return fromHandle;
-    }
-
-    return input.base.replace(/\/+$/, '');
-  }
+  if (input.kind === 'publication') return input.base;
 
   const publicationBase = `https://${input.slug}.substack.com`;
-  const [probe, fromHandle] = await Promise.all([
-    fetchArchiveRows(publicationBase, 1, 0),
-    resolvePublicationFromHandle(input.slug),
-  ]);
+  const probe = await fetchArchiveRows(publicationBase, 1, 0);
   if (probe.ok) return publicationBase;
-  return fromHandle;
+  // A publication slug remains usable via RSS even when the archive/profile API fails.
+  return (await resolvePublicationFromHandle(input.slug).catch(() => null)) || publicationBase;
 }
 
 /**
@@ -224,6 +214,7 @@ async function fetchRssPosts(base) {
     const res = await fetch(feedUrl, {
       headers: { ...FETCH_HEADERS, Accept: 'application/rss+xml, application/xml, text/xml, */*' },
       redirect: 'follow',
+      signal: AbortSignal.timeout(5000),
     });
     if (!res.ok) return [];
     const xml = await res.text();
@@ -247,7 +238,7 @@ export async function handler(event) {
   const offset = Math.max(0, Number.parseInt(event.queryStringParameters?.offset || '0', 10) || 0);
 
   try {
-    const base = await resolvePublicationBase(process.env.SUBSTACK_PUBLICATION_URL);
+    const base = await resolvePublicationBase(process.env.SUBSTACK_PUBLICATION_URL?.trim() || 'https://shreyave.substack.com');
 
     if (!base) {
       return json(503, {

@@ -32,11 +32,7 @@ export default function Blogs() {
             title="Could not load Substack posts"
             message={error}
             hint={
-              <>
-                Set <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">SUBSTACK_PUBLICATION_URL</code> in
-                Netlify or <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">.env</code>. Locally run{' '}
-                <code className="rounded bg-neutral-200/80 px-1 dark:bg-neutral-800">netlify dev</code>.
-              </>
+              <>Your other writing is still available below. Please try again shortly.</>
             }
           />
         </div>
