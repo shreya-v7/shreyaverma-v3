@@ -2,7 +2,7 @@ export const metaData = {
   baseUrl: "https://shreyaverma.netlify.app",
   title: "Shreya Verma",
   name: "Shreya Verma",
-  ogImage: "/profile.png",
+  ogImage: "/profile.jpeg",
   description:
     "ML systems and AI engineering. Graduate student at Carnegie Mellon. Previously SWE Intern at Proofpoint and Software Engineer II at Morgan Stanley.",
 };

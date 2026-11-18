@@ -57,7 +57,7 @@ export default function Home() {
         <div className="flow-root">
           <a href={socialLinks.twitter} target="_blank" rel="noopener noreferrer">
             <SiteImage
-              src="/profile.png"
+              src="/profile.jpeg"
               alt="Shreya Verma"
               className="mx-auto mb-6 mt-0 block rounded-full sm:float-right sm:mb-5 sm:ml-5 lg:mb-5 lg:mt-5"
               width={160}
