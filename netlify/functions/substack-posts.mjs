@@ -238,7 +238,13 @@ export async function handler(event) {
   const offset = Math.max(0, Number.parseInt(event.queryStringParameters?.offset || '0', 10) || 0);
 
   try {
-    const base = await resolvePublicationBase(process.env.SUBSTACK_PUBLICATION_URL?.trim() || 'https://shreyave.substack.com');
+    const configured = process.env.SUBSTACK_PUBLICATION_URL?.trim();
+    // Migrate the obsolete deployed handle as well as missing configuration.
+    const legacy = /^(?:@?shreyaverma1|(?:https?:\/\/)?shreyaverma1\.substack\.com\/?|https?:\/\/substack\.com\/@shreyaverma1\/?)$/i;
+    const publication = !configured || legacy.test(configured)
+      ? 'https://shreyave.substack.com'
+      : configured;
+    const base = await resolvePublicationBase(publication);
 
     if (!base) {
       return json(503, {

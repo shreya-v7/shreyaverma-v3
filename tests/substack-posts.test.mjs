@@ -31,3 +31,24 @@ for (const failure of ['network', 'json', 'http']) {
     }
   });
 }
+
+for (const configured of ['shreyaverma1', '@shreyaverma1', 'https://shreyaverma1.substack.com', 'https://substack.com/@shreyaverma1']) {
+  test(`migrates obsolete publication setting: ${configured}`, async () => {
+    const previousFetch = globalThis.fetch;
+    const previousEnv = process.env.SUBSTACK_PUBLICATION_URL;
+    process.env.SUBSTACK_PUBLICATION_URL = configured;
+    globalThis.fetch = async (url) => {
+      assert.ok(url.startsWith('https://shreyave.substack.com/'));
+      return new Response(JSON.stringify([{slug:'test',title:'Test post'}]), {headers:{'content-type':'application/json'}});
+    };
+    try {
+      const response = await handler(event);
+      assert.equal(response.statusCode, 200);
+      assert.equal(JSON.parse(response.body).publicationUrl, 'https://shreyave.substack.com');
+    } finally {
+      globalThis.fetch = previousFetch;
+      if (previousEnv === undefined) delete process.env.SUBSTACK_PUBLICATION_URL;
+      else process.env.SUBSTACK_PUBLICATION_URL = previousEnv;
+    }
+  });
+}
