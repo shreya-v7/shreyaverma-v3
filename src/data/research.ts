@@ -21,11 +21,27 @@ export const researchItems: ResearchItem[] = [
     summary:
       'Industry-sponsored CMU capstone on replacing prompted LLM orchestrators with a learned policy for deep-research agents.',
     details: [
-      'Replacing prompted LLM orchestrators in deep research agents with a small model trained via reinforcement learning to decide what context to keep, when to prune, and when to stop.',
-      'In progress: problem formulation, architecture, baselines, and evaluation (quality, latency, cost, tool use).',
+      'Designing PILOT, a joint policy for evidence retention, pruning, and stopping. PILOT is not yet built; its 1–7B training remains planned.',
+      'Implemented a separate PyTorch GRPO trainer for Qwen2.5-3B with LoRA under a fixed 20 GPU-hour budget, validating every 8 steps on 10 held-out questions.',
+      'Paused at step 8 with coverage at 25.4% versus a 30.3% untrained baseline. An offline check on 40 training trees showed the reward favored keeping all pages and never stopping; revised rewards remain proposed.',
+      'Evaluating quality, latency, token cost, and tool use with DeepResearch Bench and DeepResearchGym. No positive training or efficiency result is claimed.',
     ],
     tags: ['Agentic systems', 'Reinforcement learning', 'Orchestration', 'Evaluation', 'LLMs'],
-    libraries: ['Reinforcement learning', 'LLMs', 'Tool use', 'Evaluation'],
+    libraries: ['PyTorch', 'LoRA', 'GRPO', 'Qwen2.5-3B', 'Google Colab'],
+  },
+  {
+    kind: 'Current',
+    title: 'FP4 low-precision training and inference (Needle)',
+    venue: 'Carnegie Mellon University · Deep Learning Systems (10-714)',
+    date: 'In progress · Fall 2026',
+    summary: 'Exploring MXFP4 and NVFP4 training and inference inside Needle, with C++/CUDA kernels and training-stability analysis.',
+    details: [
+      'Developing packed FP4 storage via pybind11, QuantizedLinear, CUDA quantize-pack, and fused dequantize-matmul/GEMV kernels.',
+      'Studying forward, input-gradient, and weight-gradient ablations with stochastic rounding and Hadamard rotation; roofline profiling is in progress.',
+      'No measured performance or stability results yet; exact project dates and team attribution remain unconfirmed.',
+    ],
+    tags: ['ML systems', 'Low-precision numerics', 'CUDA', 'Research'],
+    libraries: ['Needle', 'C++', 'CUDA', 'pybind11'],
   },
   {
     kind: 'Publication',

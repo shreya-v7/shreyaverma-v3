@@ -10,8 +10,8 @@ interface ProjectCardProps {
 }
 
 export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => (
-  <div className="group relative aspect-square bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
-      <div className="relative w-full h-full">
+  <div className="group relative bg-white dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300">
+      <div className="relative aspect-square w-full">
         <SiteImage
           src={`/${project.image}`}
           alt={project.title}
@@ -37,11 +37,11 @@ export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => 
               ))}
             </div>
             <p className="text-[10px] text-white/70">
-              {formatDate(project.date)}
+              {project.dateLabel ?? formatDate(project.date)}
             </p>
           </div>
 
-          <a
+          {project.link ? <a
             href={project.link}
             target="_blank"
             rel="noopener noreferrer"
@@ -49,8 +49,9 @@ export const ProjectCard = ({ project, priority = false }: ProjectCardProps) => 
           >
             <FiExternalLink className="h-3.5 w-3.5" />
             <span>View Project</span>
-          </a>
+          </a> : <span className="text-xs text-white/80">In progress</span>}
         </div>
       </div>
+      <p className="mx-3 my-3 line-clamp-3 text-xs leading-relaxed text-neutral-700 dark:text-neutral-300">{project.description}</p>
     </div>
 );

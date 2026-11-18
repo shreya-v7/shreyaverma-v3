@@ -5,20 +5,19 @@ export const experienceData: Company[] = [
   {
     company: "Proofpoint",
     logo: "experience/proofpoint.png",
-    hook: "Multi-tenant access analytics on a Spark and Hudi lake, plus an investigation agent that has to stay grounded.",
-    highlights: ["Agentic systems", "LLM evaluation", "Apache Spark", "Apache Hudi", "Amazon Athena", "Python", "SQL", "AWS"],
+    hook: "Lakehouse access analytics, a PuppyGraph evaluation, and bounded investigation tools across 20 tenants.",
+    highlights: ["Agentic systems", "LLM evaluation", "Apache Spark", "Apache Hudi", "Amazon Athena", "PuppyGraph", "Python", "SQL", "AWS"],
     roles: [
       {
         title: "SWE Intern, Cloud and ML",
         duration: "Jun 2026 - Aug 2026",
         content: [
-          "Designed a multi-tenant effective-access analytics pipeline over a Spark and Hudi data lake, resolving transitive access across direct grants, nested group membership, and folder inheritance for 8M+ resources and 1M+ identities without modifying source data or duplicating ownership of access relationships.",
-          "Built a 12-function bounded query API with tenant isolation at the query level, hard scan-cost caps, and a 28-question evaluation suite that reached 100% groundedness, isolation, and reproducibility, including SQL-injection attempts and cross-tenant adversarial probes.",
-          "Architected an autonomous investigation agent using priority-frontier search with budget, novelty, and coverage stopping conditions, paired with a separate LLM verification layer that grades groundedness and reasoning consistency after the fact instead of trusting the agent's own confidence.",
-          "Benchmarked a lakehouse-based access engine against an incumbent graph-database design, showing sub-second query latency (651 ms) at about 1/140th the cost ($1.80/day vs $258/day) for the same security analytics workload.",
-          "Reduced query scan cost by 27x (60.46 MB to 2.27 MB) by replacing query-time permission resolution with a precomputed transitive closure, bringing a failing 2.5-second query inside a 2-second SLA.",
-          "Designed a deterministic, fully explainable risk-scoring model as a weighted feature sum across role, exposure, path depth, and dormancy, avoiding ML complexity that the dataset could not support reliably.",
-          "Placed 3rd in a firm-wide internal intern hackathon.",
+          "Proposed and led a PuppyGraph-versus-Athena proof of concept as the sole engineer, advised by a mentor and manager, comparing graph investigation and lakehouse analytics on shared source tables.",
+          "Built a Spark and Hudi effective-access pipeline across 8.8M resources, 1.14M identities, and 20 tenants, resolving direct grants, nested groups, folder inheritance, and sharing links.",
+          "Cut a failing 2.5-second access lookup to 651 ms with 27x fewer bytes scanned; bidirectionally bucketed Athena tables held about 1-second lookups at 108M-route synthetic scale.",
+          "Built daily dashboard rollups that reduced bytes scanned about 600x, materialized risk scores for 8.7x lower read latency, and validated incremental repairs against full rebuilds by count and checksum.",
+          "Built 12 parameterized, tenant-locked SQL tools behind an LLM tool-choice planner and a separate deterministic investigator. A 28-question adversarial suite found no cross-tenant leaks; later live planner testing had no retained scores.",
+          "Recommended Athena for aggregation and PuppyGraph for bounded investigation, projecting 22\u201335x lower Athena-only cost than the incumbent Neptune baseline under the documented billing assumptions. Presented the hybrid recommendation to the product SVP; placed 3rd in a separate firm-wide intern hackathon.",
         ],
         awards: "3rd Place, Internal Intern Hackathon (Firm-wide)",
         techStack: [
@@ -40,38 +39,6 @@ export const experienceData: Company[] = [
     ],
   },
   {
-    company: "Corporate Startup Lab",
-    logo: "experience/csl.png",
-    hook: "Solo 0-to-1 AI banking assistant for PNC: advisor for SMBs, CRM for RMs, humans on the credit call.",
-    highlights: ["LangGraph", "Claude API", "Hugging Face Spaces", "FastAPI", "Tool calling", "Human-in-the-loop", "React", "PostgreSQL"],
-    roles: [
-      {
-        title: "CSL Course Fellow, PNC Bank",
-        duration: "Jan 2026 - Apr 2026",
-        content: [
-          "Built Brilliant Banker, a 0-to-1 AI banking assistant for PNC, as a solo Corporate Startup Lab fellow: SMB owners get an in-app financial advisor, and relationship managers get a CRM with AI briefs, warm leads, and one-tap credit decisions.",
-          "Designed a LangGraph state-machine on the Claude API (intent classifier, tool router, reply composer, human escalation) so credit requests above a configurable threshold auto-escalate to a live RM queue instead of letting the model decide high-stakes credit on its own.",
-          "Shipped a FastAPI backend with REST and Server-Sent Events, a React and Vite frontend with two role experiences, SQLite and PostgreSQL, Docker packaging, Hugging Face Spaces, and structured user testing with both personas.",
-        ],
-        techStack: [
-          "LangGraph",
-          "Claude API",
-          "Tool calling",
-          "Human-in-the-loop",
-          "FastAPI",
-          "React",
-          "Vite",
-          "Server-Sent Events",
-          "SQLite",
-          "PostgreSQL",
-          "Docker",
-          "Hugging Face Spaces",
-          "Artificial Intelligence (AI)",
-        ],
-      },
-    ],
-  },
-  {
     company: "Morgan Stanley",
     logo: "experience/Ms.jpg",
     hook: "Factor-based stress testing at fund scale, and a PyTorch autoencoder that flags bad risk numbers.",
@@ -81,42 +48,31 @@ export const experienceData: Company[] = [
         title: "Software Engineer II",
         duration: "Sep 2024 - Aug 2025",
         content: [
-          "Designed and built a distributed, factor-based portfolio stress-testing system covering 3,500+ funds, simulating 100K+ scenarios over million-position datasets with a focus on scalability, correctness, and failure handling under load.",
-          "Used Barra factor models and historical market events, integrating Monte Carlo simulations, tail-risk modeling, and loss-probability functions to disentangle risks and improve worst-loss prediction for quantitative and small-cap strategies.",
-          "Developed high-performance Java services (Spring Boot, DDD, multithreading) with CI/CD pipelines for large-scale historical backtesting and reproducible risk simulations.",
-          "Built a data-quality engine using a PyTorch autoencoder to detect anomalous risk outputs, automatically triggering recalculation pipelines and improving accuracy, compliance, and trust in reported figures.",
-          "Created real-time risk insight dashboards (React, Power BI, DAX) that replaced manual Excel workflows and enabled permission-controlled access to scenario-based portfolio risk insights for Prime Brokerage and Institutional Equities.",
-          "Improved margin requirement accuracy (GAP), contributing to a ~20% impact on revenue strategy, by tightening model assumptions and validation logic.",
-          "Recognized with Best Innovative Project (among 2000+ department employees) and Team Engagement Champion awards.",
+          "Built a distributed factor-based stress-testing framework in about 3 months, covering 3,500+ funds and million-position datasets, used daily by 200+ risk analysts.",
+          "Modeled systematic risk with Barra historical factor shocks and specific risk with 100K+ Monte Carlo scenarios for tail-loss estimation.",
+          "Cut nightly simulations from 8 hours to 4 through multithreaded revaluation and longest-processing-time-first scheduling on a min-heap across cluster nodes.",
+          "Shipped a Kafka-fed React, Vite, and Spring Boot dashboard in 2 weeks, replacing Power BI reports for Prime Brokerage with real-time risk views.",
+          "Built a PyTorch autoencoder for GAP-report data-quality monitoring and email alerts, with manual re-runs; built a reconciliation orchestrator whose data-quality gates failed Jenkins builds on missing or mismatched risk numbers.",
+          "Automated daily Hong Kong and London desk reports with a Python script calling 5 services to generate spreadsheets in about 5 minutes. Received Best Innovative Project for the full stress-testing framework and Team Engagement Champion recognition.",
         ],
         awards: "Best Innovative Project Award, Team Engagement Champion 2024 Quarterly Awards",
-        techStack: ["PyTorch", "Keras", "TensorFlow", "pandas", "NumPy", "Java", "Springboot", "Python", "Angular", "React", "PowerBI", "Kafka", "Redis", "Kubernetes", "Podman", "Terraform", "Delphix", "Loki", "Prometheus", "Grafana", "Tempo", "Openshift"],
+        techStack: ["PyTorch", "Keras", "TensorFlow", "pandas", "NumPy", "Java", "Springboot", "Python", "Angular", "React", "Vite", "Kafka", "Redis", "Kubernetes", "Podman", "Terraform", "Delphix", "Loki", "Prometheus", "Grafana", "Tempo", "Openshift"],
       },
       {
         title: "Technology Associate",
-        duration: "Nov 2023 - Sep 2024",
+        duration: "Jul 2023 - Sep 2024",
         content: [
-          "Implemented a greedy algorithm for exposure risk calculations across 7000+ accounts at a decomposed level daily, reducing computation time from over 4 hours to 30 minutes.",
+          "Implemented greedy bin packing with a dynamic per-batch position cap across 7,000+ accounts, isolating million-position accounts and grouping smaller ones; cut daily exposure computation from over 4 hours to 30 minutes.",
           "Deployed a liquidity calculator to OpenShift using Kubernetes and Docker, and automated infrastructure with Terraform, eliminating environment drift and reducing QA/test setup time by 40+ hours per cycle.",
           "Built internal tooling for automated test generation (Python, LLM-assisted workflows) with PyTest and JUnit, improving coverage and reducing regression risk.",
           "Served as Scrum Master, driving execution clarity while building observability dashboards (Python Dash, Plotly, Rally) to monitor system health and delivery velocity.",
-          "Awarded IST Annual Circle of Excellence as the first technology analyst in the 2023 cohort.",
+          "Completed the Technology Analyst Program (Jul–Oct 2023) during full-time onboarding and led my team to first in Tech Principles Jeopardy. Awarded IST Annual Circle of Excellence as the first technology analyst in the 2023 cohort.",
         ],
         awards: "IST Circle of Excellence Award",
         techStack: ["Python", "Java", "Spring Boot", "Azure Spring Apps", "Linux", "Terraform", "OpenShift", "Docker", "Git", "JUnit", "PyTest", "pandas", "NumPy", "Large Language Models (LLMs)", "React", "Power BI", "Jira", "Rally"]
       },
       {
-        title: "Technology Analyst",
-        duration: "Jul 2023 - Oct 2023",
-        content: [
-          "Graduated from Morgan Stanley's Technology Analyst Program, specializing in software engineering, financial technology, and internal architecture.",
-          "Led my team to first place in the firm's Tech Principles Jeopardy Quiz.",
-        ],
-        awards: "First in Jeopardy Quiz on Tech Principles",
-        techStack: ["React", "Java", "Python", "Azure Spring Functions", "Jira", "Rally", "Springboot", "Linux"],
-      },
-      {
-        title: "Spring Technology Analyst",
+        title: "Spring Technology Analyst (Internship)",
         duration: "Jan 2023 - Jul 2023",
         content: [
           "Replaced a 40GB Hazelcast (v3) cache with Redis in cluster mode for the Matrix platform, improving API performance and supporting high-frequency client calls.",
@@ -127,7 +83,7 @@ export const experienceData: Company[] = [
         techStack: ["Java", "Springboot", "Redis", "Hazelcast", "JMeter", "Grafana", "Prometheus", "Java Microbenchmark Harness", "OpenAPI"],
       },
       {
-        title: "Summer Technology Analyst",
+        title: "Summer Technology Analyst (Internship)",
         duration: "May 2022 - Jul 2022",
         content: [
           "Built a real-time risk measurement system (Spring Boot + Kafka) to calculate portfolio metrics (Beta, VaR, Exposure, Greeks, Deltas) across 4,000+ accounts in London, New York, and Hong Kong.",
@@ -175,7 +131,7 @@ export const experienceData: Company[] = [
   },
 ].sort((a, b) => durationEndDate(b.roles[0].duration).getTime() - durationEndDate(a.roles[0].duration).getTime());
 
-const EXPERIENCE_HIGHLIGHT_NAMES = ['Proofpoint', 'Morgan Stanley', 'Corporate Startup Lab'] as const;
+const EXPERIENCE_HIGHLIGHT_NAMES = ['Proofpoint', 'Morgan Stanley'] as const;
 
 /** Curated roles for about preview quick looks. */
 export function getExperienceHighlights(): Company[] {

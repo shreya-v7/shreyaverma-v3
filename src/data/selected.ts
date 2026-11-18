@@ -8,5 +8,5 @@ export const relatedResearchProjects = relatedTitles
   .filter((project): project is (typeof projects)[number] => project != null);
 
 export const relatedResearchHackathon = achievementsData.find(
-  (item) => item.title === 'Google Agentic AI Day Finalist',
+  (item) => item.title === 'Top 10 of 700+ Teams — Google Cloud Agentic AI Day',
 );

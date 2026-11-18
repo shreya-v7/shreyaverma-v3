@@ -9,6 +9,7 @@ import { getExperienceHighlights } from '../../data/experience';
 import { educationData } from '../../data/education';
 import { getLeadershipHighlights } from '../../data/leadership';
 import { achievementsData } from '../../data/achievements';
+import { skillGroups } from '../../data/skills';
 import { projects } from '../../data/projects';
 
 export default function AboutPreview() {
@@ -33,7 +34,7 @@ export default function AboutPreview() {
       : null,
   ].filter((item): item is { kind: string; title: string; blurb: string } => item != null);
   const honorsPreview = [
-    achievementsData.find((a) => a.title === 'Google Agentic AI Day Finalist'),
+    achievementsData.find((a) => a.title === 'Top 10 of 700+ Teams — Google Cloud Agentic AI Day'),
     achievementsData.find((a) => a.title === 'Best Innovative Project'),
   ].filter((item): item is (typeof achievementsData)[number] => item != null);
 
@@ -103,6 +104,18 @@ export default function AboutPreview() {
             </article>
           ))}
         </div>
+      </section>
+
+      <section>
+        <h2 className="mb-4 text-xl font-semibold tracking-tight">Skills</h2>
+        <dl className="grid gap-4 sm:grid-cols-2">
+          {skillGroups.map(({ category, summary }) => (
+            <div key={category} className="rounded-2xl border border-neutral-200 p-4 dark:border-neutral-700">
+              <dt className="font-semibold">{category}</dt>
+              <dd className="mt-2 text-sm leading-relaxed text-neutral-600 dark:text-neutral-300">{summary}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
 
       <Modal isOpen={selectedCompany !== null} onClose={handleCloseModal}>

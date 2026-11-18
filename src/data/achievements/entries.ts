@@ -21,7 +21,6 @@ const morganStanley: Achievement[] = [
     context: CTX.ms,
     highlight:
       'Recognized by a Managing Director for building a dynamic factor-based stress-testing framework and secure internal platform that improved risk analysis and automated data-quality workflows.',
-    details: ['Selected among ~500-1,000 employees within the department for innovation and impact.'],
   },
   {
     title: 'Team Engagement Champions',
@@ -270,13 +269,13 @@ const certifications: Achievement[] = [
 
 const hackathons: Achievement[] = [
   {
-    title: 'Google Agentic AI Day Finalist',
+    title: 'Top 10 of 700+ Teams — Google Cloud Agentic AI Day',
     category: 'Hackathon',
     group: GROUP.hackathons,
-    date: '2026-02',
+    date: '2025-07',
     context: CTX.googleAgentic,
     highlight:
-      'Finalist with Quantastica / FinAI, a 26-agent personal finance platform with retrieval-augmented context and schema-validated structured output.',
+      'Top 10 of 700+ teams with Quantastica / FinAI, a 26-agent personal finance platform with retrieval-augmented context and schema-validated structured output.',
     link: 'https://github.com/shreya-v7/Quantastica-Agentic-AI',
   },
   {

@@ -2,18 +2,26 @@ import { Project } from '../types';
 
 export const projects: Project[] = [
   {
+    title: "FP4 low-precision training and inference (Needle)",
+    description: "In-progress CMU Deep Learning Systems project on MXFP4/NVFP4 inside Needle: packed C++/CUDA storage via pybind11, QuantizedLinear, quantize-pack and fused dequantize-matmul/GEMV kernels, and training-stability ablations with stochastic rounding and Hadamard rotation. Roofline profiling is in progress; no performance results yet.",
+    date: "",
+    dateLabel: "In progress · Fall 2026",
+    image: "work/fp4-needle.svg",
+    tags: ["AI", "Research", "Systems", "CUDA"],
+  },
+  {
     title: "Learned Orchestration for Efficient Deep Research Agents",
     description:
-      "Industry-sponsored CMU capstone with Adobe. Replacing prompted LLM orchestrators in deep research agents with a small model trained via reinforcement learning to decide what context to keep, when to prune, and when to stop. In progress: problem formulation, architecture, baselines, and evaluation (quality, latency, cost, tool use).",
+      "Industry-sponsored CMU capstone with Adobe. Designing PILOT to learn evidence retention, pruning, and stopping; PILOT and its 1–7B training remain planned. Separately implemented a PyTorch GRPO trainer for Qwen2.5-3B with LoRA and diagnosed a reward that favored keeping everything. No demonstrated quality or cost improvement yet.",
     date: "2026-08-01",
     image: "work/adobe-capstone.svg",
-    link: "https://arxiv.org/abs/2510.05145",
+    link: "/about/research",
     tags: ["AI", "Agentic", "RL", "Research", "LLMs"],
   },
   {
     title: "Brilliant Banker",
     description:
-      "Solo Corporate Startup Lab build for PNC. SMB owners get an in-app financial advisor; relationship managers get a CRM with AI briefs, warm leads, and one-tap credit decisions. LangGraph plus Claude routes intent to tools, and credit requests above a set threshold auto-escalate over Server-Sent Events to a live RM queue.",
+      "Built through CMU’s Corporate Startup Lab with industry partner PNC Bank. A four-node LangGraph pipeline on Claude supports an SMB advisor and relationship-manager CRM. Deterministic weighted scoring pre-qualifies credit; requests above $10,000 escalate to a human over SSE. FastAPI, React/Vite, SQLite, Docker, and a user-feedback widget.",
     date: "2026-04-15",
     image: "work/brilliant-banker.svg",
     link: "https://github.com/shreya-v7/brilliant-banker",
@@ -119,8 +127,8 @@ export const projects: Project[] = [
   {
     title: "Quantastica - Fin.AI",
     description:
-      "Google Agentic AI Day Finalist. 26-agent personal finance and investing platform pairing retrieval-augmented context with a reasoning layer that emits schema-validated structured output behind a provider-agnostic model routing interface.",
-    date: "2026-02-15",
+      "Top 10 of 700+ teams at Google Cloud Agentic AI Day. 26-agent personal finance and investing platform pairing retrieval-augmented context with a reasoning layer that emits schema-validated structured output behind a provider-agnostic model routing interface.",
+    date: "2025-07",
     image: "work/quantastica.png",
     link: "https://github.com/shreya-v7/Quantastica-Agentic-AI",
     tags: ["AI", "Agentic", "RAG", "App", "Web", "Finance"],

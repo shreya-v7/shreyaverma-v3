@@ -4,6 +4,16 @@ import { durationEndDate } from '../utils';
 /** Org leadership, ambassadorships, speaking, and volunteering. Not professional employment. */
 export const leadershipData: Company[] = [
   {
+    company: "IEEE SB JIIT Women in Engineering",
+    logo: "experience/ieeewie.jpg",
+    roles: [{
+      title: "Invited Keynote Speaker",
+      duration: "Jul 2026 - Jul 2026",
+      content: ["Delivered the Women in Engineering in the Age of AI keynote for Women in Engineering Day under Technology with Purpose, covering careers, industry change, and leadership with integrity."],
+      techStack: ["Public Speaking", "STEM Outreach", "Leadership"],
+    }],
+  },
+  {
     company: "Women Who Code",
     logo: "leadership/wwc.svg",
     roles: [

@@ -3,16 +3,16 @@ import { projects } from '../../data/projects';
 import { FilterPills } from '../../components/ui/FilterPills';
 import { ProjectCard } from '../../components/ui/ProjectCard';
 
-const CATEGORIES = ['All', 'Agentic', 'AI', 'Research', 'App', 'Web', 'Talk'] as const;
+const CATEGORIES = ['All', 'AI', 'Research', 'Web', 'Talk'] as const;
 
 export default function ProjectsInfo() {
   const [activeCategory, setActiveCategory] = useState<(typeof CATEGORIES)[number]>('All');
 
   const sortedProjects = useMemo(() => {
     const filtered = activeCategory === 'All'
-      ? projects
+      ? [...projects]
       : projects.filter(p => p.tags.includes(activeCategory));
-    return filtered.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+    return filtered.sort((a, b) => (b.date ? new Date(b.date).getTime() : Infinity) - (a.date ? new Date(a.date).getTime() : Infinity));
   }, [activeCategory]);
 
   return (

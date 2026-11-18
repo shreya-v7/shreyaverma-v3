@@ -41,7 +41,7 @@ export default function Home() {
   } = useCompanyModal();
   const featuredProjects = [
     projects.find((p) => p.title.startsWith('Learned Orchestration')),
-    projects.find((p) => p.title.startsWith('Quantastica')),
+    projects.find((p) => p.title.startsWith('FP4')),
     projects.find((p) => p.title === 'Brilliant Banker'),
   ].filter((p): p is (typeof projects)[number] => p != null);
 

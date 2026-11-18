@@ -29,7 +29,8 @@ export interface Project {
   description: string;
   date: string;
   image: string;
-  link: string;
+  link?: string;
+  dateLabel?: string;
   tags: string[];
 }
 
